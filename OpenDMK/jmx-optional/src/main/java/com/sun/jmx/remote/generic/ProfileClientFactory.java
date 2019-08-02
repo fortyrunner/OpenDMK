@@ -5,19 +5,19 @@
  * @(#)lastedit  07/03/08
  * @(#)build     @BUILD_TAG_PLACEHOLDER@
  *
- * 
+ *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
- * 
+ *
  * Copyright (c) 2007 Sun Microsystems, Inc. All Rights Reserved.
- * 
+ *
  * The contents of this file are subject to the terms of either the GNU General
  * Public License Version 2 only ("GPL") or the Common Development and
  * Distribution License("CDDL")(collectively, the "License"). You may not use
  * this file except in compliance with the License. You can obtain a copy of the
- * License at http://opendmk.dev.java.net/legal_notices/licenses.txt or in the 
- * LEGAL_NOTICES folder that accompanied this code. See the License for the 
+ * License at http://opendmk.dev.java.net/legal_notices/licenses.txt or in the
+ * LEGAL_NOTICES folder that accompanied this code. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * When distributing the software, include this License Header Notice in each
  * file and include the License file found at
  *     http://opendmk.dev.java.net/legal_notices/licenses.txt
@@ -25,27 +25,27 @@
  * Sun designates this particular file as subject to the "Classpath" exception
  * as provided by Sun in the GPL Version 2 section of the License file that
  * accompanied this code.
- * 
+ *
  * If applicable, add the following below the License Header, with the fields
  * enclosed by brackets [] replaced by your own identifying information:
- * 
+ *
  *       "Portions Copyrighted [year] [name of copyright owner]"
- * 
+ *
  * Contributor(s):
- * 
+ *
  * If you wish your version of this file to be governed by only the CDDL or
  * only the GPL Version 2, indicate your decision by adding
- * 
+ *
  *       "[Contributor] elects to include this software in this distribution
  *        under the [CDDL or GPL Version 2] license."
- * 
+ *
  * If you don't indicate a single choice of license, a recipient has the option
  * to distribute your version of this file under either the CDDL or the GPL
  * Version 2, or to extend the choice of license to its licensees as provided
  * above. However, if you add GPL Version 2 code and therefore, elected the
  * GPL Version 2 license, then the option applies only if the new code is made
  * subject to such option by the copyright holder.
- * 
+ *
  */
 
 package com.sun.jmx.remote.generic;
@@ -107,13 +107,13 @@ import java.util.StringTokenizer;
  * #createProfile(String, Map) createProfile} contains the key
  * <code>jmx.remote.profile.provider.class.loader</code> then the
  * associated value is the class loader to use to load the provider.
- * If the associated value is not an instance of 
+ * If the associated value is not an instance of
  * {@link java.lang.ClassLoader}, an {@link
  * java.lang.IllegalArgumentException} is thrown.</p>
- * 
+ *
  * <p>If the <code>jmx.remote.profile.provider.class.loader</code>
  * key is not present in the <code>environment</code> parameter, the
- * class loader that loaded the <code>ProfileClientFactory</code> class 
+ * class loader that loaded the <code>ProfileClientFactory</code> class
  * is used.</p>
  *
  * <p>If the attempt to load this class produces a {@link
@@ -144,7 +144,7 @@ import java.util.StringTokenizer;
  *
  * <p>Once a provider is found, the result of the
  * <code>createProfile</code> method is the result of calling {@link
- * ProfileClientProvider#createProfile(String,Map) createProfile}
+ * ProfileClientProvider#createProfile(String, Map) createProfile}
  * on the provider.</p>
  *
  * <p>The <code>Map</code> parameter passed to the
@@ -160,159 +160,161 @@ import java.util.StringTokenizer;
  */
 public class ProfileClientFactory {
 
-    /**
-     * <p>Name of the attribute that specifies the provider packages
-     * that are consulted when looking for the provider for a profile.
-     * The value associated with this attribute is a string with
-     * package names separated by vertical bars (<code>|</code>).</p>
-     */
-    public static final String PROFILE_PROVIDER_PACKAGES =
-        "jmx.remote.profile.provider.pkgs";
+  /**
+   * <p>Name of the attribute that specifies the provider packages
+   * that are consulted when looking for the provider for a profile.
+   * The value associated with this attribute is a string with
+   * package names separated by vertical bars (<code>|</code>).</p>
+   */
+  public static final String PROFILE_PROVIDER_PACKAGES =
+    "jmx.remote.profile.provider.pkgs";
 
-    /**
-     * <p>Name of the attribute that specifies the class
-     * loader for loading profile providers.
-     * The value associated with this attribute is an instance
-     * of {@link ClassLoader}.</p>
-     */
-    public static final String PROFILE_PROVIDER_CLASS_LOADER =
-        "jmx.remote.profile.provider.class.loader";
+  /**
+   * <p>Name of the attribute that specifies the class
+   * loader for loading profile providers.
+   * The value associated with this attribute is an instance
+   * of {@link ClassLoader}.</p>
+   */
+  public static final String PROFILE_PROVIDER_CLASS_LOADER =
+    "jmx.remote.profile.provider.class.loader";
 
-    private static final String PROFILE_PROVIDER_DEFAULT_PACKAGE =
-        "com.sun.jmx.remote.profile";
+  private static final String PROFILE_PROVIDER_DEFAULT_PACKAGE =
+    "com.sun.jmx.remote.profile";
 
-    /**
-     * There are no instances of this class.
-     */
-    private ProfileClientFactory() {
+  /**
+   * There are no instances of this class.
+   */
+  private ProfileClientFactory() {
+  }
+
+  /**
+   * <p>Create a profile.</p>
+   *
+   * @param profile     the name of the profile to be created.
+   * @param environment a read-only Map containing named attributes
+   *                    to determine how the profile is created. Keys in this map must
+   *                    be Strings. The appropriate type of each associated value
+   *                    depends on the attribute.</p>
+   * @return a <code>ProfileClient</code> representing the new profile.
+   * Each successful call to this method produces a different object.
+   * @throws NullPointerException if <code>profile</code> is null.
+   */
+  public static ProfileClient createProfile(String profile, Map environment)
+    throws ProfileProviderException {
+
+    final String pkgs = resolvePkgs(environment);
+
+    final ClassLoader loader = resolveClassLoader(environment);
+
+    if (environment == null) {
+      environment = new HashMap();
+    } else {
+      environment = new HashMap(environment);
     }
 
-    /**
-     * <p>Create a profile.</p>
-     *
-     * @param profile the name of the profile to be created.
-     *
-     * @param environment a read-only Map containing named attributes
-     * to determine how the profile is created. Keys in this map must
-     * be Strings. The appropriate type of each associated value
-     * depends on the attribute.</p>
-     *
-     * @return a <code>ProfileClient</code> representing the new profile.
-     * Each successful call to this method produces a different object.
-     *
-     * @exception NullPointerException if <code>profile</code> is null.
-     */
-    public static ProfileClient createProfile(String profile, Map environment)
-	throws ProfileProviderException {
+    environment.put(PROFILE_PROVIDER_CLASS_LOADER, loader);
+    environment = Collections.unmodifiableMap(environment);
 
-        final String pkgs = resolvePkgs(environment);
+    final ProfileClientProvider provider =
+      getProvider(profile, pkgs, loader);
 
-        final ClassLoader loader = resolveClassLoader(environment);
-
-        if (environment == null)
-            environment = new HashMap();
-        else
-            environment = new HashMap(environment);
-
-        environment.put(PROFILE_PROVIDER_CLASS_LOADER, loader);
-        environment = Collections.unmodifiableMap(environment);
-
-        final ProfileClientProvider provider =
-	    getProvider(profile, pkgs, loader);
-
-        if (provider == null) {
-            throw new IllegalArgumentException("Unsupported profile: " +
-					       profile);
-        }
-
-        return provider.createProfile(profile, environment);
+    if (provider == null) {
+      throw new IllegalArgumentException("Unsupported profile: " +
+        profile);
     }
 
-    private static final String resolvePkgs(Map env) {
+    return provider.createProfile(profile, environment);
+  }
 
-        String pkgs = null;
+  private static final String resolvePkgs(Map env) {
 
-        if (env != null)
-            pkgs = (String) env.get(PROFILE_PROVIDER_PACKAGES);
+    String pkgs = null;
 
-        if (pkgs == null)
-            pkgs = (String)
-		AccessController.doPrivileged(new PrivilegedAction() {
-		    public Object run() {
-			return System.getProperty(PROFILE_PROVIDER_PACKAGES);
-		    }
-		});
-        if (pkgs == null || pkgs.trim().equals(""))
-            pkgs = PROFILE_PROVIDER_DEFAULT_PACKAGE;
-        else
-            pkgs += "|" + PROFILE_PROVIDER_DEFAULT_PACKAGE;
-
-        return pkgs;
+    if (env != null) {
+      pkgs = (String) env.get(PROFILE_PROVIDER_PACKAGES);
     }
 
-    private static final ProfileClientProvider getProvider(String profile,
-							   String pkgs,
-							   ClassLoader loader)
-	throws ProfileProviderException {
-        Class providerClass = null;
-        ProfileClientProvider provider = null;
-        Object obj = null;
-
-        StringTokenizer tokenizer = new StringTokenizer(pkgs, "|");
-
-	String p = profile.toLowerCase();
-	if (p.indexOf("/") != -1) {
-	    p = p.substring(0, p.indexOf("/"));
-	}
-        while (tokenizer.hasMoreTokens()) {
-            String pkg = (String) tokenizer.nextToken();
-            String className = (pkg + "." + p + ".ClientProvider");
-            try {
-                providerClass = loader.loadClass(className);
-            } catch (ClassNotFoundException e) {
-                continue;
-            }
-
-            try {
-                obj = providerClass.newInstance();
-            } catch (Exception e) {
-                final String msg =
-                    "Exception when instantiating provider [" + className + "]";
-                throw new ProfileProviderException(msg, e);
-            }
-
-            if (!(obj instanceof ProfileClientProvider)) {
-                final String msg =
-                    "Provider not an instance of " +
-                    ProfileClientProvider.class.getName() + ": " +
-                    obj.getClass().getName();
-                throw new IllegalArgumentException(msg);
-            }
-
-            return (ProfileClientProvider) obj;
-        }
-
-        return null;
+    if (pkgs == null) {
+      pkgs = (String)
+        AccessController.doPrivileged(new PrivilegedAction() {
+          public Object run() {
+            return System.getProperty(PROFILE_PROVIDER_PACKAGES);
+          }
+        });
+    }
+    if (pkgs == null || pkgs.trim().equals("")) {
+      pkgs = PROFILE_PROVIDER_DEFAULT_PACKAGE;
+    } else {
+      pkgs += "|" + PROFILE_PROVIDER_DEFAULT_PACKAGE;
     }
 
-    private static final ClassLoader resolveClassLoader(Map environment) {
-        ClassLoader loader = null;
+    return pkgs;
+  }
 
-        if (environment != null) {
-            try {
-                loader = (ClassLoader)
-		    environment.get(PROFILE_PROVIDER_CLASS_LOADER);
-            } catch (ClassCastException e) {
-                final String msg =
-                    "ClassLoader not an instance of java.lang.ClassLoader : " +
-                    loader.getClass().getName();
-                throw new IllegalArgumentException(msg); 
-            }
-        }
+  private static final ProfileClientProvider getProvider(String profile,
+                                                         String pkgs,
+                                                         ClassLoader loader)
+    throws ProfileProviderException {
+    Class providerClass = null;
+    ProfileClientProvider provider = null;
+    Object obj = null;
 
-        if (loader == null)
-            loader = ProfileClientFactory.class.getClassLoader();
+    StringTokenizer tokenizer = new StringTokenizer(pkgs, "|");
 
-        return loader;
+    String p = profile.toLowerCase();
+    if (p.contains("/")) {
+      p = p.substring(0, p.indexOf("/"));
     }
+    while (tokenizer.hasMoreTokens()) {
+      String pkg = tokenizer.nextToken();
+      String className = (pkg + "." + p + ".ClientProvider");
+      try {
+        providerClass = loader.loadClass(className);
+      } catch (ClassNotFoundException e) {
+        continue;
+      }
+
+      try {
+        obj = providerClass.newInstance();
+      } catch (Exception e) {
+        final String msg =
+          "Exception when instantiating provider [" + className + "]";
+        throw new ProfileProviderException(msg, e);
+      }
+
+      if (!(obj instanceof ProfileClientProvider)) {
+        final String msg =
+          "Provider not an instance of " +
+            ProfileClientProvider.class.getName() + ": " +
+            obj.getClass().getName();
+        throw new IllegalArgumentException(msg);
+      }
+
+      return (ProfileClientProvider) obj;
+    }
+
+    return null;
+  }
+
+  private static final ClassLoader resolveClassLoader(Map environment) {
+    ClassLoader loader = null;
+
+    if (environment != null) {
+      try {
+        loader = (ClassLoader)
+          environment.get(PROFILE_PROVIDER_CLASS_LOADER);
+      } catch (ClassCastException e) {
+        final String msg =
+          "ClassLoader not an instance of java.lang.ClassLoader : " +
+            loader.getClass().getName();
+        throw new IllegalArgumentException(msg);
+      }
+    }
+
+    if (loader == null) {
+      loader = ProfileClientFactory.class.getClassLoader();
+    }
+
+    return loader;
+  }
 }

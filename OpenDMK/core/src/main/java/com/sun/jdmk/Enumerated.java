@@ -4,19 +4,19 @@
  * @(#)version   1.21
  * @(#)lastedit      07/03/08
  *
- * 
+ *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
- * 
+ *
  * Copyright (c) 2007 Sun Microsystems, Inc. All Rights Reserved.
- * 
+ *
  * The contents of this file are subject to the terms of either the GNU General
  * Public License Version 2 only ("GPL") or the Common Development and
  * Distribution License("CDDL")(collectively, the "License"). You may not use
  * this file except in compliance with the License. You can obtain a copy of the
- * License at http://opendmk.dev.java.net/legal_notices/licenses.txt or in the 
- * LEGAL_NOTICES folder that accompanied this code. See the License for the 
+ * License at http://opendmk.dev.java.net/legal_notices/licenses.txt or in the
+ * LEGAL_NOTICES folder that accompanied this code. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * When distributing the software, include this License Header Notice in each
  * file and include the License file found at
  *     http://opendmk.dev.java.net/legal_notices/licenses.txt
@@ -24,122 +24,120 @@
  * Sun designates this particular file as subject to the "Classpath" exception
  * as provided by Sun in the GPL Version 2 section of the License file that
  * accompanied this code.
- * 
+ *
  * If applicable, add the following below the License Header, with the fields
  * enclosed by brackets [] replaced by your own identifying information:
- * 
+ *
  *       "Portions Copyrighted [year] [name of copyright owner]"
- * 
+ *
  * Contributor(s):
- * 
+ *
  * If you wish your version of this file to be governed by only the CDDL or
  * only the GPL Version 2, indicate your decision by adding
- * 
+ *
  *       "[Contributor] elects to include this software in this distribution
  *        under the [CDDL or GPL Version 2] license."
- * 
+ *
  * If you don't indicate a single choice of license, a recipient has the option
  * to distribute your version of this file under either the CDDL or the GPL
  * Version 2, or to extend the choice of license to its licensees as provided
  * above. However, if you add GPL Version 2 code and therefore, elected the
  * GPL Version 2 license, then the option applies only if the new code is made
  * subject to such option by the copyright holder.
- * 
+ *
  */
 
 package com.sun.jdmk;
 
 
-import java.io.*;
+import java.io.Serializable;
+import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.*;
 
 
-
-/** This class is used for implementing enumerated values.
- *
+/**
+ * This class is used for implementing enumerated values.
+ * <p>
  * An enumeration is represented by a class derived from Enumerated.
  * The derived class defines what are the permitted values in the enumeration.
- *
+ * <p>
  * An enumerated value is represented by an instance of the derived class.
  * It can be represented :
- *  - as an integer
- *  - as a string
- * 
+ * - as an integer
+ * - as a string
  */
 
-abstract public class Enumerated  implements Serializable {
+abstract public class Enumerated implements Serializable {
 
   /**
    * Construct an enumerated with a default value.
    * The default value is the first available in getIntTable().
-    * @exception IllegalArgumentException One of the arguments passed to the method is illegal or inappropriate.
+   *
+   * @throws IllegalArgumentException One of the arguments passed to the method is illegal or inappropriate.
    */
   public Enumerated() throws IllegalArgumentException {
-    Enumeration e =getIntTable().keys() ;
+    Enumeration e = getIntTable().keys();
     if (e.hasMoreElements()) {
-      value = ((Integer)e.nextElement()).intValue() ;
-    }
-    else {
-      throw new IllegalArgumentException() ;
+      value = ((Integer) e.nextElement()).intValue();
+    } else {
+      throw new IllegalArgumentException();
     }
   }
- 
+
   /**
    * Construct an enumerated from its integer form.
-   * 
+   *
    * @param valueIndex The integer form.
-   * @exception IllegalArgumentException One of the arguments passed 
-   *            to the method is illegal or inappropriate.
+   * @throws IllegalArgumentException One of the arguments passed
+   *                                  to the method is illegal or inappropriate.
    */
   public Enumerated(int valueIndex) throws IllegalArgumentException {
     if (getIntTable().get(new Integer(valueIndex)) == null) {
-      throw new IllegalArgumentException() ;
+      throw new IllegalArgumentException();
     }
-    value = valueIndex ;
+    value = valueIndex;
   }
- 
+
   /**
    * Construct an enumerated from its Integer form.
-   * 
+   *
    * @param valueIndex The Integer form.
-   * @exception IllegalArgumentException One of the arguments passed to 
-   *            the method is illegal or inappropriate.
+   * @throws IllegalArgumentException One of the arguments passed to
+   *                                  the method is illegal or inappropriate.
    */
   public Enumerated(Integer valueIndex) throws IllegalArgumentException {
     if (getIntTable().get(valueIndex) == null) {
-      throw new IllegalArgumentException() ;
+      throw new IllegalArgumentException();
     }
-    value = valueIndex.intValue() ;
+    value = valueIndex.intValue();
   }
- 
- 
+
+
   /**
    * Construct an enumerated from its string form.
-   * 
+   *
    * @param valueString The string form.
-   * @exception IllegalArgumentException One of the arguments passed to 
-   *            the method is illegal or inappropriate.
+   * @throws IllegalArgumentException One of the arguments passed to
+   *                                  the method is illegal or inappropriate.
    */
   public Enumerated(String valueString) throws IllegalArgumentException {
-    Integer index = (Integer)getStringTable().get(valueString) ;
+    Integer index = (Integer) getStringTable().get(valueString);
     if (index == null) {
-      throw new IllegalArgumentException() ;
-    }
-    else {
-      value = index.intValue() ;
+      throw new IllegalArgumentException();
+    } else {
+      value = index.intValue();
     }
   }
 
 
   /**
    * Return the integer form of the enumerated.
-   * 
+   *
    * @return The integer form
    */
 
   public int intValue() {
-    return value ;
+    return value;
   }
 
 
@@ -150,10 +148,10 @@ abstract public class Enumerated  implements Serializable {
    */
 
   public Enumeration valueIndexes() {
-    return getIntTable().keys() ;
+    return getIntTable().keys();
   }
-  
-  
+
+
   /**
    * Returns an Java enumeration of the permitted strings.
    *
@@ -161,47 +159,46 @@ abstract public class Enumerated  implements Serializable {
    */
 
   public Enumeration valueStrings() {
-    return getStringTable().keys() ;
+    return getStringTable().keys();
   }
 
 
   /**
    * Compares this enumerated to the specified enumerated.
-   *
+   * <p>
    * The result is true if and only if the argument is not null
    * and is of the same class.
-   * 
-   * @param obj The object to compare with.
    *
+   * @param obj The object to compare with.
    * @return True if this and obj are the same; false otherwise
    */
   public boolean equals(Object obj) {
-    
+
     return ((obj != null) &&
-            (getClass() == obj.getClass()) &&
-            (value == ((Enumerated)obj).value)) ;
+      (getClass() == obj.getClass()) &&
+      (value == ((Enumerated) obj).value));
   }
- 
- 
+
+
   /**
    * Returns the hash code for this enumerated.
-   * 
+   *
    * @return A hash code value for this object.
    */
   public int hashCode() {
-    String hashString = getClass().getName() + String.valueOf(value) ;
-    return hashString.hashCode() ;
+    String hashString = getClass().getName() + value;
+    return hashString.hashCode();
   }
 
 
   /**
    * Returns the string form of this enumerated.
-   * 
+   *
    * @return The string for for this object.
    */
 
   public String toString() {
-    return (String)getIntTable().get(new Integer(value)) ;
+    return (String) getIntTable().get(new Integer(value));
   }
 
 
@@ -209,33 +206,32 @@ abstract public class Enumerated  implements Serializable {
    * Returns the hashtable of the integer forms.
    * getIntTable().get(x) returns the string form associated
    * to the integer x.
-   *
+   * <p>
    * This method must be implemented by the derived class.
    *
    * @return An hashtable for read-only purpose
    */
 
-  protected abstract Hashtable getIntTable() ;
-  
-  
-  
+  protected abstract Hashtable getIntTable();
+
+
   /**
    * Returns the hashtable of the string forms.
    * getStringTable().get(s) returns the integer form associated
    * to the string s.
-   *
+   * <p>
    * This method must be implemented by the derived class.
    *
    * @return An hashtable for read-only purpose
    */
 
-  protected abstract Hashtable getStringTable() ;
- 
- 
+  protected abstract Hashtable getStringTable();
+
+
   /**
    * This variable keeps the integer form of the enumerated.
    * The string form is retrieved using getIntTable().
-   */  
-  protected int value ;
-  
+   */
+  protected int value;
+
 }

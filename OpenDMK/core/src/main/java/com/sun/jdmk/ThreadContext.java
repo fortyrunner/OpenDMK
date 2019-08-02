@@ -4,19 +4,19 @@
  * @(#)version   1.10
  * @(#)date      07/10/01
  *
- * 
+ *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
- * 
+ *
  * Copyright (c) 2007 Sun Microsystems, Inc. All Rights Reserved.
- * 
+ *
  * The contents of this file are subject to the terms of either the GNU General
  * Public License Version 2 only ("GPL") or the Common Development and
  * Distribution License("CDDL")(collectively, the "License"). You may not use
  * this file except in compliance with the License. You can obtain a copy of the
- * License at http://opendmk.dev.java.net/legal_notices/licenses.txt or in the 
- * LEGAL_NOTICES folder that accompanied this code. See the License for the 
+ * License at http://opendmk.dev.java.net/legal_notices/licenses.txt or in the
+ * LEGAL_NOTICES folder that accompanied this code. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * When distributing the software, include this License Header Notice in each
  * file and include the License file found at
  *     http://opendmk.dev.java.net/legal_notices/licenses.txt
@@ -24,35 +24,32 @@
  * Sun designates this particular file as subject to the "Classpath" exception
  * as provided by Sun in the GPL Version 2 section of the License file that
  * accompanied this code.
- * 
+ *
  * If applicable, add the following below the License Header, with the fields
  * enclosed by brackets [] replaced by your own identifying information:
- * 
+ *
  *       "Portions Copyrighted [year] [name of copyright owner]"
- * 
+ *
  * Contributor(s):
- * 
+ *
  * If you wish your version of this file to be governed by only the CDDL or
  * only the GPL Version 2, indicate your decision by adding
- * 
+ *
  *       "[Contributor] elects to include this software in this distribution
  *        under the [CDDL or GPL Version 2] license."
- * 
+ *
  * If you don't indicate a single choice of license, a recipient has the option
  * to distribute your version of this file under either the CDDL or the GPL
  * Version 2, or to extend the choice of license to its licensees as provided
  * above. However, if you add GPL Version 2 code and therefore, elected the
  * GPL Version 2 license, then the option applies only if the new code is made
  * subject to such option by the copyright holder.
- * 
+ *
  *
  */
 
 
 package com.sun.jdmk;
-
-import java.util.Stack;
-import java.util.EmptyStackException;
 
 /**
  * <p><b>Warning: The interface of this class is subject to change.
@@ -83,7 +80,6 @@ import java.util.EmptyStackException;
  * value that was most recently pushed with the given key.</p>
  *
  * <p>A thread cannot read or modify the context of another thread.</p>
- *
  */
 public class ThreadContext implements Cloneable {
 
@@ -126,80 +122,80 @@ public class ThreadContext implements Cloneable {
        longer current.  But the interface says this can be rejected,
        in case we remove immutability later.  */
 
-    /* We have to comment out "final" here because of a bug in the JDK1.1
-       compiler.  Uncomment it when we discard 1.1 compatibility.  */
-    private /*final*/ ThreadContext previous;
-    private /*final*/ String key;
-    private /*final*/ Object value;
+  /* We have to comment out "final" here because of a bug in the JDK1.1
+     compiler.  Uncomment it when we discard 1.1 compatibility.  */
+  private final /*final*/ ThreadContext previous;
+  private final /*final*/ String key;
+  private final /*final*/ Object value;
 
-    private ThreadContext(ThreadContext previous, String key, Object value) {
-	this.previous = previous;
-	this.key = key;
-	this.value = value;
+  private ThreadContext(ThreadContext previous, String key, Object value) {
+    this.previous = previous;
+    this.key = key;
+    this.value = value;
+  }
+
+  /**
+   * <p>Get the Object that was most recently pushed with the given key.</p>
+   *
+   * @param key the key of interest.
+   * @return the last Object that was pushed (using
+   * <code>push</code>) with that key and not subsequently canceled
+   * by a <code>restore</code>; or null if there is no such object.
+   * A null return value may also indicate that the last Object
+   * pushed was the value <code>null</code>.  Use the
+   * <code>contains</code> method to distinguish this case from the
+   * case where there is no Object.
+   * @throws IllegalArgumentException if <code>key</code> is null.
+   */
+  public static Object get(String key) throws IllegalArgumentException {
+    ThreadContext context = contextContaining(key);
+    if (context == null) {
+      return null;
+    } else {
+      return context.value;
     }
+  }
 
-    /** 
-     * <p>Get the Object that was most recently pushed with the given key.</p>
-     *
-     * @param key the key of interest.
-     *
-     * @return the last Object that was pushed (using
-     * <code>push</code>) with that key and not subsequently canceled
-     * by a <code>restore</code>; or null if there is no such object.
-     * A null return value may also indicate that the last Object
-     * pushed was the value <code>null</code>.  Use the
-     * <code>contains</code> method to distinguish this case from the
-     * case where there is no Object.
-     *
-     * @exception IllegalArgumentException if <code>key</code> is null.
-     */
-    public static Object get(String key) throws IllegalArgumentException {
-	ThreadContext context = contextContaining(key);
-	if (context == null)
-	    return null;
-	else
-	    return context.value;
+  /**
+   * <p>Check whether a value with the given key exists in the stack.
+   * This means that the <code>push</code> method was called with
+   * this key and it was not canceled by a subsequent
+   * <code>restore</code>.  This method is useful when the
+   * <code>get</code> method returns null, to distinguish between
+   * the case where the key exists in the stack but is associated
+   * with a null value, and the case where the key does not exist in
+   * the stack.</p>
+   *
+   * @return true if the key exists in the stack.
+   * @throws IllegalArgumentException if <code>key</code> is null.
+   */
+  public static boolean contains(String key)
+    throws IllegalArgumentException {
+    return (contextContaining(key) != null);
+  }
+
+  /**
+   * <p>Find the ThreadContext in the stack that contains the given key,
+   * or return null if there is none.</p>
+   *
+   * @throws IllegalArgumentException if <code>key</code> is null.
+   */
+  private static ThreadContext contextContaining(String key)
+    throws IllegalArgumentException {
+    if (key == null) {
+      throw new IllegalArgumentException("null key");
     }
-
-    /**
-     * <p>Check whether a value with the given key exists in the stack.
-     * This means that the <code>push</code> method was called with
-     * this key and it was not canceled by a subsequent
-     * <code>restore</code>.  This method is useful when the
-     * <code>get</code> method returns null, to distinguish between
-     * the case where the key exists in the stack but is associated
-     * with a null value, and the case where the key does not exist in
-     * the stack.</p>
-     *
-     * @return true if the key exists in the stack.
-     *
-     * @exception IllegalArgumentException if <code>key</code> is null.
-     */
-    public static boolean contains(String key)
-	    throws IllegalArgumentException {
-	return (contextContaining(key) != null);
-    }
-
-    /**
-     * <p>Find the ThreadContext in the stack that contains the given key,
-     * or return null if there is none.</p>
-     *
-     * @exception IllegalArgumentException if <code>key</code> is null.
-     */
-    private static ThreadContext contextContaining(String key)
-	    throws IllegalArgumentException {
-	if (key == null)
-	    throw new IllegalArgumentException("null key");
-	for (ThreadContext context = getContext();
-	     context != null;
-	     context = context.previous) {
-	    if (key.equals(context.key))
-		return context;
+    for (ThreadContext context = getContext();
+         context != null;
+         context = context.previous) {
+      if (key.equals(context.key)) {
+        return context;
+      }
 	    /* Note that "context.key" may be null if "context" is the
 	       sentinel, so don't write "if (context.key.equals(key))"!  */
-	}
-	return null;
     }
+    return null;
+  }
 
 //  /**
 //   * Change the value that was most recently associated with the given key
@@ -225,133 +221,135 @@ public class ThreadContext implements Cloneable {
 //	return old;
 //  }
 
-    /**
-     * <p>Push an object on the context stack with the given key.
-     * This operation can subsequently be undone by calling
-     * <code>restore</code> with the ThreadContext value returned
-     * here.</p>
-     *
-     * @param key the key that will be used to find the object while it is
-     * on the stack.
-     * @param value the value to be associated with that key.  It may be null.
-     *
-     * @return a ThreadContext that can be given to <code>restore</code> to
-     * restore the stack to its state before the <code>push</code>.
-     *
-     * @exception IllegalArgumentException if <code>key</code> is null.
-     */
-    public static ThreadContext push(String key, Object value)
-	    throws IllegalArgumentException {
-	if (key == null)
-	    throw new IllegalArgumentException("null key");
-
-	ThreadContext oldContext = getContext();
-	if (oldContext == null)
-	    oldContext = new ThreadContext(null, null, null);  // make sentinel
-	ThreadContext newContext = new ThreadContext(oldContext, key, value);
-	setContext(newContext);
-	return oldContext;
+  /**
+   * <p>Push an object on the context stack with the given key.
+   * This operation can subsequently be undone by calling
+   * <code>restore</code> with the ThreadContext value returned
+   * here.</p>
+   *
+   * @param key   the key that will be used to find the object while it is
+   *              on the stack.
+   * @param value the value to be associated with that key.  It may be null.
+   * @return a ThreadContext that can be given to <code>restore</code> to
+   * restore the stack to its state before the <code>push</code>.
+   * @throws IllegalArgumentException if <code>key</code> is null.
+   */
+  public static ThreadContext push(String key, Object value)
+    throws IllegalArgumentException {
+    if (key == null) {
+      throw new IllegalArgumentException("null key");
     }
 
-    /**
-     * <p>Return an object that can later be supplied to <code>restore</code>
-     * to restore the context stack to its current state.  The object can
-     * also be given to <code>setInitialContext</code>.</p>
-     *
-     * @return a ThreadContext that represents the current context stack.
-     */
-    public static ThreadContext getThreadContext() {
-	return getContext();
+    ThreadContext oldContext = getContext();
+    if (oldContext == null) {
+      oldContext = new ThreadContext(null, null, null);  // make sentinel
     }
+    ThreadContext newContext = new ThreadContext(oldContext, key, value);
+    setContext(newContext);
+    return oldContext;
+  }
 
-    /**
-     * <p>Restore the context stack to an earlier state.  This typically
-     * undoes the effect of one or more <code>push</code> calls.</p>
-     *
-     * @param oldContext the state to return.  This is usually the return
-     * value of an earlier <code>push</code> operation.
-     *
-     * @exception NullPointerException if <code>oldContext</code> is null.
-     * @exception IllegalArgumentException if <code>oldContext</code>
-     * does not represent a context from this thread, or if that
-     * context was undone by an earlier <code>restore</code>.
-     */
-    public static void restore(ThreadContext oldContext)
-	    throws NullPointerException, IllegalArgumentException {
+  /**
+   * <p>Return an object that can later be supplied to <code>restore</code>
+   * to restore the context stack to its current state.  The object can
+   * also be given to <code>setInitialContext</code>.</p>
+   *
+   * @return a ThreadContext that represents the current context stack.
+   */
+  public static ThreadContext getThreadContext() {
+    return getContext();
+  }
+
+  /**
+   * <p>Restore the context stack to an earlier state.  This typically
+   * undoes the effect of one or more <code>push</code> calls.</p>
+   *
+   * @param oldContext the state to return.  This is usually the return
+   *                   value of an earlier <code>push</code> operation.
+   * @throws NullPointerException     if <code>oldContext</code> is null.
+   * @throws IllegalArgumentException if <code>oldContext</code>
+   *                                  does not represent a context from this thread, or if that
+   *                                  context was undone by an earlier <code>restore</code>.
+   */
+  public static void restore(ThreadContext oldContext)
+    throws NullPointerException, IllegalArgumentException {
 	/* The following test is not strictly necessary in the code as it
 	   stands today, since the reference to "oldContext.key" would
 	   generate a NullPointerException anyway.  But if someone
 	   didn't notice that during subsequent changes, they could
 	   accidentally permit restore(null) with the semantics of
 	   trashing the context stack.  */
-	if (oldContext == null)
-	    throw new NullPointerException();
+    if (oldContext == null) {
+      throw new NullPointerException();
+    }
 
-	/* Check that the restored context is in the stack.  */
-	for (ThreadContext context = getContext();
-	     context != oldContext;
-	     context = context.previous) {
-	    if (context == null) {
-		throw new IllegalArgumentException("Restored context is not " +
-						   "contained in current " +
-						   "context");
-	    }
-	}
+    /* Check that the restored context is in the stack.  */
+    for (ThreadContext context = getContext();
+         context != oldContext;
+         context = context.previous) {
+      if (context == null) {
+        throw new IllegalArgumentException("Restored context is not " +
+          "contained in current " +
+          "context");
+      }
+    }
 
 	/* Discard the sentinel if the stack is empty.  This means that it
 	   is an error to call "restore" a second time with the
 	   ThreadContext value that means an empty stack.  That's why we
 	   don't say that it is all right to restore the stack to the
 	   state it was already in.  */
-	if (oldContext.key == null)
-	    oldContext = null;
-
-	setContext(oldContext);
+    if (oldContext.key == null) {
+      oldContext = null;
     }
 
-    /**
-     * <p>Set the initial context of the calling thread to a context obtained
-     * from another thread.  After this call, the calling thread will see
-     * the same results from the <code>get</code> method as the thread
-     * from which the <code>context</code> argument was obtained, at the
-     * time it was obtained.</p>
-     *
-     * <p>The <code>context</code> argument must be the result of an earlier
-     * <code>push</code> or <code>getThreadContext</code> call.  It is an
-     * error (which may or may not be detected) if this context has been
-     * undone by a <code>restore</code>.</p>
-     *
-     * <p>The context stack of the calling thread must be empty before this
-     * call, i.e., there must not have been a <code>push</code> not undone
-     * by a subsequent <code>restore</code>.</p>
-     *
-     * @exception IllegalArgumentException if the context stack was
-     * not empty before the call.  An implementation may also throw this
-     * exception if <code>context</code> is no longer current in the
-     * thread from which it was obtained.
-     */
+    setContext(oldContext);
+  }
+
+  /**
+   * <p>Set the initial context of the calling thread to a context obtained
+   * from another thread.  After this call, the calling thread will see
+   * the same results from the <code>get</code> method as the thread
+   * from which the <code>context</code> argument was obtained, at the
+   * time it was obtained.</p>
+   *
+   * <p>The <code>context</code> argument must be the result of an earlier
+   * <code>push</code> or <code>getThreadContext</code> call.  It is an
+   * error (which may or may not be detected) if this context has been
+   * undone by a <code>restore</code>.</p>
+   *
+   * <p>The context stack of the calling thread must be empty before this
+   * call, i.e., there must not have been a <code>push</code> not undone
+   * by a subsequent <code>restore</code>.</p>
+   *
+   * @throws IllegalArgumentException if the context stack was
+   *                                  not empty before the call.  An implementation may also throw this
+   *                                  exception if <code>context</code> is no longer current in the
+   *                                  thread from which it was obtained.
+   */
     /* We rely on the fact that ThreadContext objects are immutable.
        This means that we don't have to check that the "context"
        argument is valid.  It necessarily represents the head of a
        valid chain of ThreadContext objects, even if the thread from
        which it was obtained has subsequently been set to a point
        later in that chain using "restore".  */
-    public void setInitialContext(ThreadContext context)
-	    throws IllegalArgumentException {
+  public void setInitialContext(ThreadContext context)
+    throws IllegalArgumentException {
 	/* The following test assumes that we discard sentinels when the
 	   stack is empty.  */
-	if (getContext() != null)
-	    throw new IllegalArgumentException("previous context not empty");
-	setContext(context);
+    if (getContext() != null) {
+      throw new IllegalArgumentException("previous context not empty");
     }
+    setContext(context);
+  }
 
-    private static ThreadContext getContext() {
-	return (ThreadContext) localContext.get();
-    }
+  private static ThreadContext getContext() {
+    return (ThreadContext) localContext.get();
+  }
 
-    private static void setContext(ThreadContext context) {
-	localContext.set(context);
-    }
+  private static void setContext(ThreadContext context) {
+    localContext.set(context);
+  }
 
-    private static JdmkThreadLocal localContext = new JdmkThreadLocal();
+  private static final JdmkThreadLocal localContext = new JdmkThreadLocal();
 }
