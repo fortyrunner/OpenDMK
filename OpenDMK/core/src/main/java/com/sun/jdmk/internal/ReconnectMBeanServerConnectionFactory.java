@@ -154,6 +154,7 @@ public class ReconnectMBeanServerConnectionFactory
     stop = true;
   }
 
+  @Override
   public void run() {
     long startTime = System.currentTimeMillis();
     long currentTime;
@@ -248,6 +249,7 @@ public class ReconnectMBeanServerConnectionFactory
 
   // MBeanServerConnectionFactory
   //
+  @Override
   public void
   addConnectionNotificationListener(NotificationListener l,
                                     NotificationFilter filter,
@@ -259,6 +261,7 @@ public class ReconnectMBeanServerConnectionFactory
 
   // MBeanServerConnectionFactory
   //
+  @Override
   public void
   removeConnectionNotificationListener(NotificationListener l)
     throws ListenerNotFoundException {
@@ -267,6 +270,7 @@ public class ReconnectMBeanServerConnectionFactory
 
   // MBeanServerConnectionFactory
   //
+  @Override
   public void removeConnectionNotificationListener(NotificationListener l,
                                                    NotificationFilter f,
                                                    Object handback)
@@ -295,6 +299,7 @@ public class ReconnectMBeanServerConnectionFactory
       period);
   }
 
+  @Override
   public synchronized JMXConnector getJMXConnector() {
     try {
       if (connector == null) {
@@ -309,6 +314,7 @@ public class ReconnectMBeanServerConnectionFactory
     return connector;
   }
 
+  @Override
   public synchronized MBeanServerConnection getMBeanServerConnection()
     throws IOException {
     if (failed) {

@@ -187,6 +187,7 @@ abstract class GenericHttpNotificationForwarder
   /**
    * Terminates the communication with the NotificationReceiver.
    */
+  @Override
   public void disconnect() {
     if (logger.finerOn()) {
       logger.finer("disconnect", "disconnect");
@@ -214,6 +215,7 @@ abstract class GenericHttpNotificationForwarder
    * @param params a set of objects provided by the ClientNotificationDispatcher.
    * @return a set of Objects.
    */
+  @Override
   public Object[] remoteRequest(int opType, Object[] params)
     throws Exception {
     if (logger.finerOn()) {

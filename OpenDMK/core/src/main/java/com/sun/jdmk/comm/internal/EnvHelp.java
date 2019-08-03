@@ -631,9 +631,11 @@ public class EnvHelp {
   }
 
   private static final class SinkOutputStream extends OutputStream {
+    @Override
     public void write(byte[] b, int off, int len) {
     }
 
+    @Override
     public void write(int b) {
     }
   }

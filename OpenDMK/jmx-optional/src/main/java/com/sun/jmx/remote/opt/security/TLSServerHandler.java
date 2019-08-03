@@ -206,6 +206,7 @@ public class TLSServerHandler implements ProfileServer {
   // ProfileServer interface implementation
   //---------------------------------------
 
+  @Override
   public void initialize(MessageConnection mc, Subject s) throws IOException {
 
     this.mc = mc;
@@ -337,6 +338,7 @@ public class TLSServerHandler implements ProfileServer {
     }
   }
 
+  @Override
   public ProfileMessage produceMessage() throws IOException {
     TLSMessage tlspm = new TLSMessage(TLSMessage.PROCEED);
     if (logger.traceOn()) {
@@ -351,6 +353,7 @@ public class TLSServerHandler implements ProfileServer {
     return tlspm;
   }
 
+  @Override
   public void consumeMessage(ProfileMessage pm) throws IOException {
     if (!(pm instanceof TLSMessage)) {
       throw new IOException("Unexpected profile message type: " +
@@ -371,10 +374,12 @@ public class TLSServerHandler implements ProfileServer {
     }
   }
 
+  @Override
   public boolean isComplete() {
     return completed;
   }
 
+  @Override
   public Subject activate() throws IOException {
     if (logger.traceOn()) {
       logger.trace("activate", ">>>>> TLS handshake <<<<<");
@@ -432,6 +437,7 @@ public class TLSServerHandler implements ProfileServer {
             subject = new Subject();
           }
           AccessController.doPrivileged(new PrivilegedAction() {
+            @Override
             public Object run() {
               subject.getPrincipals().add(principal);
               return null;
@@ -458,9 +464,11 @@ public class TLSServerHandler implements ProfileServer {
     return subject;
   }
 
+  @Override
   public void terminate() throws IOException {
   }
 
+  @Override
   public String getName() {
     return profile;
   }

@@ -262,6 +262,7 @@ class HeartBeatServerHandler {
 
     private class WaitPing extends Thread {
 
+      @Override
       public void run() {
         while (!toBeTerminated && timeout > 0) {
           // Sleep for a while

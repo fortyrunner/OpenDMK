@@ -124,6 +124,7 @@ class ServerIntermediary {
     final ClassLoader dcl = defaultClassLoader;
     this.clr = (ClassLoaderWithRepository)
       AccessController.doPrivileged(new PrivilegedAction() {
+        @Override
         public Object run() {
           return new ClassLoaderWithRepository(
             getClassLoaderRepository(),
@@ -139,6 +140,7 @@ class ServerIntermediary {
     String s = (String) this.env.get("com.sun.jmx.remote.bug.compatible");
     if (s == null) {
       s = (String) AccessController.doPrivileged(new PrivilegedAction() {
+        @Override
         public Object run() {
           return System.getProperty("com.sun.jmx.remote.bug.compatible");
         }
@@ -621,6 +623,7 @@ class ServerIntermediary {
    * Read a message and distribute to a thread for execution
    */
   private class RequestHandler implements SynchroCallback {
+    @Override
     public Message execute(final Message msg) {
       final boolean terminated =
         serverCommunicatorAdmin.reqIncoming();
@@ -792,6 +795,7 @@ class ServerIntermediary {
       }
     }
 
+    @Override
     public void connectionException(Exception e) {
       synchronized (stateLock) {
         if (state == RUNNING) {
@@ -953,6 +957,7 @@ class ServerIntermediary {
       super(timeout);
     }
 
+    @Override
     protected void doStop() {
       ServerIntermediary.this.terminate();
     }
@@ -965,6 +970,7 @@ class ServerIntermediary {
       this.request = request;
     }
 
+    @Override
     public Object run() throws Exception {
       return serialization.wrap(handleRequest(request));
     }
@@ -985,6 +991,7 @@ class ServerIntermediary {
   private ClassLoaderRepository getClassLoaderRepository() {
     return (ClassLoaderRepository)
       AccessController.doPrivileged(new PrivilegedAction() {
+        @Override
         public Object run() {
           return mbeanServer.getClassLoaderRepository();
         }
@@ -996,6 +1003,7 @@ class ServerIntermediary {
     try {
       return (ClassLoader)
         AccessController.doPrivileged(new PrivilegedExceptionAction() {
+          @Override
           public Object run() throws InstanceNotFoundException {
             return mbeanServer.getClassLoader(name);
           }
@@ -1010,6 +1018,7 @@ class ServerIntermediary {
     try {
       return (ClassLoader)
         AccessController.doPrivileged(new PrivilegedExceptionAction() {
+          @Override
           public Object run() throws InstanceNotFoundException {
             return mbeanServer.getClassLoaderFor(name);
           }
@@ -1035,6 +1044,7 @@ class ServerIntermediary {
     try {
       return AccessController.doPrivileged(
         new PrivilegedExceptionAction() {
+          @Override
           public Object run()
             throws IOException, ClassNotFoundException {
             return serialization.unwrap(

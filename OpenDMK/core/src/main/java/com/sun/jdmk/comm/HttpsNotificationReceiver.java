@@ -78,6 +78,7 @@ class HttpsNotificationReceiver extends GenericHttpNotificationReceiver {
    *
    * @return A HTTP/SSL adopter socket
    */
+  @Override
   GenericHttpSocket createSocket() {
     HttpsSocket https_socket = new HttpsSocket(0, null, needClientAuth);
     https_socket.setTimeout(getTimeout());
@@ -89,6 +90,7 @@ class HttpsNotificationReceiver extends GenericHttpNotificationReceiver {
    *
    * @return The string "https".
    */
+  @Override
   public String getProtocol() {
     return "https";
   }
@@ -145,6 +147,7 @@ class HttpsNotificationReceiver extends GenericHttpNotificationReceiver {
   /**
    * Returns the string used in debug traces.
    */
+  @Override
   protected String makeDebugTag() {
     return "HttpsNotificationReceiver[" + getProtocol() + ":" + getPort() + "]";
   }

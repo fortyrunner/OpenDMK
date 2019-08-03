@@ -86,6 +86,7 @@ class HtmlArrayPage
   // PUBLIC METHODS
   // --------------------------------------------------------
 
+  @Override
   public void buildPage(String req) {
     if (logger.finerOn()) {
       logger.finer("buildPage", "Handle request [" + req + "]");

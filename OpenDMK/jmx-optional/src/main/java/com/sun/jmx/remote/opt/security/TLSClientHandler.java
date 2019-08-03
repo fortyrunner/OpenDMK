@@ -83,6 +83,7 @@ public class TLSClientHandler implements ProfileClient {
   // ProfileClient interface implementation
   //---------------------------------------
 
+  @Override
   public void initialize(MessageConnection mc) throws IOException {
 
     this.mc = mc;
@@ -185,6 +186,7 @@ public class TLSClientHandler implements ProfileClient {
     }
   }
 
+  @Override
   public ProfileMessage produceMessage() throws IOException {
     TLSMessage tlspm = new TLSMessage(TLSMessage.READY);
     if (logger.traceOn()) {
@@ -198,6 +200,7 @@ public class TLSClientHandler implements ProfileClient {
     return tlspm;
   }
 
+  @Override
   public void consumeMessage(ProfileMessage pm) throws IOException {
     if (!(pm instanceof TLSMessage)) {
       throw new IOException("Unexpected profile message type: " +
@@ -219,10 +222,12 @@ public class TLSClientHandler implements ProfileClient {
     completed = true;
   }
 
+  @Override
   public boolean isComplete() {
     return completed;
   }
 
+  @Override
   public void activate() throws IOException {
     if (logger.traceOn()) {
       logger.trace("activate", ">>>>> TLS handshake <<<<<");
@@ -249,9 +254,11 @@ public class TLSClientHandler implements ProfileClient {
     ((SocketConnectionIf) mc).setSocket(ts);
   }
 
+  @Override
   public void terminate() throws IOException {
   }
 
+  @Override
   public String getName() {
     return profile;
   }

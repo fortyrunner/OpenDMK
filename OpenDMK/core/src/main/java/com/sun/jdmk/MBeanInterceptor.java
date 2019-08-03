@@ -196,6 +196,7 @@ public interface MBeanInterceptor extends ProxyHandler {
    *                                    unregister is the {@link javax.management.MBeanServerDelegate
    *                                    MBeanServerDelegate} MBean.
    */
+  @Override
   void unregisterMBean(ObjectName name)
     throws InstanceNotFoundException, MBeanRegistrationException;
 
@@ -300,6 +301,7 @@ public interface MBeanInterceptor extends ProxyHandler {
    *                                    name in parameter is null or the attribute in parameter is
    *                                    null.
    */
+  @Override
   Object getAttribute(ObjectName name, String attribute)
     throws MBeanException, AttributeNotFoundException,
     InstanceNotFoundException, ReflectionException;
@@ -320,6 +322,7 @@ public interface MBeanInterceptor extends ProxyHandler {
    *                                    <CODE>java.lang.IllegalArgumentException</CODE>: The object
    *                                    name in parameter is null or attributes in parameter is null.
    */
+  @Override
   AttributeList getAttributes(ObjectName name, String[] attributes)
     throws InstanceNotFoundException, ReflectionException;
 
@@ -347,6 +350,7 @@ public interface MBeanInterceptor extends ProxyHandler {
    *                                        name in parameter is null or the attribute in parameter is
    *                                        null.
    */
+  @Override
   void setAttribute(ObjectName name, Attribute attribute)
     throws InstanceNotFoundException, AttributeNotFoundException,
     InvalidAttributeValueException, MBeanException,
@@ -371,6 +375,7 @@ public interface MBeanInterceptor extends ProxyHandler {
    *                                    <CODE>java.lang.IllegalArgumentException</CODE>: The object
    *                                    name in parameter is null or attributes in parameter is null.
    */
+  @Override
   AttributeList setAttributes(ObjectName name,
                               AttributeList attributes)
     throws InstanceNotFoundException, ReflectionException;
@@ -397,6 +402,7 @@ public interface MBeanInterceptor extends ProxyHandler {
    *                                   <CODE>java.lang.Exception</CODE> thrown while trying to invoke
    *                                   the method.
    */
+  @Override
   Object invoke(ObjectName name, String operationName,
                 Object params[], String signature[])
     throws InstanceNotFoundException, MBeanException,
@@ -428,6 +434,7 @@ public interface MBeanInterceptor extends ProxyHandler {
    * @throws InstanceNotFoundException The MBean name provided
    *                                   does not match any of the registered MBeans.
    */
+  @Override
   void addNotificationListener(ObjectName name,
                                NotificationListener listener,
                                NotificationFilter filter,
@@ -508,6 +515,7 @@ public interface MBeanInterceptor extends ProxyHandler {
    * @throws ListenerNotFoundException The listener is not
    *                                   registered in the MBean.
    */
+  @Override
   void removeNotificationListener(ObjectName name,
                                   NotificationListener listener)
     throws InstanceNotFoundException, ListenerNotFoundException;
@@ -526,6 +534,7 @@ public interface MBeanInterceptor extends ProxyHandler {
    * @throws ReflectionException       An exception occurred when
    *                                   trying to invoke the getMBeanInfo of a Dynamic MBean.
    */
+  @Override
   MBeanInfo getMBeanInfo(ObjectName name)
     throws InstanceNotFoundException, IntrospectionException,
     ReflectionException;

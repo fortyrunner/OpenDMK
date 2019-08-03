@@ -140,6 +140,7 @@ public class BasicMBeanServerConnectionFactory
    * @see JMXConnector#getMBeanServerConnection()
    * @see JMXConnector#getMBeanServerConnection(Subject)
    */
+  @Override
   public synchronized MBeanServerConnection getMBeanServerConnection()
     throws IOException {
     if (failed) {
@@ -153,6 +154,7 @@ public class BasicMBeanServerConnectionFactory
 
   // MBeanServerConnectionFactory
   //
+  @Override
   public void
   addConnectionNotificationListener(NotificationListener listener,
                                     NotificationFilter filter,
@@ -164,6 +166,7 @@ public class BasicMBeanServerConnectionFactory
 
   // MBeanServerConnectionFactory
   //
+  @Override
   public void
   removeConnectionNotificationListener(NotificationListener listener)
     throws ListenerNotFoundException {
@@ -172,6 +175,7 @@ public class BasicMBeanServerConnectionFactory
 
   // MBeanServerConnectionFactory
   //
+  @Override
   public void removeConnectionNotificationListener(NotificationListener l,
                                                    NotificationFilter f,
                                                    Object handback)
@@ -181,6 +185,7 @@ public class BasicMBeanServerConnectionFactory
 
   // MBeanServerConnectionFactory
   //
+  @Override
   public String getConnectionId() throws IOException {
     if (failed) {
       throw new IOException("connection already failed");

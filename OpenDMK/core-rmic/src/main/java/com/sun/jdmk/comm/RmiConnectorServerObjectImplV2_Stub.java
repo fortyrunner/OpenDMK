@@ -111,6 +111,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   // methods from remote interfaces
 
   // implementation of createMBean(String, ObjectName, OperationContext)
+  @Override
   public javax.management.ObjectInstance createMBean(java.lang.String $param_String_1, javax.management.ObjectName $param_ObjectName_2, com.sun.jdmk.OperationContext $param_OperationContext_3)
     throws java.rmi.RemoteException, javax.management.InstanceAlreadyExistsException, javax.management.MBeanException, javax.management.NotCompliantMBeanException, javax.management.ReflectionException {
     try {
@@ -134,6 +135,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of createMBean(String, ObjectName, ObjectName, OperationContext)
+  @Override
   public javax.management.ObjectInstance createMBean(java.lang.String $param_String_1, javax.management.ObjectName $param_ObjectName_2, javax.management.ObjectName $param_ObjectName_3, com.sun.jdmk.OperationContext $param_OperationContext_4)
     throws java.rmi.RemoteException, javax.management.InstanceAlreadyExistsException, javax.management.InstanceNotFoundException, javax.management.MBeanException, javax.management.NotCompliantMBeanException, javax.management.ReflectionException {
     try {
@@ -159,6 +161,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of createMBean(String, ObjectName, ObjectName, Object[], String[], OperationContext)
+  @Override
   public javax.management.ObjectInstance createMBean(java.lang.String $param_String_1, javax.management.ObjectName $param_ObjectName_2, javax.management.ObjectName $param_ObjectName_3, java.lang.Object[] $param_arrayOf_Object_4, java.lang.String[] $param_arrayOf_String_5, com.sun.jdmk.OperationContext $param_OperationContext_6)
     throws java.rmi.RemoteException, javax.management.InstanceAlreadyExistsException, javax.management.InstanceNotFoundException, javax.management.MBeanException, javax.management.NotCompliantMBeanException, javax.management.ReflectionException {
     try {
@@ -184,6 +187,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of createMBean(String, ObjectName, Object[], String[], OperationContext)
+  @Override
   public javax.management.ObjectInstance createMBean(java.lang.String $param_String_1, javax.management.ObjectName $param_ObjectName_2, java.lang.Object[] $param_arrayOf_Object_3, java.lang.String[] $param_arrayOf_String_4, com.sun.jdmk.OperationContext $param_OperationContext_5)
     throws java.rmi.RemoteException, javax.management.InstanceAlreadyExistsException, javax.management.MBeanException, javax.management.NotCompliantMBeanException, javax.management.ReflectionException {
     try {
@@ -207,6 +211,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of getAttribute(ObjectName, String, OperationContext)
+  @Override
   public java.lang.Object getAttribute(javax.management.ObjectName $param_ObjectName_1, java.lang.String $param_String_2, com.sun.jdmk.OperationContext $param_OperationContext_3)
     throws java.rmi.RemoteException, javax.management.AttributeNotFoundException, javax.management.InstanceNotFoundException, javax.management.MBeanException, javax.management.ReflectionException {
     try {
@@ -230,6 +235,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of getAttributes(ObjectName, String[], OperationContext)
+  @Override
   public javax.management.AttributeList getAttributes(javax.management.ObjectName $param_ObjectName_1, java.lang.String[] $param_arrayOf_String_2, com.sun.jdmk.OperationContext $param_OperationContext_3)
     throws java.rmi.RemoteException, javax.management.InstanceNotFoundException, javax.management.ReflectionException {
     try {
@@ -249,6 +255,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of getDefaultDomain(OperationContext)
+  @Override
   public java.lang.String getDefaultDomain(com.sun.jdmk.OperationContext $param_OperationContext_1)
     throws java.rmi.RemoteException {
     try {
@@ -264,6 +271,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of getMBeanCount(OperationContext)
+  @Override
   public java.lang.Integer getMBeanCount(com.sun.jdmk.OperationContext $param_OperationContext_1)
     throws java.rmi.RemoteException {
     try {
@@ -279,6 +287,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of getMBeanInfo(ObjectName, OperationContext)
+  @Override
   public javax.management.MBeanInfo getMBeanInfo(javax.management.ObjectName $param_ObjectName_1, com.sun.jdmk.OperationContext $param_OperationContext_2)
     throws java.rmi.RemoteException, javax.management.InstanceNotFoundException, javax.management.IntrospectionException, javax.management.ReflectionException {
     try {
@@ -300,6 +309,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of getObjectInstance(ObjectName, OperationContext)
+  @Override
   public javax.management.ObjectInstance getObjectInstance(javax.management.ObjectName $param_ObjectName_1, com.sun.jdmk.OperationContext $param_OperationContext_2)
     throws java.rmi.RemoteException, javax.management.InstanceNotFoundException {
     try {
@@ -317,6 +327,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of invoke(ObjectName, String, Object[], String[], OperationContext)
+  @Override
   public java.lang.Object invoke(javax.management.ObjectName $param_ObjectName_1, java.lang.String $param_String_2, java.lang.Object[] $param_arrayOf_Object_3, java.lang.String[] $param_arrayOf_String_4, com.sun.jdmk.OperationContext $param_OperationContext_5)
     throws java.rmi.RemoteException, javax.management.InstanceNotFoundException, javax.management.MBeanException, javax.management.ReflectionException {
     try {
@@ -338,6 +349,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of isInstanceOf(ObjectName, String, OperationContext)
+  @Override
   public boolean isInstanceOf(javax.management.ObjectName $param_ObjectName_1, java.lang.String $param_String_2, com.sun.jdmk.OperationContext $param_OperationContext_3)
     throws java.rmi.RemoteException, javax.management.InstanceNotFoundException {
     try {
@@ -355,6 +367,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of isRegistered(ObjectName, OperationContext)
+  @Override
   public boolean isRegistered(javax.management.ObjectName $param_ObjectName_1, com.sun.jdmk.OperationContext $param_OperationContext_2)
     throws java.rmi.RemoteException {
     try {
@@ -370,6 +383,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of pingHeartBeatServer(String, int, int, Long, OperationContext)
+  @Override
   public java.lang.String pingHeartBeatServer(java.lang.String $param_String_1, int $param_int_2, int $param_int_3, java.lang.Long $param_Long_4, com.sun.jdmk.OperationContext $param_OperationContext_5)
     throws java.rmi.RemoteException {
     try {
@@ -385,6 +399,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of queryMBeans(ObjectName, QueryExp, OperationContext)
+  @Override
   public java.util.Set queryMBeans(javax.management.ObjectName $param_ObjectName_1, javax.management.QueryExp $param_QueryExp_2, com.sun.jdmk.OperationContext $param_OperationContext_3)
     throws java.rmi.RemoteException {
     try {
@@ -400,6 +415,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of queryNames(ObjectName, QueryExp, OperationContext)
+  @Override
   public java.util.Set queryNames(javax.management.ObjectName $param_ObjectName_1, javax.management.QueryExp $param_QueryExp_2, com.sun.jdmk.OperationContext $param_OperationContext_3)
     throws java.rmi.RemoteException {
     try {
@@ -415,6 +431,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of remoteRequest(int, Object[], OperationContext)
+  @Override
   public java.lang.Object[] remoteRequest(int $param_int_1, java.lang.Object[] $param_arrayOf_Object_2, com.sun.jdmk.OperationContext $param_OperationContext_3)
     throws java.lang.Exception {
     Object $result = ref.invoke(this, $method_remoteRequest_16, new java.lang.Object[]{new java.lang.Integer($param_int_1), $param_arrayOf_Object_2, $param_OperationContext_3}, -2341243041480682483L);
@@ -422,6 +439,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of setAttribute(ObjectName, Attribute, OperationContext)
+  @Override
   public void setAttribute(javax.management.ObjectName $param_ObjectName_1, javax.management.Attribute $param_Attribute_2, com.sun.jdmk.OperationContext $param_OperationContext_3)
     throws java.rmi.RemoteException, javax.management.AttributeNotFoundException, javax.management.InstanceNotFoundException, javax.management.InvalidAttributeValueException, javax.management.MBeanException, javax.management.ReflectionException {
     try {
@@ -446,6 +464,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of setAttributes(ObjectName, AttributeList, OperationContext)
+  @Override
   public javax.management.AttributeList setAttributes(javax.management.ObjectName $param_ObjectName_1, javax.management.AttributeList $param_AttributeList_2, com.sun.jdmk.OperationContext $param_OperationContext_3)
     throws java.rmi.RemoteException, javax.management.InstanceNotFoundException, javax.management.ReflectionException {
     try {
@@ -465,6 +484,7 @@ public final class RmiConnectorServerObjectImplV2_Stub
   }
 
   // implementation of unregisterMBean(ObjectName, OperationContext)
+  @Override
   public void unregisterMBean(javax.management.ObjectName $param_ObjectName_1, com.sun.jdmk.OperationContext $param_OperationContext_2)
     throws java.rmi.RemoteException, javax.management.InstanceNotFoundException, javax.management.MBeanRegistrationException {
     try {

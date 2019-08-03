@@ -630,6 +630,7 @@ class ServerNotificationDispatcher {
     }
 
     // called by Notif sender
+    @Override
     public void handleNotification(Notification n, Object o) {
       if (rliLogger.finestOn()) {
         String info = "Receive a notification for remote listener "
@@ -704,6 +705,7 @@ class ServerNotificationDispatcher {
         //setDaemon(true);
       }
 
+      @Override
       public void run() {
         while (!tobeTerminated) {
           ClientInfo ci = null;

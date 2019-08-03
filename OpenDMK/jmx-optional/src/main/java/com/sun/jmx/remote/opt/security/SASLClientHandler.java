@@ -85,6 +85,7 @@ public class SASLClientHandler implements ProfileClient {
   // ProfileClient interface implementation
   //---------------------------------------
 
+  @Override
   public void initialize(MessageConnection mc) throws IOException {
 
     logger.trace("initialize", "starts");
@@ -165,6 +166,7 @@ public class SASLClientHandler implements ProfileClient {
     mechanism = saslClnt.getMechanismName();
   }
 
+  @Override
   public ProfileMessage produceMessage() throws IOException {
     if (initialResponse) {
       blob =
@@ -186,6 +188,7 @@ public class SASLClientHandler implements ProfileClient {
     return response;
   }
 
+  @Override
   public void consumeMessage(ProfileMessage pm) throws IOException {
     if (!(pm instanceof SASLMessage)) {
       throw new IOException("Unexpected profile message type: " +
@@ -233,10 +236,12 @@ public class SASLClientHandler implements ProfileClient {
     }
   }
 
+  @Override
   public boolean isComplete() {
     return completed;
   }
 
+  @Override
   public void activate() throws IOException {
     // If negotiated integrity or privacy
     //
@@ -255,10 +260,12 @@ public class SASLClientHandler implements ProfileClient {
     }
   }
 
+  @Override
   public void terminate() throws IOException {
     saslClnt.dispose();
   }
 
+  @Override
   public String getName() {
     return profile;
   }
@@ -306,6 +313,7 @@ public class SASLClientHandler implements ProfileClient {
       this.pwchars = password.toCharArray();
     }
 
+    @Override
     public void handle(Callback[] callbacks)
       throws IOException, UnsupportedCallbackException {
       for (Callback callback : callbacks) {
@@ -332,6 +340,7 @@ public class SASLClientHandler implements ProfileClient {
       }
     }
 
+    @Override
     protected void finalize() {
       clearPassword();
     }

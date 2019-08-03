@@ -261,6 +261,7 @@ public final class Service {
       this.loader = loader;
     }
 
+    @Override
     public boolean hasNext() throws IllegalArgumentException {
       if (nextName != null) {
         return true;
@@ -287,6 +288,7 @@ public final class Service {
       return true;
     }
 
+    @Override
     public Object next() throws IllegalArgumentException {
       if (!hasNext()) {
         throw new NoSuchElementException();
@@ -306,6 +308,7 @@ public final class Service {
       return null;  /* This cannot happen */
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }

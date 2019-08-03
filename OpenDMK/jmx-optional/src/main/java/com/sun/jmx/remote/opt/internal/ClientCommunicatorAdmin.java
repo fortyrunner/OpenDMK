@@ -192,6 +192,7 @@ public abstract class ClientCommunicatorAdmin {
 // private varaibles
 // --------------------------------------------------------------
   private class Checker implements Runnable {
+    @Override
     public void run() {
       myThread = Thread.currentThread();
 

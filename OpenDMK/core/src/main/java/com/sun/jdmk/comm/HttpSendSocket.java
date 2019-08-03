@@ -381,6 +381,7 @@ class HttpSendSocket extends Socket {
   /**
    * Get the address to which the socket is connected.
    */
+  @Override
   public InetAddress getInetAddress() {
     try {
       return InetAddress.getByName(host);
@@ -392,6 +393,7 @@ class HttpSendSocket extends Socket {
   /**
    * Get the local address to which the socket is bound.
    */
+  @Override
   public InetAddress getLocalAddress() {
     try {
       return InetAddress.getLocalHost();
@@ -403,6 +405,7 @@ class HttpSendSocket extends Socket {
   /**
    * Get the remote port to which the socket is connected.
    */
+  @Override
   public int getPort() {
     return port;
   }
@@ -410,6 +413,7 @@ class HttpSendSocket extends Socket {
   /**
    * Get the local port to which the socket is connected.
    */
+  @Override
   public int getLocalPort() {
     return -1; // Request not applicable to this socket type
   }
@@ -417,6 +421,7 @@ class HttpSendSocket extends Socket {
   /**
    * Get an InputStream for this socket.
    */
+  @Override
   public InputStream getInputStream() throws IOException {
     return inNotifier;
   }
@@ -424,6 +429,7 @@ class HttpSendSocket extends Socket {
   /**
    * Get an OutputStream for this socket.
    */
+  @Override
   public OutputStream getOutputStream() throws IOException {
     return outNotifier;
   }
@@ -432,12 +438,14 @@ class HttpSendSocket extends Socket {
    * Enable/disable TCP_NODELAY.
    * This operation has no effect for an HttpSendSocket.
    */
+  @Override
   public void setTcpNoDelay(boolean on) throws SocketException {
   }
 
   /**
    * Retrieve whether TCP_NODELAY is enabled.
    */
+  @Override
   public boolean getTcpNoDelay() throws SocketException {
     return false; // Imply option is disabled
   }
@@ -446,12 +454,14 @@ class HttpSendSocket extends Socket {
    * Enable/disable SO_LINGER with the specified linger time.
    * This operation has no effect for an HttpSendSocket.
    */
+  @Override
   public void setSoLinger(boolean on, int val) throws SocketException {
   }
 
   /**
    * Retrieve setting for SO_LINGER.
    */
+  @Override
   public int getSoLinger() throws SocketException {
     return -1; // Imply option is disabled
   }
@@ -460,12 +470,14 @@ class HttpSendSocket extends Socket {
    * Enable/disable SO_TIMEOUT with the specified timeout
    * This operation has no effect for an HttpSendSocket.
    */
+  @Override
   public synchronized void setSoTimeout(int timeout) throws SocketException {
   }
 
   /**
    * Retrieve setting for SO_TIMEOUT.
    */
+  @Override
   public synchronized int getSoTimeout() throws SocketException {
     return 0; // Imply option is disabled
   }
@@ -473,6 +485,7 @@ class HttpSendSocket extends Socket {
   /**
    * Close the socket.
    */
+  @Override
   public synchronized void close() throws IOException {
     if (out != null) // Push out transmission if not done
     {

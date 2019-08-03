@@ -64,6 +64,7 @@ public class ObjectWrappingImpl implements ObjectWrapping {
   public ObjectWrappingImpl() {
   }
 
+  @Override
   public Object wrap(Object obj) throws IOException {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     ObjectOutputStream oos = new ObjectOutputStream(baos);
@@ -72,6 +73,7 @@ public class ObjectWrappingImpl implements ObjectWrapping {
     return baos.toByteArray();
   }
 
+  @Override
   public Object unwrap(Object wrapped, ClassLoader cloader)
     throws IOException, ClassNotFoundException {
 
@@ -93,6 +95,7 @@ public class ObjectWrappingImpl implements ObjectWrapping {
       return readObject();
     }
 
+    @Override
     protected Class resolveClass(ObjectStreamClass aClass) throws IOException, ClassNotFoundException {
       return cloader == null ? super.resolveClass(aClass) : Class.forName(aClass.getName(), false, cloader);
     }

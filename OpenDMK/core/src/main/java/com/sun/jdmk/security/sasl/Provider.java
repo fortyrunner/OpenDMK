@@ -79,6 +79,7 @@ public final class Provider extends java.security.Provider {
   public Provider() {
     super("JavaDMKSASL", 5.1, info);
     AccessController.doPrivileged(new PrivilegedAction() {
+      @Override
       public Object run() {
         // Server mechanisms
         //

@@ -154,6 +154,7 @@ public class ThreadService {
     public ThreadServiceJob() {
     }
 
+    @Override
     public void run() {
       Thread currentThread = Thread.currentThread();
 
@@ -270,6 +271,7 @@ public class ThreadService {
     }
   }
 
+  @Override
   protected void finalize() {
     terminate();
   }
@@ -283,6 +285,7 @@ public class ThreadService {
   private ClassLoader getContextClassLoader() {
     return (ClassLoader)
       AccessController.doPrivileged(new PrivilegedAction() {
+        @Override
         public Object run() {
           return Thread.currentThread().getContextClassLoader();
         }
@@ -292,6 +295,7 @@ public class ThreadService {
   private void setContextClassLoader(final Thread currentThread,
                                      final ClassLoader classloader) {
     AccessController.doPrivileged(new PrivilegedAction() {
+      @Override
       public Object run() {
         currentThread.setContextClassLoader(classloader);
         return null;

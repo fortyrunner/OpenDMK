@@ -121,6 +121,7 @@ public final class DefaultMBeanServerInterceptor
     this.inner = inner;
   }
 
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     Object params[], String signature[])
     throws ReflectionException, InstanceAlreadyExistsException,
@@ -129,6 +130,7 @@ public final class DefaultMBeanServerInterceptor
     return inner.createMBean(className, name, params, signature);
   }
 
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     ObjectName loaderName, Object params[],
                                     String signature[])
@@ -139,49 +141,59 @@ public final class DefaultMBeanServerInterceptor
       signature);
   }
 
+  @Override
   public ObjectInstance registerMBean(Object object, ObjectName name)
     throws InstanceAlreadyExistsException, MBeanRegistrationException,
     NotCompliantMBeanException {
     return inner.registerMBean(object, name);
   }
 
+  @Override
   public void unregisterMBean(ObjectName name)
     throws InstanceNotFoundException, MBeanRegistrationException {
     inner.unregisterMBean(name);
   }
 
+  @Override
   public ObjectInstance getObjectInstance(ObjectName name)
     throws InstanceNotFoundException {
     return inner.getObjectInstance(name);
   }
 
+  @Override
   public Set queryMBeans(ObjectName name, QueryExp query) {
     return inner.queryMBeans(name, query);
   }
 
+  @Override
   public Set queryNames(ObjectName name, QueryExp query) {
     return inner.queryNames(name, query);
   }
 
+  @Override
   public boolean isRegistered(ObjectName name) {
     return inner.isRegistered(name);
   }
 
+  @Override
   public Integer getMBeanCount() {
     return inner.getMBeanCount();
   }
 
+  @Override
   public Object getAttribute(ObjectName name, String attribute)
     throws MBeanException, AttributeNotFoundException,
     InstanceNotFoundException, ReflectionException {
     return inner.getAttribute(name, attribute);
   }
 
+  @Override
   public AttributeList getAttributes(ObjectName name, String[] attributes)
     throws InstanceNotFoundException, ReflectionException {
     return inner.getAttributes(name, attributes);
   }
 
+  @Override
   public void setAttribute(ObjectName name, Attribute attribute)
     throws InstanceNotFoundException, AttributeNotFoundException,
     InvalidAttributeValueException, MBeanException,
@@ -189,12 +201,14 @@ public final class DefaultMBeanServerInterceptor
     inner.setAttribute(name, attribute);
   }
 
+  @Override
   public AttributeList setAttributes(ObjectName name,
                                      AttributeList attributes)
     throws InstanceNotFoundException, ReflectionException {
     return inner.setAttributes(name, attributes);
   }
 
+  @Override
   public Object invoke(ObjectName name, String operationName,
                        Object params[], String signature[])
     throws InstanceNotFoundException, MBeanException,
@@ -202,14 +216,17 @@ public final class DefaultMBeanServerInterceptor
     return inner.invoke(name, operationName, params, signature);
   }
 
+  @Override
   public String getDefaultDomain() {
     return inner.getDefaultDomain();
   }
 
+  @Override
   public String[] getDomains() {
     return inner.getDomains();
   }
 
+  @Override
   public void addNotificationListener(ObjectName name,
                                       NotificationListener listener,
                                       NotificationFilter filter,
@@ -218,6 +235,7 @@ public final class DefaultMBeanServerInterceptor
     inner.addNotificationListener(name, listener, filter, handback);
   }
 
+  @Override
   public void addNotificationListener(ObjectName name,
                                       ObjectName listener,
                                       NotificationFilter filter,
@@ -226,12 +244,14 @@ public final class DefaultMBeanServerInterceptor
     inner.addNotificationListener(name, listener, filter, handback);
   }
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
     inner.removeNotificationListener(name, listener);
   }
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener,
                                          NotificationFilter filter,
@@ -240,12 +260,14 @@ public final class DefaultMBeanServerInterceptor
     inner.removeNotificationListener(name, listener, filter, handback);
   }
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
     inner.removeNotificationListener(name, listener);
   }
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener,
                                          NotificationFilter filter,
@@ -254,12 +276,14 @@ public final class DefaultMBeanServerInterceptor
     inner.removeNotificationListener(name, listener, filter, handback);
   }
 
+  @Override
   public MBeanInfo getMBeanInfo(ObjectName name)
     throws InstanceNotFoundException, IntrospectionException,
     ReflectionException {
     return inner.getMBeanInfo(name);
   }
 
+  @Override
   public boolean isInstanceOf(ObjectName name, String className)
     throws InstanceNotFoundException {
     return inner.isInstanceOf(name, className);
@@ -269,16 +293,19 @@ public final class DefaultMBeanServerInterceptor
    * @deprecated Use
    * {@link #getClassLoaderFor(javax.management.ObjectName) }
    **/
+  @Override
   public final ClassLoader getMBeanClassLoader(ObjectName name)
     throws InstanceNotFoundException {
     return getClassLoaderFor(name);
   }
 
+  @Override
   public ClassLoader getClassLoader(ObjectName loaderName)
     throws InstanceNotFoundException {
     return inner.getClassLoader(loaderName);
   }
 
+  @Override
   public ClassLoader getClassLoaderFor(ObjectName mbeanName)
     throws InstanceNotFoundException {
     return inner.getClassLoaderFor(mbeanName);

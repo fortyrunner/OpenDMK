@@ -75,6 +75,7 @@ class HttpNotificationForwarder extends GenericHttpNotificationForwarder {
    *
    * @return A HTTP/TCP connector client socket.
    */
+  @Override
   GenericHttpSocketFactory getSocketFactory() {
     return new HttpSocketFactory();
   }
@@ -84,6 +85,7 @@ class HttpNotificationForwarder extends GenericHttpNotificationForwarder {
    *
    * @return The notification receiver used by this client connector.
    */
+  @Override
   GenericHttpNotificationReceiver getNotificationReceiver(GenericHttpConnectorClient connector,
                                                           ClientNotificationDispatcher dispatcher) {
     throw new CommunicationException("Not Applicable");

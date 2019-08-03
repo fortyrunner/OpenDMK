@@ -94,6 +94,7 @@ class HttpSendOutputStream extends FilterOutputStream {
   /**
    * Write a byte of data to the stream.
    */
+  @Override
   public void write(int b) throws IOException {
     if (out == null) {
       out = owner.writeNotify();
@@ -108,6 +109,7 @@ class HttpSendOutputStream extends FilterOutputStream {
    * @param off the start offset of the data
    * @param len the number of bytes to be written
    */
+  @Override
   public void write(byte b[], int off, int len) throws IOException {
     if (len == 0) {
       return;
@@ -121,6 +123,7 @@ class HttpSendOutputStream extends FilterOutputStream {
   /**
    * Flush the stream.
    */
+  @Override
   public void flush() throws IOException {
     if (out != null) {
       out.flush();
@@ -130,6 +133,7 @@ class HttpSendOutputStream extends FilterOutputStream {
   /**
    * Close the stream.
    */
+  @Override
   public void close() throws IOException {
     flush();
     owner.close();

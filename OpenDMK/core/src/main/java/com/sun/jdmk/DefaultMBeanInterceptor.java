@@ -215,6 +215,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     Object params[], String signature[])
     throws ReflectionException, InstanceAlreadyExistsException,
@@ -269,6 +270,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     ObjectName loaderName, Object params[],
                                     String signature[])
@@ -338,6 +340,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public ObjectInstance registerMBean(Object object, ObjectName name)
     throws InstanceAlreadyExistsException, MBeanRegistrationException,
     NotCompliantMBeanException {
@@ -356,6 +359,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public void unregisterMBean(ObjectName name)
     throws InstanceNotFoundException, MBeanRegistrationException {
     Object object;
@@ -415,6 +419,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public ObjectInstance getObjectInstance(ObjectName name)
     throws InstanceNotFoundException {
 
@@ -431,6 +436,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public Set queryMBeans(ObjectName name, QueryExp query) {
     final Set list;
     synchronized (this) {
@@ -446,6 +452,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public Set queryNames(ObjectName name, QueryExp query) {
 
     final HashSet result = new HashSet();
@@ -457,6 +464,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
     return (result);
   }
 
+  @Override
   public String[] getDomains() {
 
     final Set names;
@@ -477,6 +485,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
     return (String[]) tmpSet.toArray(result);
   }
 
+  @Override
   public boolean isRegistered(ObjectName name) {
     if (name == null) {
       throw new RuntimeOperationsException(new
@@ -490,11 +499,13 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public Integer getMBeanCount() {
     return (repository.getCount());
   }
 
 
+  @Override
   public Object getAttribute(ObjectName name, String attribute)
     throws MBeanException, AttributeNotFoundException,
     InstanceNotFoundException, ReflectionException {
@@ -518,6 +529,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public AttributeList getAttributes(ObjectName name, String[] attributes)
     throws InstanceNotFoundException, ReflectionException {
 
@@ -547,6 +559,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public void setAttribute(ObjectName name, Attribute attribute)
     throws InstanceNotFoundException, AttributeNotFoundException,
     InvalidAttributeValueException, MBeanException,
@@ -572,6 +585,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public AttributeList setAttributes(ObjectName name,
                                      AttributeList attributes)
     throws InstanceNotFoundException, ReflectionException {
@@ -596,6 +610,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public Object invoke(ObjectName name, String operationName,
                        Object params[], String signature[])
     throws InstanceNotFoundException, MBeanException,
@@ -789,6 +804,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public String getDefaultDomain() {
     return domain;
   }
@@ -838,6 +854,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
    * some day we don't want to rely on weak references.
    */
 
+  @Override
   public void addNotificationListener(ObjectName name,
                                       NotificationListener listener,
                                       NotificationFilter filter,
@@ -871,6 +888,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
     broadcaster.addNotificationListener(listenerWrapper, filter, handback);
   }
 
+  @Override
   public void addNotificationListener(ObjectName name,
                                       ObjectName listener,
                                       NotificationFilter filter,
@@ -898,12 +916,14 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
       filter, handback);
   }
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
     removeNotificationListener(name, listener, null, null, true);
   }
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener,
                                          NotificationFilter filter,
@@ -969,12 +989,14 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
     removeNotificationListener(name, listener, null, null, true);
   }
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener,
                                          NotificationFilter filter,
@@ -1020,6 +1042,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public MBeanInfo getMBeanInfo(ObjectName name)
     throws InstanceNotFoundException, IntrospectionException,
     ReflectionException {
@@ -1034,6 +1057,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public boolean isInstanceOf(ObjectName name, String className)
     throws InstanceNotFoundException {
 
@@ -1047,6 +1071,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
     }
   }
 
+  @Override
   public ClassLoader getClassLoader(ObjectName loaderName)
     throws InstanceNotFoundException {
     Object obj = getMBean(loaderName);
@@ -1062,11 +1087,13 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
     return (ClassLoader) obj;
   }
 
+  @Override
   public final ClassLoader getMBeanClassLoader(ObjectName name)
     throws InstanceNotFoundException {
     return getClassLoaderFor(name);
   }
 
+  @Override
   public ClassLoader getClassLoaderFor(ObjectName name)
     throws InstanceNotFoundException {
 
@@ -1280,6 +1307,7 @@ public class DefaultMBeanInterceptor implements MBeanServerInterceptor {
       this.mbean = mbean;
     }
 
+    @Override
     public void handleNotification(Notification notification,
                                    Object handback) {
       if (notification != null) {

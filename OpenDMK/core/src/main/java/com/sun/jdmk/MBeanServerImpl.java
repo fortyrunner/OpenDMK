@@ -112,17 +112,20 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
       this.clr = clr;
     }
 
+    @Override
     public final Class loadClass(String className)
       throws ClassNotFoundException {
       return clr.loadClass(className);
     }
 
+    @Override
     public final Class loadClassWithout(ClassLoader loader,
                                         String className)
       throws ClassNotFoundException {
       return clr.loadClassWithout(loader, className);
     }
 
+    @Override
     public final Class loadClassBefore(ClassLoader loader,
                                        String className)
       throws ClassNotFoundException {
@@ -238,6 +241,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
   /**
    * Return the MBeanInstantiator associated to this MBeanServer.
    */
+  @Override
   public MBeanInstantiator getMBeanInstantiator() {
 
     return instantiator;
@@ -246,6 +250,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
   /**
    * Return the MetaData associated to this MBeanServer.
    */
+  @Override
   public MetaData getMetaData() {
 
     return meta;
@@ -255,6 +260,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * Return the MBeanInterceptor to which all requests from the
    * MBeanServer interface are forwarded.
    */
+  @Override
   public synchronized MBeanInterceptor getDefaultMBeanInterceptor() {
     return interceptor;
   }
@@ -267,6 +273,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * @param mbi the new  object.
    * @throws IllegalArgumentException if <code>mbi</code> is null.
    */
+  @Override
   public synchronized void setDefaultMBeanInterceptor(MBeanInterceptor mbi)
     throws IllegalArgumentException {
     if (mbi == null) {
@@ -313,6 +320,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                        <CODE>ObjectName</CODE> passed in parameter contains a pattern
    *                                        or no <CODE>ObjectName</CODE> is specified for the MBean.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name)
     throws ReflectionException, InstanceAlreadyExistsException,
     MBeanRegistrationException, MBeanException,
@@ -361,6 +369,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                        passed in parameter contains a pattern or no
    *                                        <CODE>ObjectName</CODE> is specified for the MBean.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     ObjectName loaderName)
     throws ReflectionException, InstanceAlreadyExistsException,
@@ -411,6 +420,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                        passed in parameter contains a pattern or no
    *                                        <CODE>ObjectName</CODE> is specified for the MBean.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     Object params[], String signature[])
     throws ReflectionException, InstanceAlreadyExistsException,
@@ -461,6 +471,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                        passed in parameter contains a pattern or no
    *                                        <CODE>ObjectName</CODE> is specified for the MBean.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     ObjectName loaderName, Object params[],
                                     String signature[])
@@ -495,6 +506,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                        <CODE>{@link java.lang.IllegalArgumentException}</CODE>: The
    *                                        object passed in parameter is null or no object name is specified.
    */
+  @Override
   public ObjectInstance registerMBean(Object object, ObjectName name)
     throws InstanceAlreadyExistsException, MBeanRegistrationException,
     NotCompliantMBeanException {
@@ -520,6 +532,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                    {@link javax.management.MBeanServerDelegate MBeanServerDelegate}
    *                                    MBean.
    **/
+  @Override
   public void unregisterMBean(ObjectName name)
     throws InstanceNotFoundException, MBeanRegistrationException {
     // Now handled by the delegate itself..
@@ -541,6 +554,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * @throws InstanceNotFoundException The MBean specified is not
    *                                   registered in the MBean server.
    */
+  @Override
   public ObjectInstance getObjectInstance(ObjectName name)
     throws InstanceNotFoundException {
 
@@ -568,6 +582,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * for the selected MBeans.
    * If no MBean satisfies the query an empty list is returned.
    */
+  @Override
   public Set queryMBeans(ObjectName name, QueryExp query) {
 
     return interceptor.queryMBeans(name, query);
@@ -593,6 +608,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * @return A set containing the ObjectNames for the MBeans selected.
    * If no MBean satisfies the query, an empty list is returned.
    */
+  @Override
   public Set queryNames(ObjectName name, QueryExp query) {
 
     return interceptor.queryNames(name, query);
@@ -610,6 +626,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                    <CODE>{@link java.lang.IllegalArgumentException}</CODE>: The object
    *                                    name in parameter is null.
    */
+  @Override
   public boolean isRegistered(ObjectName name) {
 
     return interceptor.isRegistered(name);
@@ -619,6 +636,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
   /**
    * Returns the number of MBeans registered in the MBean server.
    */
+  @Override
   public Integer getMBeanCount() {
 
     return interceptor.getMBeanCount();
@@ -647,6 +665,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                    The object name in parameter is null or the attribute in
    *                                    parameter is null.
    */
+  @Override
   public Object getAttribute(ObjectName name, String attribute)
     throws MBeanException, AttributeNotFoundException,
     InstanceNotFoundException, ReflectionException {
@@ -672,6 +691,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                    object name in parameter is null or attributes in parameter
    *                                    is null.
    */
+  @Override
   public AttributeList getAttributes(ObjectName name, String[] attributes)
     throws InstanceNotFoundException, ReflectionException {
 
@@ -703,6 +723,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                        object name in parameter is null or the attribute in parameter
    *                                        is null.
    */
+  @Override
   public void setAttribute(ObjectName name, Attribute attribute)
     throws InstanceNotFoundException, AttributeNotFoundException,
     InvalidAttributeValueException, MBeanException,
@@ -730,6 +751,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                    The object name in parameter is null or  attributes in
    *                                    parameter is null.
    */
+  @Override
   public AttributeList setAttributes(ObjectName name,
                                      AttributeList attributes)
     throws InstanceNotFoundException, ReflectionException {
@@ -759,6 +781,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                   <CODE>{@link java.lang.Exception}</CODE> thrown while trying
    *                                   to invoke the method.
    */
+  @Override
   public Object invoke(ObjectName name, String operationName,
                        Object params[], String signature[])
     throws InstanceNotFoundException, MBeanException,
@@ -771,6 +794,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * The default domain name is used as the domain part in the ObjectName
    * of MBeans if no domain is specified by the user.
    */
+  @Override
   public String getDefaultDomain() {
     return interceptor.getDefaultDomain();
   }
@@ -788,6 +812,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * @throws InstanceNotFoundException The MBean name provided does
    *                                   not match any of the registered MBeans.
    */
+  @Override
   public void addNotificationListener(ObjectName name,
                                       NotificationListener listener,
                                       NotificationFilter filter,
@@ -812,6 +837,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                   notification listener or of the notification broadcaster
    *                                   does not match any of the registered MBeans.
    */
+  @Override
   public void addNotificationListener(ObjectName name, ObjectName listener,
                                       NotificationFilter filter, Object handback)
     throws InstanceNotFoundException {
@@ -829,6 +855,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * @throws InstanceNotFoundException The MBean name provided does not match any of the registered MBeans.
    * @throws ListenerNotFoundException The listener is not registered in the MBean.
    */
+  @Override
   public void removeNotificationListener(ObjectName name, NotificationListener listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
 
@@ -844,6 +871,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * @throws InstanceNotFoundException The MBean name provided does not match any of the registered MBeans.
    * @throws ListenerNotFoundException The listener is not registered in the MBean.
    */
+  @Override
   public void removeNotificationListener(ObjectName name, ObjectName listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
 
@@ -861,6 +889,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * @throws InstanceNotFoundException The MBean specified is not found.
    * @throws ReflectionException       An exception occurred when trying to invoke the getMBeanInfo of a Dynamic MBean.
    */
+  @Override
   public MBeanInfo getMBeanInfo(ObjectName name) throws
     InstanceNotFoundException, IntrospectionException, ReflectionException {
 
@@ -888,6 +917,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                    <CODE>{@link java.lang.IllegalArgumentException}</CODE>:
    *                                    The className passed in parameter is null.
    */
+  @Override
   public Object instantiate(String className)
     throws ReflectionException, MBeanException {
     return instantiator.instantiate(className);
@@ -918,6 +948,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                    <CODE>{@link java.lang.IllegalArgumentException}</CODE>: The
    *                                    className passed in parameter is null.
    */
+  @Override
   public Object instantiate(String className, ObjectName loaderName)
     throws ReflectionException, MBeanException,
     InstanceNotFoundException {
@@ -951,6 +982,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                    <CODE>{@link java.lang.IllegalArgumentException}</CODE>:
    *                                    The className passed in parameter is null.
    */
+  @Override
   public Object instantiate(String className, Object params[],
                             String signature[])
     throws ReflectionException, MBeanException {
@@ -988,6 +1020,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                    <CODE>{@link java.lang.IllegalArgumentException}</CODE>:
    *                                    The className passed in parameter is null.
    */
+  @Override
   public Object instantiate(String className, ObjectName loaderName,
                             Object params[], String signature[])
     throws ReflectionException, MBeanException,
@@ -1009,6 +1042,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * @throws InstanceNotFoundException The MBean specified is not
    *                                   registered in the MBean server.
    */
+  @Override
   public boolean isInstanceOf(ObjectName name, String className)
     throws InstanceNotFoundException {
 
@@ -1028,6 +1062,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * @throws OperationsException       Any of the usual Input/Output
    *                                   related exceptions.
    */
+  @Override
   public ObjectInputStream deserialize(ObjectName name, byte[] data)
     throws InstanceNotFoundException, OperationsException {
 
@@ -1048,6 +1083,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * @throws ReflectionException The specified class could not be
    *                             loaded by the default loader repository
    */
+  @Override
   public ObjectInputStream deserialize(String className, byte[] data)
     throws OperationsException, ReflectionException {
 
@@ -1076,6 +1112,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * @throws ReflectionException       The specified class could not
    *                                   be loaded by the specified class loader.
    */
+  @Override
   public ObjectInputStream deserialize(String className,
                                        ObjectName loaderName, byte[] data)
     throws InstanceNotFoundException, OperationsException,
@@ -1088,6 +1125,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
   /**
    * Return the ClassLoader of the MBean with the specified ObjectName.
    */
+  @Override
   public ClassLoader getMBeanClassLoader(ObjectName name)
     throws InstanceNotFoundException {
 
@@ -1143,6 +1181,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    * @return The ClassLoaderRepository for this MBeanServer.
    * @since Java DMK 5.1 (JMX 1.2)
    */
+  @Override
   public ClassLoaderRepository getClassLoaderRepository() {
     return secureClr;
   }
@@ -1151,6 +1190,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
   /**
    * @since Java DMK 5.1 (JMX 1.2)
    */
+  @Override
   public ClassLoader getClassLoaderFor(ObjectName mbeanName)
     throws InstanceNotFoundException {
 
@@ -1167,6 +1207,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *
    * @since Java DMK 5.1 (JMX 1.2)
    */
+  @Override
   public ClassLoader getClassLoader(ObjectName loaderName)
     throws InstanceNotFoundException {
 
@@ -1196,6 +1237,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                       supported by the underlying interceptor.
    * @since Java DMK 1.5
    **/
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener,
                                          NotificationFilter filter,
@@ -1222,6 +1264,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
    *                                       supported by the underlying interceptor.
    * @since Java DMK 1.5
    **/
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listenerName,
                                          NotificationFilter filter,
@@ -1241,6 +1284,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
   /**
    * @since Java DMK 1.5
    */
+  @Override
   public String[] getDomains() {
     if (interceptor instanceof MBeanServerInterceptor) {
       return ((MBeanServerInterceptor) interceptor).getDomains();
@@ -1260,6 +1304,7 @@ public class MBeanServerImpl implements MBeanServer, MBeanServerInt {
   }
 
 
+  @Override
   public javax.management.MBeanServerDelegate getMBeanServerDelegate() {
 
     return MBeanServerDelegateObject;

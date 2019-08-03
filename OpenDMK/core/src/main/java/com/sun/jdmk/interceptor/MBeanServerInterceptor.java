@@ -196,6 +196,7 @@ public interface MBeanServerInterceptor extends MBeanInterceptor {
    * @deprecated Use
    * {@link #getClassLoaderFor(javax.management.ObjectName) }
    */
+  @Override
   ClassLoader getMBeanClassLoader(ObjectName mbeanName)
     throws InstanceNotFoundException;
 }

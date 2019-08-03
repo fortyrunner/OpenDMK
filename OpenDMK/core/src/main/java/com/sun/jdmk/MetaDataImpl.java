@@ -134,6 +134,7 @@ public class MetaDataImpl extends DynamicMetaDataImpl {
   /**
    * This methods tests if the MBean is JMX compliant
    */
+  @Override
   public synchronized void testCompliance(Class c)
     throws NotCompliantMBeanException {
     MBeanInfo bi = Introspector.testCompliance(c);
@@ -375,6 +376,7 @@ public class MetaDataImpl extends DynamicMetaDataImpl {
   //
   //---------------------------------------------------------------------
 
+  @Override
   public String getMBeanClassName(Object moi)
     throws IntrospectionException, NotCompliantMBeanException {
     if (moi instanceof DynamicMBean) {
@@ -384,6 +386,7 @@ public class MetaDataImpl extends DynamicMetaDataImpl {
     }
   }
 
+  @Override
   public MBeanInfo getMBeanInfo(Object moi)
     throws IntrospectionException {
 
@@ -405,6 +408,7 @@ public class MetaDataImpl extends DynamicMetaDataImpl {
     }
   }
 
+  @Override
   public Object getAttribute(Object instance, String attribute)
     throws MBeanException, AttributeNotFoundException,
     ReflectionException {
@@ -425,6 +429,7 @@ public class MetaDataImpl extends DynamicMetaDataImpl {
   }
 
 
+  @Override
   public AttributeList getAttributes(Object instance, String[] attributes)
     throws ReflectionException {
 
@@ -468,6 +473,7 @@ public class MetaDataImpl extends DynamicMetaDataImpl {
   }
 
 
+  @Override
   public AttributeList setAttributes(Object instance,
                                      AttributeList attributes)
     throws ReflectionException {
@@ -517,6 +523,7 @@ public class MetaDataImpl extends DynamicMetaDataImpl {
   }
 
 
+  @Override
   public Object setAttribute(Object instance, Attribute attribute)
     throws AttributeNotFoundException, InvalidAttributeValueException,
     MBeanException, ReflectionException {
@@ -539,6 +546,7 @@ public class MetaDataImpl extends DynamicMetaDataImpl {
     return setAttribute(instance, attribute, mbeanClass);
   }
 
+  @Override
   public Object invoke(Object instance, String operationName,
                        Object params[], String signature[])
     throws MBeanException, ReflectionException {
@@ -623,6 +631,7 @@ public class MetaDataImpl extends DynamicMetaDataImpl {
     return (result);
   }
 
+  @Override
   public boolean isInstanceOf(Object instance, String className)
     throws ReflectionException {
 

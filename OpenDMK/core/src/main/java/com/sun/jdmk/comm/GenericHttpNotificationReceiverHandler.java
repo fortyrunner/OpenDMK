@@ -78,10 +78,12 @@ class GenericHttpNotificationReceiverHandler
   // PROTECTED METHODS
   // -----------------
 
+  @Override
   protected AuthInfo authenticateRequest(HttpRequest request) {
     return makeNullAuthInfo();
   }
 
+  @Override
   protected String getChallenge() {
     return null;
   }
@@ -89,6 +91,7 @@ class GenericHttpNotificationReceiverHandler
   /**
    * Process an incoming post request and return the response.
    */
+  @Override
   protected HttpResponse processPostRequest(HttpRequest request) throws IOException {
 
     String remoteOp = null;
@@ -187,6 +190,7 @@ class GenericHttpNotificationReceiverHandler
   /**
    * Returns the string used in debug traces.
    */
+  @Override
   protected String makeDebugTag() {
     return "GenericHttpNotificationReceiverHandler[" + adaptorServer.getProtocol() + ":" + adaptorServer.getPort() + "][" + requestId + "]";
   }

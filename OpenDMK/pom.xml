@@ -103,5 +103,6 @@
     <module>core</module>
     <module>core-rmic</module>
     <module>jmx-optional</module>
+    <module>jmx.samples</module>
   </modules>
 </project>

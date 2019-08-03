@@ -278,6 +278,7 @@ public interface RemoteMBeanServer extends ProxyHandler, ClientNotificationHandl
    * @throws MBeanRegistrationException The <CODE>preDeregister</CODE> (<CODE>MBeanRegistration</CODE>
    *                                    interface) method of the MBean has thrown an exception.
    */
+  @Override
   void unregisterMBean(ObjectName name) throws InstanceNotFoundException, MBeanRegistrationException;
 
   /**
@@ -349,6 +350,7 @@ public interface RemoteMBeanServer extends ProxyHandler, ClientNotificationHandl
    * @throws ReflectionException        Wraps an exception thrown while trying to instantiate and apply the
    *                                    operator specified in Modification.
    */
+  @Override
   Object getAttribute(ObjectName name, String attribute)
     throws MBeanException, AttributeNotFoundException, InstanceNotFoundException, ReflectionException;
 
@@ -363,6 +365,7 @@ public interface RemoteMBeanServer extends ProxyHandler, ClientNotificationHandl
    * @throws InstanceNotFoundException The specified MBean is not registered in the MBean server.
    * @throws ReflectionException       An exception occurred trying to invoke the getAttributes of a Dynamic MBean.
    */
+  @Override
   AttributeList getAttributes(ObjectName name, String[] attributes)
     throws InstanceNotFoundException, ReflectionException;
 
@@ -381,6 +384,7 @@ public interface RemoteMBeanServer extends ProxyHandler, ClientNotificationHandl
    * @throws ReflectionException            Wraps an exception thrown while trying to instantiate and apply the
    *                                        operator specified in Modification.
    */
+  @Override
   void setAttribute(ObjectName name, Attribute attribute)
     throws InstanceNotFoundException, AttributeNotFoundException, InvalidAttributeValueException,
     MBeanException, ReflectionException;
@@ -398,6 +402,7 @@ public interface RemoteMBeanServer extends ProxyHandler, ClientNotificationHandl
    * @throws InstanceNotFoundException The specified MBean is not registered in the MBean server.
    * @throws ReflectionException       An exception occurred trying to invoke the setAttributes of a Dynamic MBean.
    */
+  @Override
   AttributeList setAttributes(ObjectName name, AttributeList attributes)
     throws InstanceNotFoundException, ReflectionException;
 
@@ -416,6 +421,7 @@ public interface RemoteMBeanServer extends ProxyHandler, ClientNotificationHandl
    * @throws MBeanException            Wraps an exception thrown by the MBean's invoked method.
    * @throws ReflectionException       Wraps a <CODE>java.lang.Exception</CODE> thrown while trying to invoke the method.
    */
+  @Override
   Object invoke(ObjectName name, String operationName, Object params[], String signature[])
     throws InstanceNotFoundException, MBeanException, ReflectionException;
 
@@ -431,6 +437,7 @@ public interface RemoteMBeanServer extends ProxyHandler, ClientNotificationHandl
    * @throws ReflectionException       Wraps a <CODE>java.lang.Exception</CODE> thrown while trying to invoke
    *                                   the <CODE>getMBeanInfo</CODE> method.
    */
+  @Override
   MBeanInfo getMBeanInfo(ObjectName name)
     throws InstanceNotFoundException, IntrospectionException, ReflectionException;
 

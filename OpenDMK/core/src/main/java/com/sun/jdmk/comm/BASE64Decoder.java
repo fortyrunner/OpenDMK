@@ -81,6 +81,7 @@ class BASE64Decoder extends CharacterDecoder {
   /**
    * This class has 4 bytes per atom.
    */
+  @Override
   protected int bytesPerAtom() {
     return (4);
   }
@@ -88,6 +89,7 @@ class BASE64Decoder extends CharacterDecoder {
   /**
    * Any multiple of 4 will do, 72 might be common.
    */
+  @Override
   protected int bytesPerLine() {
     return (72);
   }
@@ -124,6 +126,7 @@ class BASE64Decoder extends CharacterDecoder {
   /**
    * Decodes one BASE64 atom into 1, 2, or 3 bytes of data.
    */
+  @Override
   protected void decodeAtom(InputStream inStream, OutputStream outStream, int rem)
     throws IOException {
     int i;

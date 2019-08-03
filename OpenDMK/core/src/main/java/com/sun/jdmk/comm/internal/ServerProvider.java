@@ -65,6 +65,7 @@ import java.util.Map;
  */
 public class ServerProvider implements JMXConnectorServerProvider {
 
+  @Override
   public JMXConnectorServer newJMXConnectorServer(JMXServiceURL serviceURL,
                                                   Map environment,
                                                   MBeanServer mbeanServer)

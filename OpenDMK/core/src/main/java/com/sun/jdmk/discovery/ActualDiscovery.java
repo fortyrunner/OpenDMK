@@ -130,6 +130,7 @@ class ActualDiscovery extends DiscoveryCommon {
    * The ttl must be in the range 0 < ttl <= 255 or an
    * IllegalArgumentException will be thrown.
    */
+  @Override
   public void setTimeToLive(int ttl) throws IOException {
     try {
       super.setTimeToLive(ttl);
@@ -147,6 +148,7 @@ class ActualDiscovery extends DiscoveryCommon {
     this.ttl = ttl;
   }
 
+  @Override
   public int getTimeToLive() {
     return ttl;
   }
@@ -394,6 +396,7 @@ class ActualDiscovery extends DiscoveryCommon {
     // ------------------------
     // run
     // ------------------------
+    @Override
     public void run() {
 
       // ------------------------

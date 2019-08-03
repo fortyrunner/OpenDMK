@@ -157,6 +157,7 @@ public class RmiConnectorAddress implements ConnectorAddress {
    *
    * @return the value of the connector type property.
    */
+  @Override
   public String getConnectorType() {
     return "SUN RMI";
   }

@@ -200,6 +200,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
     }
   }
 
+  @Override
   public final ObjectInstance createMBean(final String className,
                                           final ObjectName name,
                                           final Object params[],
@@ -219,6 +220,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final ObjectInstance createMBean(final String className,
                                           final ObjectName name,
                                           final ObjectName loaderName,
@@ -239,6 +241,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final ObjectInstance getObjectInstance(final ObjectName name)
     throws InstanceNotFoundException {
 
@@ -253,6 +256,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final Set queryMBeans(final ObjectName name, final QueryExp query) {
 
     final Object handle = beginOperation(Controller.QUERY, "queryMBeans",
@@ -265,6 +269,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final Set queryNames(final ObjectName name, final QueryExp query) {
 
     final Object handle = beginOperation(Controller.QUERY, "queryNames",
@@ -277,6 +282,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public String[] getDomains() {
 
     final Object handle =
@@ -289,6 +295,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final String getDefaultDomain() {
 
     final Object handle =
@@ -300,6 +307,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
     }
   }
 
+  @Override
   public final Integer getMBeanCount() {
 
     final Object handle =
@@ -312,6 +320,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final boolean isRegistered(final ObjectName name) {
 
     final Object handle =
@@ -324,6 +333,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final boolean isInstanceOf(final ObjectName name,
                                     final String className)
     throws InstanceNotFoundException {
@@ -338,6 +348,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final ObjectInstance registerMBean(final Object object,
                                             final ObjectName name)
     throws InstanceAlreadyExistsException,
@@ -353,6 +364,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final void addNotificationListener(final ObjectName name,
                                             final NotificationListener listener,
                                             final NotificationFilter filter,
@@ -370,6 +382,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
     }
   }
 
+  @Override
   public final void addNotificationListener(final ObjectName name,
                                             final ObjectName listener,
                                             final NotificationFilter filter,
@@ -388,6 +401,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final void removeNotificationListener(final ObjectName name,
                                                final NotificationListener listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
@@ -403,6 +417,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final void removeNotificationListener(final ObjectName name,
                                                final ObjectName listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
@@ -417,6 +432,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
     }
   }
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener,
                                          NotificationFilter filter,
@@ -434,6 +450,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener,
                                          NotificationFilter filter,
@@ -450,6 +467,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
     }
   }
 
+  @Override
   public final void unregisterMBean(final ObjectName name)
     throws InstanceNotFoundException, MBeanRegistrationException {
 
@@ -463,6 +481,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final Object getAttribute(final ObjectName name,
                                    final String attribute)
     throws MBeanException, AttributeNotFoundException,
@@ -478,6 +497,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final AttributeList getAttributes(final ObjectName name,
                                            final String[] attributes)
     throws InstanceNotFoundException, ReflectionException {
@@ -492,6 +512,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final void setAttribute(final ObjectName name,
                                  final Attribute attribute)
     throws InstanceNotFoundException, AttributeNotFoundException,
@@ -506,6 +527,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
     }
   }
 
+  @Override
   public final AttributeList setAttributes(final ObjectName name,
                                            final AttributeList attributes)
     throws InstanceNotFoundException, ReflectionException {
@@ -519,6 +541,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
     }
   }
 
+  @Override
   public final Object invoke(final ObjectName name,
                              final String operationName,
                              final Object params[],
@@ -536,6 +559,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final MBeanInfo getMBeanInfo(final ObjectName name)
     throws InstanceNotFoundException, IntrospectionException,
     ReflectionException {
@@ -549,11 +573,13 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
     }
   }
 
+  @Override
   public final ClassLoader getMBeanClassLoader(final ObjectName name)
     throws InstanceNotFoundException {
     return getClassLoaderFor(name);
   }
 
+  @Override
   public final ClassLoader getClassLoaderFor(ObjectName mbeanName)
     throws InstanceNotFoundException {
 
@@ -567,6 +593,7 @@ public class MBeanServerInterceptorWrapper implements MBeanServerInterceptor {
   }
 
 
+  @Override
   public final ClassLoader getClassLoader(ObjectName loaderName)
     throws InstanceNotFoundException {
 

@@ -179,6 +179,7 @@ public class HttpsConnectorAddress implements GenericHttpConnectorAddress {
    *
    * @return the value of the connector type property.
    */
+  @Override
   public String getConnectorType() {
     return connType;
   }
@@ -188,6 +189,7 @@ public class HttpsConnectorAddress implements GenericHttpConnectorAddress {
    *
    * @return the value of the server host property.
    */
+  @Override
   public String getHost() {
     return host;
   }
@@ -197,6 +199,7 @@ public class HttpsConnectorAddress implements GenericHttpConnectorAddress {
    *
    * @param host the new value of the server host property.
    */
+  @Override
   public void setHost(String host) {
     this.host = host;
   }
@@ -206,6 +209,7 @@ public class HttpsConnectorAddress implements GenericHttpConnectorAddress {
    *
    * @return the value of the server port property.
    */
+  @Override
   public int getPort() {
     return port;
   }
@@ -215,6 +219,7 @@ public class HttpsConnectorAddress implements GenericHttpConnectorAddress {
    *
    * @param port the new value of the server port property.
    */
+  @Override
   public void setPort(int port) {
     this.port = port;
   }
@@ -224,6 +229,7 @@ public class HttpsConnectorAddress implements GenericHttpConnectorAddress {
    *
    * @return the value of the authentication info property.
    */
+  @Override
   public AuthInfo getAuthInfo() {
     return authInfo;
   }
@@ -233,6 +239,7 @@ public class HttpsConnectorAddress implements GenericHttpConnectorAddress {
    *
    * @param authInfo the new value of the authentication info property.
    */
+  @Override
   public void setAuthInfo(AuthInfo authInfo) {
     this.authInfo = authInfo;
   }
@@ -246,6 +253,7 @@ public class HttpsConnectorAddress implements GenericHttpConnectorAddress {
    *
    * @see Object#clone
    */
+  @Override
   public Object clone() {
     Object newHttpsConnectorAddress = null;
     try {

@@ -292,6 +292,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
      *
      * @param addr the client connector address used by the server connector to establish a connection.
      */
+    @Override
     public NotificationBackConnector startPush(ConnectorAddress addr) {
       return connector.startPush(addr);
     }
@@ -301,6 +302,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
      *
      * @param connector the connector which is used for "push" mode.
      */
+    @Override
     public void stopPush(NotificationBackConnector connector) {
       this.connector.stopPush(connector);
     }
@@ -315,6 +317,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
    * Performs pre-registration initialization.
    * This method is not intended to be called directly by the user.
    */
+  @Override
   public ObjectName preRegister(MBeanServer server, ObjectName name) throws Exception {
     return super.preRegister(server, name);
   }
@@ -326,6 +329,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
    * @param registrationDone Indicates whether or not the MBean has been successfully registered
    *                         in the MBeanServer. The value false means that the registration phase has failed.
    */
+  @Override
   public void postRegister(Boolean registrationDone) {
     super.postRegister(registrationDone);
     NotificationHandlerInternal handler =
@@ -343,6 +347,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
    * @throws java.lang.Exception This exception should be caught by the MBean server and re-thrown
    *                             as an <CODE>MBeanRegistrationException</CODE>.
    */
+  @Override
   public void preDeregister() throws Exception {
     super.preDeregister();
   }
@@ -351,6 +356,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
    * Allows the MBean to perform any operations needed after having been
    * de-registered from the MBean server.
    */
+  @Override
   public void postDeregister() {
     super.postDeregister();
   }
@@ -361,12 +367,14 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
   /**
    *
    */
+  @Override
   protected void doError(Exception e) throws CommunicationException {
   }
 
   /**
    *
    */
+  @Override
   protected void doBind()
     throws InterruptedException, CommunicationException {
     try {
@@ -410,6 +418,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
   /**
    *
    */
+  @Override
   protected void doReceive()
     throws InterruptedException, CommunicationException {
     try {
@@ -436,6 +445,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
   /**
    *
    */
+  @Override
   protected void doProcess()
     throws InterruptedException, CommunicationException {
     if (logger.finerOn()) {
@@ -450,6 +460,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
   /**
    *
    */
+  @Override
   protected void doUnbind()
     throws InterruptedException, CommunicationException {
     try {
@@ -469,6 +480,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
   /**
    * Returns the string used in debug traces.
    */
+  @Override
   String makeDebugTag() {
     return "GenericHttpConnectorServer[" + getProtocol() + ":" + getPort() + "]";
   }
@@ -479,6 +491,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
    * Has no effect if this HTTP connector server is
    * <CODE>OFFLINE</CODE> or <CODE>STOPPING</CODE>.
    */
+  @Override
   public void stop() {
     if ((state == ONLINE) || (state == STARTING)) {
       super.stop();
@@ -502,6 +515,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
   // GETTERS/SETTERS
   //----------------
 
+  @Override
   public synchronized void setMBeanServer(MBeanServer newMBS)
     throws IllegalArgumentException, IllegalStateException {
     super.setMBeanServer(newMBS);
@@ -515,6 +529,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
    * @return The number of clients handled by this <CODE>GenericHttpConnectorServer</CODE>
    * since its creation. This counter is not reset by the <CODE>stop</CODE> method.
    */
+  @Override
   public int getServedClientCount() {
     return super.getServedClientCount();
   }
@@ -526,6 +541,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
    * @return The number of clients currently being processed by this
    * <CODE>GenericHttpConnectorServer</CODE>.
    */
+  @Override
   public int getActiveClientCount() {
     return super.getActiveClientCount();
   }
@@ -537,6 +553,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
    * @return The maximum number of clients that this
    * <CODE>GenericHttpConnectorServer</CODE> can process concurrently.
    */
+  @Override
   public int getMaxActiveClientCount() {
     return super.getMaxActiveClientCount();
   }
@@ -549,6 +566,7 @@ public abstract class GenericHttpConnectorServer extends CommunicatorServer {
    * @throws java.lang.IllegalStateException This method has been invoked
    *                                         while the communicator was ONLINE or STARTING.
    */
+  @Override
   public void setMaxActiveClientCount(int c)
     throws java.lang.IllegalStateException {
     super.setMaxActiveClientCount(c);

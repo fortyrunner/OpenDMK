@@ -113,6 +113,7 @@ public class JdmkMBeanServerBuilder extends MBeanServerBuilder {
 
   // Comments imported from MBeanServerBuilder
   //
+  @Override
   public MBeanServerDelegate newMBeanServerDelegate() {
     // Revisit: might be safer to "wrap" the delegate from "inner" ?
     return new MBeanServerDelegateImpl(inner.newMBeanServerDelegate());
@@ -120,6 +121,7 @@ public class JdmkMBeanServerBuilder extends MBeanServerBuilder {
 
   // Comments imported from MBeanServerBuilder
   //
+  @Override
   public MBeanServer newMBeanServer(String defaultDomain,
                                     MBeanServer outer,
                                     MBeanServerDelegate delegate) {

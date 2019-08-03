@@ -92,6 +92,7 @@ class HttpResponse extends HttpMessage {
    * Read the specified input stream and fill this message with
    * the read data.
    */
+  @Override
   public void readFrom(InputStream s)
     throws IOException, MalformedHttpException {
     throw new IOException();
@@ -101,6 +102,7 @@ class HttpResponse extends HttpMessage {
   /**
    * Write this header to the specified output stream.
    */
+  @Override
   public void writeTo(OutputStream s) throws IOException {
     final String firstLine =
       ((httpVersion == null) ? "HTTP/1.0" : httpVersion) + " " +

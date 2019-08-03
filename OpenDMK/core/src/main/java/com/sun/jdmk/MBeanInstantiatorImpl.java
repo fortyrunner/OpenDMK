@@ -83,10 +83,12 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public void testCreation(Class c) throws NotCompliantMBeanException {
     Introspector.testCreation(c);
   }
 
+  @Override
   public Class findClassWithDefaultLoaderRepository(String className)
     throws ReflectionException {
 
@@ -111,6 +113,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public Class findClass(String className, ClassLoader loader)
     throws ReflectionException {
 
@@ -133,6 +136,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
     return theClass;
   }
 
+  @Override
   public Class findClass(String className, ObjectName aLoader)
     throws ReflectionException, InstanceNotFoundException {
     Class theClass = null;
@@ -163,6 +167,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public Class[] findSignatureClasses(String signature[],
                                       ClassLoader loader)
     throws ReflectionException {
@@ -223,6 +228,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public Object instantiate(Class theClass)
     throws ReflectionException, MBeanException {
     Object moi = null;
@@ -264,6 +270,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public Object instantiate(Class theClass, Object params[],
                             String signature[], ClassLoader loader)
     throws ReflectionException, MBeanException {
@@ -324,6 +331,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
     return moi;
   }
 
+  @Override
   public final AttributeList checkTransferAttributeList(
     final ClassLoader dest, final AttributeList attributes) {
     final ClassLoader aLoader = dest;
@@ -349,6 +357,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
     return attributes;
   }
 
+  @Override
   public Attribute checkTransferAttribute(final ClassLoader dest,
                                           final Attribute attribute) {
     final ClassLoader aLoader = dest;
@@ -372,6 +381,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
     return new Attribute(attribute.getName(), newval);
   }
 
+  @Override
   public Object[] checkTransferParameters(ClassLoader dest,
                                           Object params[]) {
     final Object[] values = params;
@@ -388,6 +398,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
     return values;
   }
 
+  @Override
   public Object checkTransferObject(ClassLoader targetLoader,
                                     Object value) {
 
@@ -420,6 +431,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
     }
   }
 
+  @Override
   public Object transferObject(Object obj, ClassLoader aloader) {
 
     // Serialize the parameter
@@ -446,6 +458,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public ObjectInputStream deserialize(ObjectName name, byte[] data)
     throws
     OperationsException {
@@ -480,6 +493,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public ObjectInputStream deserialize(String className, byte[] data)
     throws OperationsException,
     ReflectionException {
@@ -521,6 +535,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public ObjectInputStream deserialize(String className,
                                        ObjectName loaderName,
                                        byte[] data,
@@ -584,6 +599,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public Object instantiate(String className)
     throws ReflectionException,
     MBeanException {
@@ -592,6 +608,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public Object instantiate(String className, ObjectName loaderName,
                             ClassLoader loader)
     throws ReflectionException, MBeanException,
@@ -602,6 +619,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public Object instantiate(String className,
                             Object params[],
                             String signature[],
@@ -614,6 +632,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public Object instantiate(String className,
                             ObjectName loaderName,
                             Object params[],
@@ -634,6 +653,7 @@ public class MBeanInstantiatorImpl implements MBeanInstantiator {
   }
 
 
+  @Override
   public ModifiableClassLoaderRepository getClassLoaderRepository() {
     return clr;
   }

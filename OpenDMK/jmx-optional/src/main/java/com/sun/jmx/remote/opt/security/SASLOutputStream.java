@@ -104,12 +104,14 @@ public class SASLOutputStream extends OutputStream {
     }
   }
 
+  @Override
   public void write(int b) throws IOException {
     byte[] buffer = new byte[1];
     buffer[0] = (byte) b;
     write(buffer, 0, 1);
   }
 
+  @Override
   public void write(byte[] buffer, int offset, int total) throws IOException {
     int count;
     byte[] wrappedToken, saslBuffer;
@@ -145,6 +147,7 @@ public class SASLOutputStream extends OutputStream {
     }
   }
 
+  @Override
   public void close() throws IOException {
     if (sc != null) {
       sc.dispose();

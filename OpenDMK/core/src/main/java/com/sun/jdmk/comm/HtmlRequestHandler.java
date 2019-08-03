@@ -97,6 +97,7 @@ class HtmlRequestHandler extends ClientHandler {
   /**
    * Treat the incoming request and send the results back to the client.
    */
+  @Override
   public void doRun() {
     if (logger.finerOn()) {
       logger.finer("doRun", "Start Html request handler");
@@ -486,6 +487,7 @@ class HtmlRequestHandler extends ClientHandler {
   /**
    * Returns the string used in debug traces.
    */
+  @Override
   protected String makeDebugTag() {
     return "HtmlRequestHandler[" + adaptorServer.getProtocol() + ":" +
       adaptorServer.getPort() + "][" + requestId + "]";

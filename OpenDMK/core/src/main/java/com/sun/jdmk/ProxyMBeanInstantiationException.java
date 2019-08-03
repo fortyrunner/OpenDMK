@@ -102,6 +102,7 @@ public class ProxyMBeanInstantiationException extends ManagerException {
   /**
    * Returns the actual {@link Throwable} thrown.
    */
+  @Override
   public Throwable getCause() {
     return exception;
   }

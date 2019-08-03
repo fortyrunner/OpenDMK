@@ -128,6 +128,7 @@ public class JMXPasswordAuthenticator implements JMXAuthenticator {
    * @throws SecurityException if the server cannot authenticate the user
    *                           with the provided credentials.
    */
+  @Override
   public Subject authenticate(Object credentials) {
     // Verify that credentials is of type String[].
     //

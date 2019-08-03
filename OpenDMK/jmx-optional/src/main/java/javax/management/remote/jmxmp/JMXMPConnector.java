@@ -129,6 +129,7 @@ public class JMXMPConnector extends GenericConnector
 
   }
 
+  @Override
   public void connect(Map env) throws IOException {
 	/* Call validateAddress again in case we've deserialized
 	   a bogus address (so we didn't call the constructor).  */

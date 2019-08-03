@@ -79,6 +79,7 @@ abstract class GenericHttpSocket implements Cloneable {
    *
    * @return The new object.
    */
+  @Override
   public Object clone() {
     Object newAdp = null;
     try {

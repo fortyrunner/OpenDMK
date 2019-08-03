@@ -98,6 +98,7 @@ class CompatibleClassLoaderRepositorySupport
    *
    * @throws UnsupportedOperationException if unsupported.
    **/
+  @Override
   public void addClassLoader(ClassLoader loader) {
     final ClassLoaderRepository clr = inner.getClassLoaderRepository();
     if (clr instanceof ModifiableClassLoaderRepository) {
@@ -113,6 +114,7 @@ class CompatibleClassLoaderRepositorySupport
    *
    * @throws UnsupportedOperationException if unsupported.
    **/
+  @Override
   public void removeClassLoader(ClassLoader loader) {
     final ClassLoaderRepository clr = inner.getClassLoaderRepository();
     if (clr instanceof ModifiableClassLoaderRepository) {
@@ -129,6 +131,7 @@ class CompatibleClassLoaderRepositorySupport
    *
    * @throws UnsupportedOperationException if unsupported.
    **/
+  @Override
   public void addClassLoader(ObjectName name, ClassLoader loader) {
     final ClassLoaderRepository clr = inner.getClassLoaderRepository();
     if (clr instanceof ModifiableClassLoaderRepository) {
@@ -145,6 +148,7 @@ class CompatibleClassLoaderRepositorySupport
    *
    * @throws UnsupportedOperationException if unsupported.
    **/
+  @Override
   public void removeClassLoader(ObjectName name) {
     final ClassLoaderRepository clr = inner.getClassLoaderRepository();
     if (clr instanceof ModifiableClassLoaderRepository) {
@@ -157,6 +161,7 @@ class CompatibleClassLoaderRepositorySupport
   /**
    * Get a named ClassLoader from the repository.
    **/
+  @Override
   public ClassLoader getClassLoader(ObjectName name) {
     try {
       return inner.getClassLoader(name);
@@ -165,6 +170,7 @@ class CompatibleClassLoaderRepositorySupport
     }
   }
 
+  @Override
   public final Class loadClass(String className)
     throws ClassNotFoundException {
     final ClassLoaderRepository clr = inner.getClassLoaderRepository();
@@ -175,6 +181,7 @@ class CompatibleClassLoaderRepositorySupport
   }
 
 
+  @Override
   public final Class loadClassWithout(ClassLoader loader, String className)
     throws ClassNotFoundException {
     final ClassLoaderRepository clr = inner.getClassLoaderRepository();
@@ -184,6 +191,7 @@ class CompatibleClassLoaderRepositorySupport
     return clr.loadClassWithout(loader, className);
   }
 
+  @Override
   public final Class loadClassBefore(ClassLoader loader, String className)
     throws ClassNotFoundException {
     final ClassLoaderRepository clr = inner.getClassLoaderRepository();

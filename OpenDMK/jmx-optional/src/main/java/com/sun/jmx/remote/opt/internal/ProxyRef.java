@@ -62,45 +62,55 @@ public class ProxyRef implements RemoteRef {
     this.ref = ref;
   }
 
+  @Override
   public void readExternal(ObjectInput in)
     throws IOException, ClassNotFoundException {
     ref.readExternal(in);
   }
 
+  @Override
   public void writeExternal(ObjectOutput out) throws IOException {
     ref.writeExternal(out);
   }
 
+  @Override
   public void invoke(RemoteCall call) throws Exception {
     ref.invoke(call);
   }
 
+  @Override
   public Object invoke(Remote obj, Method method, Object[] params,
                        long opnum) throws Exception {
     return ref.invoke(obj, method, params, opnum);
   }
 
+  @Override
   public void done(RemoteCall call) throws RemoteException {
     ref.done(call);
   }
 
+  @Override
   public String getRefClass(ObjectOutput out) {
     return ref.getRefClass(out);
   }
 
+  @Override
   public RemoteCall newCall(RemoteObject obj, Operation[] op, int opnum,
                             long hash) throws RemoteException {
     return ref.newCall(obj, op, opnum, hash);
   }
 
+  @Override
   public boolean remoteEquals(RemoteRef obj) {
     return ref.remoteEquals(obj);
   }
 
+  @Override
   public int remoteHashCode() {
     return ref.remoteHashCode();
   }
 
+  @Override
   public String remoteToString() {
     return ref.remoteToString();
   }

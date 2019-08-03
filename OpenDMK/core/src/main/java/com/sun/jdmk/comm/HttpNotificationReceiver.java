@@ -78,6 +78,7 @@ class HttpNotificationReceiver extends GenericHttpNotificationReceiver {
    *
    * @return A HTTP/TCP adopter socket
    */
+  @Override
   GenericHttpSocket createSocket() {
     HttpSocket http_socket = new HttpSocket();
     http_socket.setTimeout(getTimeout());
@@ -89,6 +90,7 @@ class HttpNotificationReceiver extends GenericHttpNotificationReceiver {
    *
    * @return The string "http".
    */
+  @Override
   public String getProtocol() {
     return "http";
   }
@@ -145,6 +147,7 @@ class HttpNotificationReceiver extends GenericHttpNotificationReceiver {
   /**
    * Returns the string used in debug traces.
    */
+  @Override
   protected String makeDebugTag() {
     return "HttpNotificationReceiver[" + getProtocol() + ":" + getPort() + "]";
   }

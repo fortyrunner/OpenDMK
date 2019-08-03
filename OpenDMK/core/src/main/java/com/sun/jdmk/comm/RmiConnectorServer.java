@@ -221,6 +221,7 @@ public class RmiConnectorServer extends CommunicatorServer
    *                   and re-thrown as an MBeanRegistrationException.
    */
 
+  @Override
   public ObjectName preRegister(MBeanServer server, ObjectName name) throws java.lang.Exception {
     // ------------------------------------------------
     // Identify the port and service name from the name
@@ -248,6 +249,7 @@ public class RmiConnectorServer extends CommunicatorServer
    * @param registrationDone Indicates whether or not the MBean has been successfully registered in
    *                         the <CODE>MBeanServer</CODE>. The value false means that the registration phase has failed.
    */
+  @Override
   public void postRegister(Boolean registrationDone) {
     super.postRegister(registrationDone);
     NotificationHandlerInternal handler =
@@ -265,6 +267,7 @@ public class RmiConnectorServer extends CommunicatorServer
    * @throws java.lang.Exception This exception should be caught by the <CODE>MBeanServer</CODE> and re-thrown
    *                             as an <CODE>MBeanRegistrationException</CODE>.
    */
+  @Override
   public void preDeregister() throws java.lang.Exception {
     super.preDeregister();
   }
@@ -273,6 +276,7 @@ public class RmiConnectorServer extends CommunicatorServer
    * Allows the MBean to perform any operations needed after having been
    * de-registered in the <CODE>MBeanServer</CODE>.
    */
+  @Override
   public void postDeregister() {
     super.postDeregister();
   }
@@ -290,6 +294,7 @@ public class RmiConnectorServer extends CommunicatorServer
    *
    * @return The service name of this RMI connector.
    */
+  @Override
   public String getServiceName() {
     return serviceName;
   }
@@ -301,6 +306,7 @@ public class RmiConnectorServer extends CommunicatorServer
    * @throws java.lang.IllegalStateException This method has been invoked while the
    *                                         RMI connector was ONLINE or STARTING.
    */
+  @Override
   public void setServiceName(String serviceName) throws java.lang.IllegalStateException {
     if ((state == ONLINE) || (state == STARTING)) {
       throw new IllegalStateException("Stop server before carrying out this operation");
@@ -312,6 +318,7 @@ public class RmiConnectorServer extends CommunicatorServer
   /**
    * Returns the name of the protocol (rmi).
    */
+  @Override
   public String getProtocol() {
     return "rmi";
   }
@@ -322,6 +329,7 @@ public class RmiConnectorServer extends CommunicatorServer
    * Has no effect if this RMI connector server is
    * <CODE>OFFLINE</CODE> or <CODE>STOPPING</CODE>.
    */
+  @Override
   public void stop() {
     if ((state == ONLINE) || (state == STARTING)) {
       super.stop();
@@ -329,6 +337,7 @@ public class RmiConnectorServer extends CommunicatorServer
     }
   }
 
+  @Override
   public synchronized void setMBeanServer(MBeanServer newMBS)
     throws IllegalArgumentException, IllegalStateException {
     super.setMBeanServer(newMBS);
@@ -346,6 +355,7 @@ public class RmiConnectorServer extends CommunicatorServer
   /**
    *
    */
+  @Override
   protected void doError(Exception e) throws CommunicationException {
   }
 
@@ -355,6 +365,7 @@ public class RmiConnectorServer extends CommunicatorServer
    * @throws CommunicationException if the adaptor can't bind to the specified port.
    * @throws InterruptedException   when the adaptor is stopped.
    */
+  @Override
   protected synchronized void doBind()
     throws CommunicationException, InterruptedException {
     try {
@@ -412,6 +423,7 @@ public class RmiConnectorServer extends CommunicatorServer
    * @throws CommunicationException if the adaptor is not bound to the specified port.
    * @throws InterruptedException   when the adaptor is stopped.
    */
+  @Override
   protected void doReceive() throws CommunicationException, InterruptedException {
     // -------------------------------------------------------------------
     // wait for invocations from clients
@@ -437,12 +449,14 @@ public class RmiConnectorServer extends CommunicatorServer
   /**
    * Returns immediately.
    */
+  @Override
   protected void doProcess() throws CommunicationException, InterruptedException {
   }
 
   /**
    * Unbinds the adaptor.
    */
+  @Override
   protected void doUnbind() throws CommunicationException, InterruptedException {
     // -------------------------------
     // remove rmi object from registry
@@ -463,6 +477,7 @@ public class RmiConnectorServer extends CommunicatorServer
   //
   // ===================================================================
 
+  @Override
   protected String makeDebugTag() {
     return "RmiConnectorServer[" + getProtocol() + ":" + getPort() +
       ":" + getServiceName() + "]";
@@ -488,6 +503,7 @@ public class RmiConnectorServer extends CommunicatorServer
      * @param addr a client connector address which can be used by the server connector
      *             to establish a connection.
      */
+    @Override
     public NotificationBackConnector startPush(ConnectorAddress addr) {
       return connector.startPush(addr);
     }
@@ -497,6 +513,7 @@ public class RmiConnectorServer extends CommunicatorServer
      *
      * @param connector the connector which is used for "push" mode.
      */
+    @Override
     public void stopPush(NotificationBackConnector connector) {
       this.connector.stopPush(connector);
     }

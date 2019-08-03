@@ -86,10 +86,12 @@ import java.util.Set;
 public abstract class MBeanServerAccessController
   implements MBeanServerForwarder {
 
+  @Override
   public MBeanServer getMBeanServer() {
     return mbs;
   }
 
+  @Override
   public void setMBeanServer(MBeanServer mbs) {
     if (mbs == null) {
       throw new IllegalArgumentException("Null MBeanServer");
@@ -125,6 +127,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public void addNotificationListener(ObjectName name,
                                       NotificationListener listener,
                                       NotificationFilter filter,
@@ -139,6 +142,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public void addNotificationListener(ObjectName name,
                                       ObjectName listener,
                                       NotificationFilter filter,
@@ -153,6 +157,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name)
     throws
     ReflectionException,
@@ -174,6 +179,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     Object params[], String signature[])
     throws
@@ -199,6 +205,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInstance createMBean(String className,
                                     ObjectName name,
                                     ObjectName loaderName)
@@ -224,6 +231,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInstance createMBean(String className,
                                     ObjectName name,
                                     ObjectName loaderName,
@@ -254,6 +262,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInputStream deserialize(ObjectName name, byte[] data)
     throws OperationsException {
     checkRead();
@@ -264,6 +273,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInputStream deserialize(String className, byte[] data)
     throws OperationsException, ReflectionException {
     checkRead();
@@ -274,6 +284,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInputStream deserialize(String className,
                                        ObjectName loaderName,
                                        byte[] data)
@@ -288,6 +299,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public Object getAttribute(ObjectName name, String attribute)
     throws
     MBeanException,
@@ -302,6 +314,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public AttributeList getAttributes(ObjectName name, String[] attributes)
     throws InstanceNotFoundException, ReflectionException {
     checkRead();
@@ -312,6 +325,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public ClassLoader getClassLoader(ObjectName loaderName)
     throws InstanceNotFoundException {
     checkRead();
@@ -322,6 +336,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public ClassLoader getClassLoaderFor(ObjectName mbeanName)
     throws InstanceNotFoundException {
     checkRead();
@@ -332,6 +347,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public ClassLoaderRepository getClassLoaderRepository() {
     checkRead();
     return getMBeanServer().getClassLoaderRepository();
@@ -341,6 +357,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public String getDefaultDomain() {
     checkRead();
     return getMBeanServer().getDefaultDomain();
@@ -350,6 +367,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public String[] getDomains() {
     checkRead();
     return getMBeanServer().getDomains();
@@ -359,6 +377,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public Integer getMBeanCount() {
     checkRead();
     return getMBeanServer().getMBeanCount();
@@ -368,6 +387,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public MBeanInfo getMBeanInfo(ObjectName name)
     throws
     InstanceNotFoundException,
@@ -381,6 +401,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInstance getObjectInstance(ObjectName name)
     throws InstanceNotFoundException {
     checkRead();
@@ -391,6 +412,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public Object instantiate(String className)
     throws ReflectionException, MBeanException {
     checkWrite();
@@ -401,6 +423,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public Object instantiate(String className,
                             Object params[],
                             String signature[])
@@ -413,6 +436,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public Object instantiate(String className, ObjectName loaderName)
     throws ReflectionException, MBeanException, InstanceNotFoundException {
     checkWrite();
@@ -423,6 +447,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public Object instantiate(String className, ObjectName loaderName,
                             Object params[], String signature[])
     throws ReflectionException, MBeanException, InstanceNotFoundException {
@@ -435,6 +460,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public Object invoke(ObjectName name, String operationName,
                        Object params[], String signature[])
     throws
@@ -450,6 +476,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public boolean isInstanceOf(ObjectName name, String className)
     throws InstanceNotFoundException {
     checkRead();
@@ -460,6 +487,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public boolean isRegistered(ObjectName name) {
     checkRead();
     return getMBeanServer().isRegistered(name);
@@ -469,6 +497,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public Set queryMBeans(ObjectName name, QueryExp query) {
     checkRead();
     return getMBeanServer().queryMBeans(name, query);
@@ -478,6 +507,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public Set queryNames(ObjectName name, QueryExp query) {
     checkRead();
     return getMBeanServer().queryNames(name, query);
@@ -487,6 +517,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInstance registerMBean(Object object, ObjectName name)
     throws
     InstanceAlreadyExistsException,
@@ -500,6 +531,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
@@ -511,6 +543,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener,
                                          NotificationFilter filter,
@@ -525,6 +558,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
@@ -536,6 +570,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkRead()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener,
                                          NotificationFilter filter,
@@ -550,6 +585,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public void setAttribute(ObjectName name, Attribute attribute)
     throws
     InstanceNotFoundException,
@@ -565,6 +601,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public AttributeList setAttributes(ObjectName name,
                                      AttributeList attributes)
     throws InstanceNotFoundException, ReflectionException {
@@ -576,6 +613,7 @@ public abstract class MBeanServerAccessController
    * Call <code>checkWrite()</code>, then forward this method to the
    * wrapped object.
    */
+  @Override
   public void unregisterMBean(ObjectName name)
     throws InstanceNotFoundException, MBeanRegistrationException {
     checkWrite();

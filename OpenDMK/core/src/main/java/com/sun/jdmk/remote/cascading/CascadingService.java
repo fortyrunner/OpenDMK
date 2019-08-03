@@ -283,6 +283,7 @@ public class CascadingService implements CascadingServiceMBean,
 
   // from CascadingServiceMBean
   //
+  @Override
   public final synchronized String mount(JMXServiceURL sourceURL,
                                          Map sourceMap,
                                          ObjectName sourcePattern,
@@ -337,6 +338,7 @@ public class CascadingService implements CascadingServiceMBean,
 
   // from CascadingServiceMBean
   //
+  @Override
   public final boolean unmount(String mountPointID)
     throws IOException {
     MountPoint mpt = null;
@@ -375,12 +377,14 @@ public class CascadingService implements CascadingServiceMBean,
 
   // from CascadingServiceMBean
   //
+  @Override
   public synchronized boolean isMounted(String mountPointID) {
     return mountMap.containsKey(mountPointID);
   }
 
   // from CascadingServiceMBean
   //
+  @Override
   public synchronized String[] getMountPointIDs() {
     return (String[])
       mountMap.keySet().toArray(new String[mountMap.size()]);
@@ -388,6 +392,7 @@ public class CascadingService implements CascadingServiceMBean,
 
   // from NotificationEmitter
   //
+  @Override
   public final void addNotificationListener(NotificationListener listener,
                                             NotificationFilter filter,
                                             Object handback)
@@ -397,6 +402,7 @@ public class CascadingService implements CascadingServiceMBean,
 
   // from NotificationEmitter
   //
+  @Override
   public final void removeNotificationListener(NotificationListener listener)
     throws ListenerNotFoundException {
     emitter.removeNotificationListener(listener);
@@ -405,6 +411,7 @@ public class CascadingService implements CascadingServiceMBean,
 
   // from NotificationEmitter
   //
+  @Override
   public final void removeNotificationListener(NotificationListener listener,
                                                NotificationFilter filter,
                                                Object handback)
@@ -415,6 +422,7 @@ public class CascadingService implements CascadingServiceMBean,
 
   // from NotificationEmitter
   //
+  @Override
   public MBeanNotificationInfo[] getNotificationInfo() {
     final MBeanNotificationInfo[] info = {
       jmxConnectionNotificationInfo
@@ -449,6 +457,7 @@ public class CascadingService implements CascadingServiceMBean,
    *                                  registered in an <tt>MBeanServer</tt>.
    * @see MBeanRegistration#preRegister
    */
+  @Override
   public ObjectName preRegister(MBeanServer server,
                                 ObjectName name)
     throws java.lang.Exception {
@@ -467,17 +476,20 @@ public class CascadingService implements CascadingServiceMBean,
 
   // from MBeanRegistration
   //
+  @Override
   public void postRegister(Boolean registrationDone) {
   }
 
 
   // from MBeanRegistration
   //
+  @Override
   public void preDeregister() throws java.lang.Exception {
   }
 
   // from MBeanRegistration
   //
+  @Override
   public void postDeregister() {
     myMBS = null;
   }

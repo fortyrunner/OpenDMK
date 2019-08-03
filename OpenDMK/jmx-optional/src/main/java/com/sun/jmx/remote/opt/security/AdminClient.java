@@ -71,6 +71,7 @@ public class AdminClient implements ClientAdmin {
     this.env = (env != null) ? env : Collections.EMPTY_MAP;
   }
 
+  @Override
   public MessageConnection connectionOpen(MessageConnection mc)
     throws IOException {
 
@@ -252,6 +253,7 @@ public class AdminClient implements ClientAdmin {
     return mc;
   }
 
+  @Override
   public void connectionClosed(MessageConnection mc) {
     for (Object o : profilesList) {
       ProfileClient p = (ProfileClient) o;
@@ -267,6 +269,7 @@ public class AdminClient implements ClientAdmin {
     profilesList.clear();
   }
 
+  @Override
   public String getConnectionId() {
     return connectionId;
   }

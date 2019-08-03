@@ -189,19 +189,23 @@ public class JDMKServerConnector
   // --------------------------------------------
 // JMXConnectorServerMBean interface
 // --------------------------------------------
+  @Override
   public JMXServiceURL getAddress() {
     return address;
   }
 
+  @Override
   public Map getAttributes() {
     Map map = EnvHelp.filterAttributes(env);
     return Collections.unmodifiableMap(map);
   }
 
+  @Override
   public boolean isActive() {
     return wrapped.isActive();
   }
 
+  @Override
   public void start() throws IOException {
     if (logger.finerOn()) {
       logger.fine("start", "start the server: " + address);
@@ -247,6 +251,7 @@ public class JDMKServerConnector
     }
   }
 
+  @Override
   public void stop() throws IOException {
     if (logger.finerOn()) {
       logger.fine("stop", "stop the server: " + address);
@@ -255,6 +260,7 @@ public class JDMKServerConnector
     wrapped.stop();
   }
 
+  @Override
   public String[] getConnectionIds() {
     throw new UnsupportedOperationException("Sorry.");
   }
@@ -262,6 +268,7 @@ public class JDMKServerConnector
   // --------------------------------------------
 // JDMKConnectorWrapper interface
 // --------------------------------------------
+  @Override
   public Object getWrapped() {
     return wrapped;
   }
@@ -269,6 +276,7 @@ public class JDMKServerConnector
   // --------------------------------------------
 // Interface MBeanRegistration: overwrite
 // --------------------------------------------
+  @Override
   public ObjectName preRegister(MBeanServer server, ObjectName name) {
     super.preRegister(server, name);
 
@@ -282,10 +290,12 @@ public class JDMKServerConnector
     return name;
   }
 
+  @Override
   public void postRegister(Boolean registrationDone) {
     ((MBeanRegistration) wrapped).postRegister(registrationDone);
   }
 
+  @Override
   public void preDeregister() throws Exception {
     ((MBeanRegistration) wrapped).preDeregister();
   }
@@ -298,6 +308,7 @@ public class JDMKServerConnector
    * Returns an empty <code>MBeanNotificationInfo</code> list.
    * This server wrapper implementation does not send notification.
    */
+  @Override
   public MBeanNotificationInfo[] getNotificationInfo() {
     return new MBeanNotificationInfo[0];
   }
@@ -310,6 +321,7 @@ public class JDMKServerConnector
       this.handback = handback;
     }
 
+    @Override
     public void handleNotification(Notification n, Object hb) {
       if (handback != hb ||
         !(n instanceof AttributeChangeNotification) ||

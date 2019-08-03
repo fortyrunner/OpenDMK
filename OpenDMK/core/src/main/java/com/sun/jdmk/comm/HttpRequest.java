@@ -101,6 +101,7 @@ class HttpRequest extends HttpMessage {
    * Read the specified input stream and fill this message with
    * the read data.
    */
+  @Override
   public void readFrom(InputStream s)
     throws IOException, MalformedHttpException {
 
@@ -186,6 +187,7 @@ class HttpRequest extends HttpMessage {
   /**
    * Write this header to the specified output stream.
    */
+  @Override
   public void writeTo(OutputStream s) throws IOException {
     String methodString;
     switch (method) {

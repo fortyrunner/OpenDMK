@@ -66,10 +66,12 @@ import java.net.URL;
  */
 class HttpsToPortSocketFactory extends GenericHttpSocketFactory {
 
+  @Override
   public Socket createSocket(String host, int port, GenericHttpConnectorClient connector) throws IOException {
     return new HttpSendSocket(host, port, new URL("https", host, port, "/"), connector);
   }
 
+  @Override
   public ServerSocket createServerSocket(int port) throws IOException {
     throw new IOException("Not Implemented Yet");
   }

@@ -350,6 +350,7 @@ public class HtmlAdaptorServer
    *
    * @return The string "html".
    */
+  @Override
   public String getProtocol() {
     return "html";
   }
@@ -361,6 +362,7 @@ public class HtmlAdaptorServer
    * @return The number of clients handled by this <CODE>HtmlAdaptorServer</CODE>
    * since its creation. This counter is not reset by the <CODE>stop</CODE> method.
    */
+  @Override
   public int getServedClientCount() {
     return super.getServedClientCount();
   }
@@ -372,6 +374,7 @@ public class HtmlAdaptorServer
    * @return The number of clients currently being processed by this
    * <CODE>HtmlAdaptorServer</CODE>.
    */
+  @Override
   public int getActiveClientCount() {
     return super.getActiveClientCount();
   }
@@ -383,6 +386,7 @@ public class HtmlAdaptorServer
    * @return The maximum number of clients that this
    * <CODE>HtmlAdaptorServer</CODE> can process concurrently.
    */
+  @Override
   public int getMaxActiveClientCount() {
     return super.getMaxActiveClientCount();
   }
@@ -395,6 +399,7 @@ public class HtmlAdaptorServer
    * @throws java.lang.IllegalStateException This method has been invoked
    *                                         while the communicator was ONLINE or STARTING.
    */
+  @Override
   public void setMaxActiveClientCount(int c)
     throws java.lang.IllegalStateException {
     super.setMaxActiveClientCount(c);
@@ -461,6 +466,7 @@ public class HtmlAdaptorServer
    * Has no effect if this SNMP protocol adaptor is <CODE>OFFLINE</CODE> or
    * <CODE>STOPPING</CODE>.
    */
+  @Override
   public void stop() {
     if ((state == ONLINE) || (state == STARTING)) {
       super.stop();
@@ -488,6 +494,7 @@ public class HtmlAdaptorServer
    * @throws java.langException This exception should be caught by the <CODE>MBeanServer</CODE> and re-thrown
    *                            as an <CODE>MBeanRegistrationException</CODE>.
    */
+  @Override
   public ObjectName preRegister(MBeanServer server, ObjectName name)
     throws java.lang.Exception {
 
@@ -500,6 +507,7 @@ public class HtmlAdaptorServer
   /**
    * Does nothing, needed for <CODE>MBeanRegistration</CODE> interface.
    */
+  @Override
   public void postRegister(Boolean registrationDone) {
     super.postRegister(registrationDone);
   }
@@ -510,6 +518,7 @@ public class HtmlAdaptorServer
    * @throws java.lang.Exception This exception should be caught by the MBeanServer and re-thrown
    *                             as an MBeanRegistrationException.
    */
+  @Override
   public void preDeregister()
     throws java.lang.Exception {
     super.preDeregister();
@@ -518,6 +527,7 @@ public class HtmlAdaptorServer
   /**
    * Does nothing, needed for <CODE>MBeanRegistration</CODE> interface.
    */
+  @Override
   public void postDeregister() {
     super.postDeregister();
   }
@@ -527,6 +537,7 @@ public class HtmlAdaptorServer
    *
    * @return An instance of MBeanInfo containing all attributes and actions exposed by the HTML protocol adaptor.
    */
+  @Override
   public MBeanInfo getMBeanInfo() {
     return dmbeaninfo;
   }
@@ -559,6 +570,7 @@ public class HtmlAdaptorServer
    * @throws MBeanException             Wraps an exception thrown by the MBean's getter.
    * @throws ReflectionException        Wraps an java.lang.Exception thrown while trying to invoke the getter.
    */
+  @Override
   public java.lang.Object getAttribute(java.lang.String attribute)
     throws AttributeNotFoundException,
     MBeanException,
@@ -622,6 +634,7 @@ public class HtmlAdaptorServer
    * @param attributes Enables the values of several attributes of the Dynamic MBean.
    * @return The list of retrieved attributes.
    */
+  @Override
   public AttributeList getAttributes(java.lang.String[] attributes) {
     AttributeList result = new AttributeList();
     String attribute = null;
@@ -681,6 +694,7 @@ public class HtmlAdaptorServer
    * @throws MBeanException      Wraps an exception thrown by the MBean's invoked method.
    * @throws ReflectionException Wraps an java.lang.Exception thrown while trying to invoke the method
    */
+  @Override
   public Object invoke(String actionName, Object[] params, String[] signature)
     throws MBeanException, ReflectionException {
 
@@ -854,6 +868,7 @@ public class HtmlAdaptorServer
    * @throws MBeanException                 Wraps an exception thrown by the MBean's setter.
    * @throws ReflectionException            Wraps an exception thrown while trying to invoke the MBean's setter.
    */
+  @Override
   public void setAttribute(Attribute attribute)
     throws AttributeNotFoundException,
     InvalidAttributeValueException,
@@ -951,6 +966,7 @@ public class HtmlAdaptorServer
    *                   attributes to be set and  the values they are to be set to.
    * @return The list of attributes that were set, with their new values.
    */
+  @Override
   public AttributeList setAttributes(AttributeList attributes) {
     // Validate the list of attributes.
     //
@@ -991,6 +1007,7 @@ public class HtmlAdaptorServer
   /**
    *
    */
+  @Override
   protected void doError(Exception e) throws CommunicationException {
   }
 
@@ -1002,6 +1019,7 @@ public class HtmlAdaptorServer
    * @throws CommunicationException Communication problem while creating listener socket.
    * @throws InterruptedException   Creating listener socket was interrupted.
    */
+  @Override
   protected void doBind()
     throws CommunicationException, InterruptedException {
 
@@ -1035,6 +1053,7 @@ public class HtmlAdaptorServer
    * @throws CommunicationException Communication problem while closing listener socket.
    * @throws InterruptedException   Closing listener socket was interrupted.
    */
+  @Override
   protected void doUnbind()
     throws CommunicationException, InterruptedException {
 
@@ -1062,6 +1081,7 @@ public class HtmlAdaptorServer
    * @throws CommunicationException Communication problem while receiving request.
    * @throws InterruptedException   Receiving request was interrupted.
    */
+  @Override
   protected void doReceive()
     throws CommunicationException, InterruptedException {
 
@@ -1092,6 +1112,7 @@ public class HtmlAdaptorServer
    * @throws CommunicationException Communication problem while processing request.
    * @throws InterruptedException   Request processing was interrupted.
    */
+  @Override
   protected void doProcess()
     throws CommunicationException, InterruptedException {
 
@@ -1230,6 +1251,7 @@ public class HtmlAdaptorServer
   /**
    * Returns the string used in debug traces.
    */
+  @Override
   String makeDebugTag() {
     return "HtmlAdaptorServer[" + getProtocol() + ":" + getPort() + "]";
   }

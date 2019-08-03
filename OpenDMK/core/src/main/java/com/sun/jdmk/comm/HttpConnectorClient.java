@@ -122,6 +122,7 @@ public class HttpConnectorClient extends GenericHttpConnectorClient {
    *
    * @return A HTTP/TCP connector client socket.
    */
+  @Override
   GenericHttpSocketFactory getSocketFactory() {
     return new HttpSocketFactory();
   }
@@ -131,6 +132,7 @@ public class HttpConnectorClient extends GenericHttpConnectorClient {
    *
    * @return The notification receiver used by this client connector.
    */
+  @Override
   GenericHttpNotificationReceiver getNotificationReceiver(GenericHttpConnectorClient connector,
                                                           ClientNotificationDispatcher dispatcher) {
     return new HttpNotificationReceiver(connector, dispatcher);

@@ -142,6 +142,7 @@ public class GenericConnectorServer extends JMXConnectorServer {
   }
 
   // JMXConnectorServerMBean interface implementation
+  @Override
   public JMXServiceURL getAddress() {
     if (!isActive()) {
       return null;
@@ -149,6 +150,7 @@ public class GenericConnectorServer extends JMXConnectorServer {
     return sMsgServer.getAddress();
   }
 
+  @Override
   public Map getAttributes() {
     Map map = EnvHelp.filterAttributes(env);
     return Collections.unmodifiableMap(map);
@@ -167,6 +169,7 @@ public class GenericConnectorServer extends JMXConnectorServer {
    * @throws IOException           if the connector server cannot be
    *                               started.
    */
+  @Override
   public void start() throws IOException {
     final boolean tracing = logger.traceOn();
     synchronized (lock) {
@@ -279,6 +282,7 @@ public class GenericConnectorServer extends JMXConnectorServer {
     }
   }
 
+  @Override
   public void stop() throws IOException {
     final boolean tracing = logger.traceOn();
 
@@ -353,6 +357,7 @@ public class GenericConnectorServer extends JMXConnectorServer {
     }
   }
 
+  @Override
   public boolean isActive() {
     synchronized (lock) {
       return state == STARTED;
@@ -369,6 +374,7 @@ public class GenericConnectorServer extends JMXConnectorServer {
   // private classes
   private class Receiver extends Thread {
 
+    @Override
     public void run() {
       if (logger.debugOn()) {
         logger.debug("Receiver.run", "starting receiver.");
@@ -451,6 +457,7 @@ public class GenericConnectorServer extends JMXConnectorServer {
       this.stopper = stopper;
     }
 
+    @Override
     public void run() {
       final boolean tracing = logger.traceOn();
       Subject subject = null;
@@ -570,6 +577,7 @@ public class GenericConnectorServer extends JMXConnectorServer {
       this.cc = cc;
     }
 
+    @Override
     public void run() {
       synchronized (cc) {
         if (cc.done) {

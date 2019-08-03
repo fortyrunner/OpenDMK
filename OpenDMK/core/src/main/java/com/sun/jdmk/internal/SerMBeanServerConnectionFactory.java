@@ -97,6 +97,7 @@ public class SerMBeanServerConnectionFactory implements Serializable,
     in.defaultReadObject();
   }
 
+  @Override
   public void addConnectionNotificationListener(NotificationListener listener, NotificationFilter filter, Object handback) {
     try {
       getFactory().addConnectionNotificationListener(listener,
@@ -107,14 +108,17 @@ public class SerMBeanServerConnectionFactory implements Serializable,
     }
   }
 
+  @Override
   public String getConnectionId() throws IOException {
     return getFactory().getConnectionId();
   }
 
+  @Override
   public MBeanServerConnection getMBeanServerConnection() throws IOException {
     return getFactory().getMBeanServerConnection();
   }
 
+  @Override
   public void removeConnectionNotificationListener(NotificationListener listener) throws ListenerNotFoundException {
     try {
       getFactory().removeConnectionNotificationListener(listener);
@@ -123,6 +127,7 @@ public class SerMBeanServerConnectionFactory implements Serializable,
     }
   }
 
+  @Override
   public void removeConnectionNotificationListener(NotificationListener l, NotificationFilter f, Object handback) throws ListenerNotFoundException {
     try {
       getFactory().removeConnectionNotificationListener(l, f, handback);

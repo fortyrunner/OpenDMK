@@ -130,6 +130,7 @@ class RmiNotificationForwarder implements NotificationBackConnector {
    * @param params a set of objects provided by a ServerNotificationHandler.
    * @return a set of Objects.
    */
+  @Override
   public Object[] remoteRequest(int opType, Object[] params)
     throws Exception {
     if (connected) {

@@ -103,6 +103,7 @@ public class SocketConnectionServer implements MessageConnectionServer {
 
 // implements MessageConnectionServer interface
 
+  @Override
   public void start(Map env) throws IOException {
     if (logger.traceOn()) {
       logger.trace("start", "Starts the server now.");
@@ -206,6 +207,7 @@ public class SocketConnectionServer implements MessageConnectionServer {
     this.env = newEnv;
   }
 
+  @Override
   public MessageConnection accept() throws IOException {
     if (logger.traceOn()) {
       logger.trace("accept", "Waiting a new connection...");
@@ -215,6 +217,7 @@ public class SocketConnectionServer implements MessageConnectionServer {
     return mc;
   }
 
+  @Override
   public void stop() throws IOException {
     if (logger.traceOn()) {
       logger.trace("stop", "Stops the server now.");
@@ -225,6 +228,7 @@ public class SocketConnectionServer implements MessageConnectionServer {
     }
   }
 
+  @Override
   public JMXServiceURL getAddress() {
     return addr;
   }

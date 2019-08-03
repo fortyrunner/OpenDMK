@@ -116,6 +116,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws NotCompliantMBeanException     This class is not an JMX compliant MBean
    */
 
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     OperationContext context)
     throws ReflectionException, InstanceAlreadyExistsException,
@@ -158,6 +159,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws InstanceNotFoundException      The specified loader is not registered in the MBeanServer
    */
 
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     ObjectName loaderName,
                                     OperationContext context)
@@ -202,6 +204,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws NotCompliantMBeanException     This class is not an JMX compliant MBean
    */
 
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     Object params[], String signature[],
                                     OperationContext context)
@@ -247,6 +250,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws InstanceNotFoundException      The specified loader is not registered in the MBeanServer
    */
 
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     ObjectName loaderName, Object params[],
                                     String signature[],
@@ -286,6 +290,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    *                                    has thrown an exception.
    */
 
+  @Override
   public void unregisterMBean(ObjectName name, OperationContext context)
     throws InstanceNotFoundException, MBeanRegistrationException,
     RemoteException {
@@ -316,6 +321,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws InstanceNotFoundException The specified MBean is not registered in the MBeanServer.
    */
 
+  @Override
   public ObjectInstance getObjectInstance(ObjectName name,
                                           OperationContext context)
     throws InstanceNotFoundException, RemoteException {
@@ -348,6 +354,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws RemoteException See java.rmi.RemoteException.
    */
 
+  @Override
   public java.util.Set queryMBeans(ObjectName name, QueryExp query,
                                    OperationContext context)
     throws RemoteException {
@@ -377,6 +384,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws RemoteException See java.rmi.RemoteException.
    */
 
+  @Override
   public boolean isRegistered(ObjectName name, OperationContext context)
     throws RemoteException {
     stopIfNotActive("isRegistered(name)");
@@ -408,6 +416,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws RemoteException See java.rmi.RemoteException.
    */
 
+  @Override
   public java.util.Set queryNames(ObjectName name, QueryExp query,
                                   OperationContext context)
     throws RemoteException {
@@ -429,6 +438,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws RemoteException See java.rmi.RemoteException.
    */
 
+  @Override
   public Integer getMBeanCount(OperationContext context)
     throws RemoteException {
     stopIfNotActive("getMBeanCount()");
@@ -449,6 +459,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws RemoteException See java.rmi.RemoteException.
    */
 
+  @Override
   public String getDefaultDomain(OperationContext context)
     throws RemoteException {
     stopIfNotActive("getDefaultDomain()");
@@ -484,6 +495,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws ReflectionException        Wraps an java.lang.Exception thrown while trying to invoke the setter.
    */
 
+  @Override
   public Object getAttribute(ObjectName name, String attribute,
                              OperationContext context)
     throws MBeanException, AttributeNotFoundException,
@@ -521,6 +533,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws ReflectionException       An exception occurred trying to invoke the getAttributes method of a Dynamic MBean.
    */
 
+  @Override
   public AttributeList getAttributes(ObjectName name, String[] attributes,
                                      OperationContext context)
     throws InstanceNotFoundException, ReflectionException,
@@ -554,6 +567,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    *                                        to set the attribute.
    */
 
+  @Override
   public void setAttribute(ObjectName name, Attribute attribute,
                            OperationContext context)
     throws InstanceNotFoundException, AttributeNotFoundException,
@@ -588,6 +602,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    *                                   the getAttributes method of a Dynamic MBean.
    */
 
+  @Override
   public AttributeList setAttributes(ObjectName name,
                                      AttributeList attributes,
                                      OperationContext context)
@@ -622,6 +637,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws ReflectionException       Wraps an java.lang.Exception thrown while trying to invoke the method.
    */
 
+  @Override
   public Object invoke(ObjectName name, String actionName, Object params[],
                        String signature[], OperationContext context)
     throws InstanceNotFoundException, MBeanException,
@@ -651,6 +667,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws ReflectionException       An exception occurred trying to invoke the getMBeanInfo of a Dynamic MBean.
    */
 
+  @Override
   public MBeanInfo getMBeanInfo(ObjectName name, OperationContext context)
     throws InstanceNotFoundException, IntrospectionException,
     ReflectionException, RemoteException {
@@ -670,6 +687,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * Notifications
    */
 
+  @Override
   public Object[] remoteRequest(int opType, Object[] params,
                                 OperationContext context)
     throws Exception {
@@ -686,6 +704,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * HeartBeat
    */
 
+  @Override
   public String pingHeartBeatServer(String sessionId, int period,
                                     int nretries, Long notifSessionId,
                                     OperationContext context)
@@ -711,6 +730,7 @@ class RmiConnectorServerObjectImplV2 extends RmiConnectorServerObjectCommon
    * @throws InstanceNotFoundException The MBean specified is not registered in the MBean server.
    */
 
+  @Override
   public boolean isInstanceOf(ObjectName name, String className,
                               OperationContext context)
     throws InstanceNotFoundException, RemoteException {

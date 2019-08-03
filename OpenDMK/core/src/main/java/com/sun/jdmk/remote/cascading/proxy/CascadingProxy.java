@@ -204,6 +204,7 @@ public class CascadingProxy
    * @see #setAttribute
    * @see DynamicMBean#getAttribute
    */
+  @Override
   public Object getAttribute(String attribute)
     throws AttributeNotFoundException,
     MBeanException, ReflectionException {
@@ -234,6 +235,7 @@ public class CascadingProxy
    * @see #getAttribute
    * @see DynamicMBean#setAttribute
    */
+  @Override
   public void setAttribute(Attribute attribute)
     throws AttributeNotFoundException,
     InvalidAttributeValueException, MBeanException,
@@ -260,6 +262,7 @@ public class CascadingProxy
    * @see #setAttributes
    * @see DynamicMBean#getAttributes
    */
+  @Override
   public AttributeList getAttributes(String[] attributes) {
     try {
       return connection().getAttributes(source, attributes);
@@ -289,6 +292,7 @@ public class CascadingProxy
    * @see #getAttributes
    * @see DynamicMBean#setAttributes
    */
+  @Override
   public AttributeList setAttributes(AttributeList attributes) {
     try {
       return connection().setAttributes(source, attributes);
@@ -322,6 +326,7 @@ public class CascadingProxy
    *                                      MBean.
    * @see DynamicMBean#invoke
    */
+  @Override
   public Object invoke(String actionName, Object params[], String signature[])
     throws MBeanException, ReflectionException {
     try {
@@ -351,6 +356,7 @@ public class CascadingProxy
    *                                      is raised while trying to forward the request to the source
    *                                      MBean.
    **/
+  @Override
   public MBeanInfo getMBeanInfo() {
     try {
       return connection().getMBeanInfo(source);
@@ -381,6 +387,7 @@ public class CascadingProxy
    *                                  is <tt>null</tt>
    * @see MBeanRegistration#preRegister
    */
+  @Override
   public ObjectName preRegister(MBeanServer server,
                                 ObjectName name)
     throws java.lang.Exception {
@@ -404,6 +411,7 @@ public class CascadingProxy
    *                         false means that the registration phase has failed.
    * @see MBeanRegistration#postRegister
    */
+  @Override
   public void postRegister(Boolean registrationDone) {
   }
 
@@ -417,6 +425,7 @@ public class CascadingProxy
    *                             MBeanRegistrationException} or a {@link RuntimeMBeanException}.
    * @see MBeanRegistration#preDeregister
    */
+  @Override
   public void preDeregister() throws java.lang.Exception {
   }
 
@@ -425,6 +434,7 @@ public class CascadingProxy
    * unregistered in the MBean server.
    * This default implementation does nothing.
    */
+  @Override
   public void postDeregister() {
   }
 
@@ -464,6 +474,7 @@ public class CascadingProxy
    * @return the array of possible notifications.
    * @see NotificationBroadcaster#getNotificationInfo
    */
+  @Override
   public MBeanNotificationInfo[] getNotificationInfo() {
     try {
       final MBeanNotificationInfo[] info =
@@ -506,6 +517,7 @@ public class CascadingProxy
    * @see #removeNotificationListener
    * @see NotificationBroadcaster#addNotificationListener
    */
+  @Override
   public void addNotificationListener(NotificationListener listener,
                                       NotificationFilter filter,
                                       Object handback) {
@@ -563,6 +575,7 @@ public class CascadingProxy
    * @see #addNotificationListener
    * @see NotificationEmitter#removeNotificationListener
    */
+  @Override
   public void removeNotificationListener(NotificationListener listener)
     throws ListenerNotFoundException {
 
@@ -619,6 +632,7 @@ public class CascadingProxy
    *                                      MBean.
    * @see NotificationEmitter#removeNotificationListener
    */
+  @Override
   public void removeNotificationListener(NotificationListener listener,
                                          NotificationFilter filter,
                                          Object handback)
@@ -695,6 +709,7 @@ public class CascadingProxy
       this.handback = handback;
     }
 
+    @Override
     public void handleNotification(Notification notif,
                                    Object handback) {
 

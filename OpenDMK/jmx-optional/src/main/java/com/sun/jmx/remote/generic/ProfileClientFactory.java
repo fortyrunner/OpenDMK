@@ -237,6 +237,7 @@ public class ProfileClientFactory {
     if (pkgs == null) {
       pkgs = (String)
         AccessController.doPrivileged(new PrivilegedAction() {
+          @Override
           public Object run() {
             return System.getProperty(PROFILE_PROVIDER_PACKAGES);
           }

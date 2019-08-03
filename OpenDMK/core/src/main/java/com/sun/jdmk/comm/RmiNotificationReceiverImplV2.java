@@ -97,6 +97,7 @@ class RmiNotificationReceiverImplV2 extends UnicastRemoteObject implements Notif
     offline = false;
   }
 
+  @Override
   public Object[] remoteRequest(int opType, Object[] params) throws Exception {
 
     if (offline)

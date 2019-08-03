@@ -94,6 +94,7 @@ class GenericHttpRequestHandler extends GenericHttpClientHandler {
    * enabled and passes, this method returns the AuthInfo that was
    * used to authenticate successfully.
    */
+  @Override
   protected AuthInfo authenticateRequest(HttpRequest request) throws IOException {
     GenericHttpConnectorServer server =
       (GenericHttpConnectorServer) adaptorServer;
@@ -124,6 +125,7 @@ class GenericHttpRequestHandler extends GenericHttpClientHandler {
   /**
    * Process an incoming post request and return the response.
    */
+  @Override
   protected HttpResponse processPostRequest(HttpRequest request)
     throws IOException {
 
@@ -322,6 +324,7 @@ class GenericHttpRequestHandler extends GenericHttpClientHandler {
   /**
    * Generate a challenge if authentication is required.
    */
+  @Override
   protected String getChallenge() {
     GenericHttpConnectorServer server = (GenericHttpConnectorServer) adaptorServer;
     if (server.isAuthenticationOn()) {
@@ -720,6 +723,7 @@ class GenericHttpRequestHandler extends GenericHttpClientHandler {
   /**
    * Returns the string used in debug traces.
    */
+  @Override
   protected String makeDebugTag() {
     return "GenericHttpRequestHandler[" + adaptorServer.getProtocol() + ":" + adaptorServer.getPort() + "][" + requestId + "]";
   }

@@ -88,6 +88,7 @@ public class ProfileProviderException extends Exception {
     this.cause = cause;
   }
 
+  @Override
   public Throwable getCause() {
     return cause;
   }

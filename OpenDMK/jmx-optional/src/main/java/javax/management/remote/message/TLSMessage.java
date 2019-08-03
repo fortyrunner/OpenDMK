@@ -129,6 +129,7 @@ public class TLSMessage implements ProfileMessage {
   /**
    * The profile name.
    */
+  @Override
   public String getProfileName() {
     return "TLS";
   }

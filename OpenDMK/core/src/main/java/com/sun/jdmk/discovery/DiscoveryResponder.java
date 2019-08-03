@@ -247,6 +247,7 @@ public class DiscoveryResponder
    *                             MBean server and re-thrown as an {@link
    *                             javax.management.MBeanRegistrationException}.
    */
+  @Override
   public ObjectName preRegister(MBeanServer server, ObjectName name)
     throws java.lang.Exception {
     if (logger.finerOn()) {
@@ -283,6 +284,7 @@ public class DiscoveryResponder
    * @param registrationDone Indicates whether or not the MBean has been successfully registered in
    *                         the MBean server. The value false means that the registration phase has failed.
    */
+  @Override
   public void postRegister(Boolean registrationDone) {
   }
 
@@ -293,6 +295,7 @@ public class DiscoveryResponder
    * @throws java.langException This exception should be caught by the MBean server and re-thrown
    *                            as an {@link javax.management.MBeanRegistrationException}.
    */
+  @Override
   public void preDeregister() throws java.lang.Exception {
     // ------------------------
     // Call stop
@@ -308,6 +311,7 @@ public class DiscoveryResponder
    * Allows the MBean to perform any operations needed after having been
    * unregistered in the MBean server.
    */
+  @Override
   public void postDeregister() {
   }
 
@@ -325,6 +329,7 @@ public class DiscoveryResponder
    *
    * @throws IOException The creation of the Multicast socket failed.
    */
+  @Override
   public void start() throws IOException {
     if (state == OFFLINE) {
       changeState(STARTING);
@@ -420,6 +425,7 @@ public class DiscoveryResponder
    * This method has no effect if the <CODE>DiscoveryResponder</CODE> is <CODE>OFFLINE</CODE> or
    * <CODE>STOPPING</CODE> or <CODE>STARTING</CODE>.
    */
+  @Override
   public void stop() {
     if (state == ONLINE) {
       changeState(STOPPING);
@@ -483,6 +489,7 @@ public class DiscoveryResponder
    * <CODE>True</CODE> is returned if the <CODE>DiscoveryResponder</CODE> is started (<CODE>DiscoveryResponder</CODE>
    * has join the multicast group).
    */
+  @Override
   public boolean isActive() {
     return (state == ONLINE);
   }
@@ -517,6 +524,7 @@ public class DiscoveryResponder
    * is the same as the <VAR>state</VAR> parameter;
    * <code>false</code> otherwise.
    */
+  @Override
   public boolean waitState(int state, long timeout) {
     if (logger.finerOn()) {
       logger.finer("waitState", state + "(0on,1off,2st) TO=" + timeout +
@@ -595,6 +603,7 @@ public class DiscoveryResponder
    *
    * @return A string containing the multicast group name.
    */
+  @Override
   public String getMulticastGroup() {
     return multicastGroup;
   }
@@ -609,6 +618,7 @@ public class DiscoveryResponder
    * @throws java.lang.IllegalStateException This method has been invoked while
    *                                         the <CODE>DiscoveryResponder</CODE> was ONLINE or STARTING.
    */
+  @Override
   public void setMulticastGroup(String multicastGroup)
     throws java.lang.IllegalStateException {
     if (state == OFFLINE) {
@@ -625,6 +635,7 @@ public class DiscoveryResponder
    *
    * @return The multicast port number.
    */
+  @Override
   public int getMulticastPort() {
     return multicastPort;
   }
@@ -639,6 +650,7 @@ public class DiscoveryResponder
    * @throws java.lang.IllegalStateException This method has been invoked while
    *                                         the <CODE>DiscoveryResponder</CODE> was ONLINE or STARTING.
    */
+  @Override
   public void setMulticastPort(int multicastPort)
     throws java.lang.IllegalStateException {
     if (state == OFFLINE) {
@@ -653,6 +665,7 @@ public class DiscoveryResponder
    *
    * @return The time-to-live value.
    */
+  @Override
   public int getTimeToLive() {
     return ttl;
   }
@@ -669,6 +682,7 @@ public class DiscoveryResponder
    * @throws java.lang.IllegalStateException    This method has been invoked while
    *                                            the <CODE>DiscoveryResponder</CODE> was ONLINE or STARTING.
    */
+  @Override
   public void setTimeToLive(int ttl)
     throws java.lang.IllegalStateException {
     if (state == OFFLINE) {
@@ -686,6 +700,7 @@ public class DiscoveryResponder
    *
    * @return <CODE>ONLINE</CODE>, <CODE>OFFLINE</CODE> or <CODE>STOPPING</CODE> or <CODE>STARTING</CODE> .
    */
+  @Override
   public Integer getState() {
     return new Integer(state);
   }
@@ -695,6 +710,7 @@ public class DiscoveryResponder
    *
    * @return One of the strings "ONLINE", "OFFLINE" or "STOPPING" or "STARTING".
    */
+  @Override
   public String getStateString() {
     String result = "UNKNOWN";
 
@@ -744,6 +760,7 @@ public class DiscoveryResponder
    * connectors/adaptors in the discovery response message, the data byte
    * array should not exceed 40 KBytes, approximately.
    */
+  @Override
   public void setUserData(byte[] data) {
     this.userData = data;
   }
@@ -753,6 +770,7 @@ public class DiscoveryResponder
    * <CODE>DiscoveryResponse</CODE>.
    * If no additional information has been added, this method returns <CODE>null</CODE>.
    */
+  @Override
   public byte[] getUserData() {
     return (userData);
   }

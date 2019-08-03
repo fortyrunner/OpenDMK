@@ -110,6 +110,7 @@ public class TimedURLConnection {
       tmpUrlConn = urlConn;
     }
 
+    @Override
     public void run() {
       switch (currentOperartion) {
         case MAKE_URLCONNECTION_OPS:

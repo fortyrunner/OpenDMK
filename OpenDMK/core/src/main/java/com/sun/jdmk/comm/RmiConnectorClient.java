@@ -397,6 +397,7 @@ public class RmiConnectorClient
    * @throws CommunicationException   The RMI Connector Client is not connected to RMI Connector Server
    *                                  or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public void setMode(int mode) throws IllegalArgumentException {
     stopIfNotConnected("setMode()");
 
@@ -412,6 +413,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public int getMode() {
     stopIfNotConnected("getMode()");
 
@@ -424,6 +426,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public void getNotifications() {
     stopIfNotConnected("getNotifications()");
 
@@ -437,6 +440,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public void clearCache() {
     stopIfNotConnected("clearCache()");
 
@@ -456,6 +460,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public void setPeriod(int period) {
     stopIfNotConnected("setPeriod()");
 
@@ -470,6 +475,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public int getPeriod() {
     stopIfNotConnected("getPeriod()");
 
@@ -490,6 +496,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public int setCacheSize(int size, boolean discardOverflow) {
     stopIfNotConnected("setCacheSize()");
 
@@ -505,6 +512,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public int getCacheSize() {
     stopIfNotConnected("getCacheSize()");
 
@@ -522,6 +530,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public void setOverflowCount(int count) {
     stopIfNotConnected("setOverflowCount()");
 
@@ -538,6 +547,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public int getOverflowCount() {
     stopIfNotConnected("getOverflowCount()");
 
@@ -555,6 +565,7 @@ public class RmiConnectorClient
    * @throws CommunicationException   The RMI Connector Client is not connected to RMI Connector Server
    *                                  or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public void setOverflowMode(int of) throws IllegalArgumentException {
     stopIfNotConnected("setOverflowMode()");
 
@@ -569,6 +580,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public int getOverflowMode() {
     stopIfNotConnected("getOverflowMode()");
 
@@ -586,6 +598,7 @@ public class RmiConnectorClient
    * @throws CommunicationException    The RMI Connector Client is not connected to RMI Connector Server
    *                                   or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public void addNotificationListener(ObjectName name, NotificationListener listener, NotificationFilter filter, Object handback)
     throws InstanceNotFoundException {
     stopIfNotConnected("addNotificationListener()");
@@ -604,6 +617,7 @@ public class RmiConnectorClient
    * @throws CommunicationException    The RMI Connector Client is not connected to RMI Connector Server
    *                                   or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public void removeNotificationListener(ObjectName name, NotificationListener listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
     stopIfNotConnected("removeNotificationListener()");
@@ -653,6 +667,7 @@ public class RmiConnectorClient
    * <p>
    * The default value is 10000 milliseconds.
    */
+  @Override
   public int getHeartBeatPeriod() {
     if (logger.finerOn()) {
       logger.finer("getHeartBeatPeriod", "getHeartBeatPeriod");
@@ -672,6 +687,7 @@ public class RmiConnectorClient
    *
    * @param period The heartbeat period in milliseconds.
    */
+  @Override
   public void setHeartBeatPeriod(int period) {
     if (logger.finerOn()) {
       logger.finer("setHeartBeatPeriod", "setHeartBeatPeriod");
@@ -687,6 +703,7 @@ public class RmiConnectorClient
    * <p>
    * The default value is 6 times.
    */
+  @Override
   public int getHeartBeatRetries() {
     if (logger.finerOn()) {
       logger.finer("getHeartBeatRetries", "getHeartBeatRetries");
@@ -704,6 +721,7 @@ public class RmiConnectorClient
    *
    * @param nretries The number of retries.
    */
+  @Override
   public void setHeartBeatRetries(int nretries) {
     if (logger.finerOn()) {
       logger.finer("setHeartBeatRetries", "setHeartBeatRetries");
@@ -721,6 +739,7 @@ public class RmiConnectorClient
    * @param filter   The filter object. If filter is null, no filtering will be performed before handling notifications.
    * @param handback The context to be sent to the listener when a notification is emitted.
    */
+  @Override
   public void addHeartBeatNotificationListener(NotificationListener listener, NotificationFilter filter, Object handback) {
     if (logger.finerOn()) {
       logger.finer("addHeartBeatNotificationListener", "addHeartBeatNotificationListener");
@@ -737,6 +756,7 @@ public class RmiConnectorClient
    *
    * @param listener The heartbeat listener which will handle the notifications emitted by the connector client.
    */
+  @Override
   public void removeHeartBeatNotificationListener(NotificationListener listener) {
     if (logger.finerOn()) {
       logger.finer("removeHeartBeatNotificationListener", "removeHeartBeatNotificationListener");
@@ -771,6 +791,7 @@ public class RmiConnectorClient
    *                                some reason.  One common reason is that the object <code>c</code>
    *                                does not implement the <code>Cloneable</code> interface.
    */
+  @Override
   public void setOperationContext(OperationContext c) {
     try {
       // NPCTE fix for bugId 4497571, esc 0, MR, 03 September 2001
@@ -792,6 +813,7 @@ public class RmiConnectorClient
    *
    * @return the current OperationContext.
    */
+  @Override
   public OperationContext getOperationContext() {
     return operationContext;
   }
@@ -821,6 +843,7 @@ public class RmiConnectorClient
    * @throws IllegalArgumentException The <CODE>RemoteMBeanServer</CODE> has already been connected and disconnected
    *                                  and the specified <CODE>ConnectorAddress</CODE> doesn't identify the same <CODE>MBeanServer</CODE>.
    */
+  @Override
   public void connect(ConnectorAddress MBeanServerAddress) {
 
     // ------------------------------
@@ -973,6 +996,7 @@ public class RmiConnectorClient
   /**
    * Terminates the communication with the <CODE>MBeanServer</CODE>.
    */
+  @Override
   public void disconnect() {
     disconnect(false);
   }
@@ -1025,6 +1049,7 @@ public class RmiConnectorClient
    *
    * @return True, if the communication is established, otherwise false.
    */
+  @Override
   public boolean isConnected() {
     return isConnected;
   }
@@ -1036,6 +1061,7 @@ public class RmiConnectorClient
    * @return The exact address of the remote <CODE>MBeanServer</CODE>, or null if the ConnectorClient is
    * not connected.
    */
+  @Override
   public ConnectorAddress getMBeanServerAddress() {
     return connectorAddress;
   }
@@ -1047,6 +1073,7 @@ public class RmiConnectorClient
    * If the Connector Client has been connected and disconnected, <CODE>getMBeanServerId</CODE> still returns
    * the previous <CODE>MBeanServer</CODE> identification.
    */
+  @Override
   public String getMBeanServerId() {
     return MBeanServerId;
   }
@@ -1075,6 +1102,7 @@ public class RmiConnectorClient
    * @throws CommunicationException         The RMI Connector Client is not connected to RMI Connector Server
    *                                        or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name)
     throws ReflectionException, InstanceAlreadyExistsException,
     MBeanRegistrationException, MBeanException,
@@ -1124,6 +1152,7 @@ public class RmiConnectorClient
    * @throws CommunicationException         The RMI Connector Client is not connected to RMI Connector Server
    *                                        or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     ObjectName loaderName)
     throws ReflectionException, InstanceAlreadyExistsException,
@@ -1179,6 +1208,7 @@ public class RmiConnectorClient
    * @throws CommunicationException         The RMI Connector Client is not connected to RMI Connector Server
    *                                        or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name, Object params[], String signature[])
     throws ReflectionException, InstanceAlreadyExistsException, MBeanRegistrationException,
     MBeanException, NotCompliantMBeanException {
@@ -1233,6 +1263,7 @@ public class RmiConnectorClient
    * @throws CommunicationException         The RMI Connector Client is not connected to RMI Connector Server
    *                                        or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name, ObjectName loaderName, Object params[], String signature[])
     throws ReflectionException, InstanceAlreadyExistsException, MBeanRegistrationException,
     MBeanException, NotCompliantMBeanException, InstanceNotFoundException {
@@ -1280,6 +1311,7 @@ public class RmiConnectorClient
    * @throws CommunicationException     The RMI Connector Client is not connected to RMI Connector Server
    *                                    or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public void unregisterMBean(ObjectName name) throws InstanceNotFoundException, MBeanRegistrationException {
     // ------------------------------
     // Check connection
@@ -1337,6 +1369,7 @@ public class RmiConnectorClient
    * @throws CommunicationException     The RMI Connector Client is not connected to RMI Connector Server
    *                                    or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public boolean isRegistered(ObjectName name) {
     // ------------------------------
     // Check connection
@@ -1379,6 +1412,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public java.util.Set queryNames(ObjectName name, QueryExp query) {
     // ------------------------------
     // Check connection
@@ -1420,6 +1454,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public java.util.Set queryMBeans(ObjectName name, QueryExp query) {
     stopIfNotConnected("queryMBeans(name,query)");
 
@@ -1447,6 +1482,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public Integer getMBeanCount() {
     // ------------------------------
     // Check connection
@@ -1478,6 +1514,7 @@ public class RmiConnectorClient
    * @throws CommunicationException The RMI Connector Client is not connected to RMI Connector Server
    *                                or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public String getDefaultDomain() {
     // ------------------------------
     // Check connection
@@ -1512,6 +1549,7 @@ public class RmiConnectorClient
    * @return true if the MBean specified is an instance of the specified class, false otherwise.
    * @throws InstanceNotFoundException The MBean specified is not registered in the MBean server.
    */
+  @Override
   public boolean isInstanceOf(ObjectName name, String className)
     throws InstanceNotFoundException {
     stopIfNotConnected("isInstanceOf(name)");
@@ -1543,6 +1581,7 @@ public class RmiConnectorClient
    * @throws CommunicationException    The RMI Connector Client is not connected to RMI Connector Server
    *                                   or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public ObjectInstance getObjectInstance(ObjectName name) throws InstanceNotFoundException {
     stopIfNotConnected("getObjectInstance(name)");
 
@@ -1584,6 +1623,7 @@ public class RmiConnectorClient
    * @throws CommunicationException     The RMI Connector Client is not connected to RMI Connector Server
    *                                    or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public Object getAttribute(ObjectName name, String attribute)
     throws MBeanException, AttributeNotFoundException, InstanceNotFoundException, ReflectionException {
 
@@ -1619,6 +1659,7 @@ public class RmiConnectorClient
    * @throws CommunicationException       The RMI Connector Client is not connected to RMI Connector Server
    *                                      or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public AttributeList getAttributes(ObjectName name, String[] attributes)
     throws InstanceNotFoundException, ReflectionException {
     stopIfNotConnected("getAttributes(name,attributes)");
@@ -1657,6 +1698,7 @@ public class RmiConnectorClient
    * @throws CommunicationException         The RMI Connector Client is not connected to RMI Connector Server
    *                                        or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public void setAttribute(ObjectName name, Attribute attribute)
     throws InstanceNotFoundException, AttributeNotFoundException,
     InvalidAttributeValueException, MBeanException, ReflectionException {
@@ -1694,6 +1736,7 @@ public class RmiConnectorClient
    * @throws CommunicationException    The RMI Connector Client is not connected to RMI Connector Server
    *                                   or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public AttributeList setAttributes(ObjectName name, AttributeList attributes)
     throws InstanceNotFoundException, ReflectionException {
 
@@ -1732,6 +1775,7 @@ public class RmiConnectorClient
    * @throws CommunicationException    The RMI Connector Client is not connected to RMI Connector Server
    *                                   or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public Object invoke(ObjectName name, String methodName, Object arguments[], String signature[])
     throws InstanceNotFoundException, MBeanException, ReflectionException {
 
@@ -1769,6 +1813,7 @@ public class RmiConnectorClient
    * @throws CommunicationException    The RMI Connector Client is not connected to RMI Connector Server
    *                                   or a problem was encountered in the connection to the RMI Connector Server.
    */
+  @Override
   public MBeanInfo getMBeanInfo(ObjectName name)
     throws InstanceNotFoundException, IntrospectionException, ReflectionException {
 
@@ -1807,6 +1852,7 @@ public class RmiConnectorClient
    * @return The name of the Java class of the <CODE>ProxyMBean</CODE>.
    * @throws ProxyMBeanInstantiationException An error occurs.
    */
+  @Override
   public String getClassForProxyMBean(ObjectInstance instance)
     throws ProxyMBeanInstantiationException {
 
@@ -1892,6 +1938,7 @@ public class RmiConnectorClient
      * the client is failed.
      * @throws RemoteRuntimeException thrown if an exception appears in the server side.
      */
+    @Override
     public Object[] remoteRequest(int opType, Object[] params) throws Exception {
       return connector.remoteRequest(opType, params);
     }
@@ -1905,6 +1952,7 @@ public class RmiConnectorClient
      *                                the client is failed.
      * @throws RemoteRuntimeException thrown if an exception appears in the server side.
      */
+    @Override
     public ConnectorAddress startPush() throws CommunicationException, RemoteRuntimeException {
       return connector.startPush();
     }
@@ -1916,6 +1964,7 @@ public class RmiConnectorClient
      *                                the client is failed.
      * @throws RemoteRuntimeException thrown if an exception appears in the server side.
      */
+    @Override
     public void stopPush(ConnectorAddress address) {
       connector.stopPush();
     }
@@ -1938,6 +1987,7 @@ public class RmiConnectorClient
     /**
      * Get remote MBean server.
      */
+    @Override
     public RemoteMBeanServer getRemoteMBeanServer() {
       return connector;
     }
@@ -1945,6 +1995,7 @@ public class RmiConnectorClient
     /**
      * Ping heartbeat server.
      */
+    @Override
     public String pingHeartBeatServer(String sessionId, int period, int nretries, Long notifSessionId) {
       return connector.pingHeartBeatServer(sessionId, period, nretries, notifSessionId);
     }

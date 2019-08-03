@@ -75,6 +75,7 @@ public class ArrayQueue extends AbstractList {
     this.tail = size;
   }
 
+  @Override
   public boolean add(Object o) {
     queue[tail] = o;
     int newtail = (tail + 1) % capacity;
@@ -85,6 +86,7 @@ public class ArrayQueue extends AbstractList {
     return true; // we did add something
   }
 
+  @Override
   public Object remove(int i) {
     if (i != 0) {
       throw new IllegalArgumentException("Can only remove head of queue");
@@ -98,6 +100,7 @@ public class ArrayQueue extends AbstractList {
     return removed;
   }
 
+  @Override
   public Object get(int i) {
     int size = size();
     if (i < 0 || i >= size) {
@@ -108,6 +111,7 @@ public class ArrayQueue extends AbstractList {
     return queue[index];
   }
 
+  @Override
   public int size() {
     // Can't use % here because it's not mod: -3 % 2 is -1, not +1.
     int diff = tail - head;

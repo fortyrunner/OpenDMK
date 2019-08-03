@@ -159,6 +159,7 @@ public final class ClassLoaderRepositorySupport
 
 
   // from javax.management.loading.DefaultLoaderRepository
+  @Override
   public final Class loadClass(String className)
     throws ClassNotFoundException {
     return loadClass(loaders, className, null, null);
@@ -166,6 +167,7 @@ public final class ClassLoaderRepositorySupport
 
 
   // from javax.management.loading.DefaultLoaderRepository
+  @Override
   public final Class loadClassWithout(ClassLoader without, String className)
     throws ClassNotFoundException {
     if (logger.finerOn()) {
@@ -190,6 +192,7 @@ public final class ClassLoaderRepositorySupport
   }
 
 
+  @Override
   public final Class loadClassBefore(ClassLoader stop, String className)
     throws ClassNotFoundException {
     if (logger.finerOn()) {
@@ -294,14 +297,17 @@ public final class ClassLoaderRepositorySupport
     }
   }
 
+  @Override
   public final void addClassLoader(ClassLoader loader) {
     add(null, loader);
   }
 
+  @Override
   public final void removeClassLoader(ClassLoader loader) {
     remove(null, loader);
   }
 
+  @Override
   public final synchronized void addClassLoader(ObjectName name,
                                                 ClassLoader loader) {
     loadersWithNames.put(name, loader);
@@ -310,6 +316,7 @@ public final class ClassLoaderRepositorySupport
     }
   }
 
+  @Override
   public final synchronized void removeClassLoader(ObjectName name) {
     ClassLoader loader = (ClassLoader) loadersWithNames.remove(name);
     if (!(loader instanceof PrivateClassLoader)) {
@@ -317,6 +324,7 @@ public final class ClassLoaderRepositorySupport
     }
   }
 
+  @Override
   public final ClassLoader getClassLoader(ObjectName name) {
     return (ClassLoader) loadersWithNames.get(name);
   }

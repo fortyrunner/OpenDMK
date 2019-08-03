@@ -228,6 +228,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    * @throws java.lang.Exception This exception should be caught by the MBean server and re-thrown
    *                             as an {@link javax.management.MBeanRegistrationException}.
    */
+  @Override
   public ObjectName preRegister(MBeanServer server, ObjectName name) throws java.lang.Exception {
     if (logger.finerOn()) {
       logger.finer("preRegister ", "object name   = " + name);
@@ -268,6 +269,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    * @param registrationDone Indicates whether or not the MBean has been successfully registered in
    *                         the MBean server. The value false means that the registration phase has failed.
    */
+  @Override
   public void postRegister(Boolean registrationDone) {
     if (registrationDone == Boolean.FALSE) {
     }
@@ -280,6 +282,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    * @throws java.langException This exception should be caught by the MBean server and re-thrown
    *                            as an {@link javax.management.MBeanRegistrationException}.
    */
+  @Override
   public void preDeregister() throws java.lang.Exception {
     // ------------------------
     // Stop corresponding thread
@@ -291,6 +294,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    * Allows the MBean to perform any operations needed after having been
    * unregistered in the MBean server.
    */
+  @Override
   public void postDeregister() {
     // ------------------------
     // free 'remained' allocated resource
@@ -312,6 +316,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    * @throws IOException The creation of the Multicast socket failed.
    */
 
+  @Override
   public void start() throws IOException {
     // ----------------
     // start actual monitor
@@ -378,6 +383,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    * <CODE>STOPPING</CODE> or <CODE>STARTING</CODE>.
    */
 
+  @Override
   public void stop() {
     if (state == ONLINE) {
       changeState(STOPPING);
@@ -404,6 +410,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    * @return <CODE>ONLINE</CODE>,<CODE>OFFLINE</CODE>, <CODE>STOPPING</CODE> or <CODE>STARTING</CODE>.
    */
 
+  @Override
   public Integer getState() {
     return new Integer(state);
   }
@@ -414,6 +421,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    * @return One of the strings "ONLINE", "OFFLINE", "STOPPING" or "STARTING".
    */
 
+  @Override
   public String getStateString() {
     String result = "UNKNOWN";
 
@@ -441,6 +449,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    *
    * @return A string containing the multicast group name.
    */
+  @Override
   public String getMulticastGroup() {
     return multicastGroup;
   }
@@ -455,6 +464,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    * @throws java.lang.IllegalStateException This method has been invoked while
    *                                         the <CODE>DiscoveryMonitor</CODE> was ONLINE or STARTING.
    */
+  @Override
   public void setMulticastGroup(String multicastGroup)
     throws java.lang.IllegalStateException {
     if (state == OFFLINE) {
@@ -470,6 +480,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    *
    * @return The multicast port number.
    */
+  @Override
   public int getMulticastPort() {
     return multicastPort;
   }
@@ -484,6 +495,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    * @throws java.lang.IllegalStateException This method has been invoked while
    *                                         the <CODE>DiscoveryMonitor</CODE> was ONLINE or STARTING.
    */
+  @Override
   public void setMulticastPort(int multicastPort)
     throws java.lang.IllegalStateException {
     if (state == OFFLINE) {
@@ -524,6 +536,7 @@ public class DiscoveryMonitor extends NotificationBroadcasterSupport
    * is the same as the <VAR>state</VAR> parameter;
    * <code>false</code> otherwise.
    */
+  @Override
   public boolean waitState(int state, long timeout) {
     if (logger.finerOn()) {
       logger.finer("waitState", state + "(0on,1off,2st) TO=" + timeout + " ; current state = " + getStateString());

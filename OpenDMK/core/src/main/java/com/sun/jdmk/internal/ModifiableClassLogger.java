@@ -71,6 +71,7 @@ public class ModifiableClassLogger extends ClassLogger {
     dbgTag = className;
   }
 
+  @Override
   public synchronized String getClassName() {
     return dbgTag;
   }

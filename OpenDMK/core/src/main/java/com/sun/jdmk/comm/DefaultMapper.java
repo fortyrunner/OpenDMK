@@ -88,6 +88,7 @@ public class DefaultMapper implements Mapper {
    * proxyMBean.
    * @throws ProxyMBeanInstantiationException An error occurs.
    */
+  @Override
   public String getClassForProxyMBean(ObjectInstance instance)
     throws ProxyMBeanInstantiationException {
     String name = instance.getClassName();

@@ -788,6 +788,7 @@ class ClientIntermediary {
       super(period);
     }
 
+    @Override
     protected void checkConnection() throws IOException {
       try {
         mBeanServerRequest(MBeanServerRequestMessage.GET_DEFAULT_DOMAIN,
@@ -851,6 +852,7 @@ class ClientIntermediary {
       notifForwarder.postReconnection(clis);
     }
 
+    @Override
     protected void doStart() throws IOException {
       connection = client.reconnect();
 
@@ -859,6 +861,7 @@ class ClientIntermediary {
       reconnectNotificationListeners(old);
     }
 
+    @Override
     protected void doStop() {
       try {
         client.close();
@@ -874,6 +877,7 @@ class ClientIntermediary {
       super(env);
     }
 
+    @Override
     protected NotificationResult fetchNotifs(long clientSequenceNumber,
                                              int maxNotifications,
                                              long timeout)
@@ -904,6 +908,7 @@ class ClientIntermediary {
       return (NotificationResult) unwrapped;
     }
 
+    @Override
     protected Integer addListenerForMBeanRemovedNotif()
       throws IOException, InstanceNotFoundException {
 
@@ -932,6 +937,7 @@ class ClientIntermediary {
       }
     }
 
+    @Override
     protected void removeListenerForMBeanRemovedNotif(Integer id)
       throws IOException {
 
@@ -951,6 +957,7 @@ class ClientIntermediary {
       }
     }
 
+    @Override
     protected void lostNotifs(String message, long number) {
       final String notifType = JMXConnectionNotification.NOTIFS_LOST;
       final JMXConnectionNotification n =

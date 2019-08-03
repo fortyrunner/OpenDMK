@@ -416,6 +416,7 @@ class HeartBeatClientHandlerImpl {
    */
   private class Ping extends Thread {
 
+    @Override
     public void run() {
       if (period > 0) {
         try {

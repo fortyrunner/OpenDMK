@@ -222,6 +222,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * @throws java.lang.Exception This exception should be caught by the MBean server and re-thrown
    *                             as an {@link javax.management.MBeanRegistrationException}.
    */
+  @Override
   public ObjectName preRegister(MBeanServer server, ObjectName name) throws java.lang.Exception {
     if (logger.finerOn()) {
       logger.finer("preRegister ", "object name   = " + name);
@@ -240,6 +241,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * @param registrationDone Indicates whether or not the MBean has been successfully registered in
    *                         the MBean server. The value false means that the registration phase has failed.
    */
+  @Override
   public void postRegister(Boolean registrationDone) {
     if (registrationDone == Boolean.FALSE) {
     }
@@ -252,6 +254,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * @throws java.langException This exception should be caught by the MBean server and re-thrown
    *                            as an {@link javax.management.MBeanRegistrationException}.
    */
+  @Override
   public void preDeregister() throws java.lang.Exception {
     // ------------------------
     // Stop receiving multicast msg
@@ -272,6 +275,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * Allows the MBean to perform any operations needed after having been
    * unregistered in the MBean server.
    */
+  @Override
   public void postDeregister() {
 
     // ------------------------
@@ -293,6 +297,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * @throws IOException The creation of the Multicast socket failed.
    */
 
+  @Override
   public void start() throws IOException {
 
     if (state == OFFLINE) {
@@ -369,6 +374,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * The <CODE>DiscoveryClient</CODE> leaves its multicast group,
    * and the multicast socket is released.
    */
+  @Override
   public void stop() {
 
     // ----------------
@@ -412,6 +418,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * <CODE>True</CODE> is returned if the <CODE>DiscoveryClient</CODE> is started (<CODE>DiscoveryClient</CODE>
    * has join the multicast group).
    */
+  @Override
   public boolean isActive() {
     return (state == ONLINE);
   }
@@ -431,6 +438,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * @return A vector of {@link com.sun.jdmk.discovery.DiscoveryResponse}.
    * @throws CommunicationException An error occurred during the discovery.
    */
+  @Override
   public Vector findMBeanServers() throws CommunicationException {
     return findCommunicators(false, null);
   }
@@ -448,6 +456,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * @return A vector of {@link com.sun.jdmk.discovery.DiscoveryResponse}.
    * @throws CommunicationException An error occurred during the discovery.
    */
+  @Override
   public Vector findMBeanServers(String SelectedHost) throws CommunicationException {
     return findCommunicators(false, SelectedHost);
   }
@@ -463,6 +472,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * @return A vector of {@link com.sun.jdmk.discovery.DiscoveryResponse}.
    * @throws CommunicationException An error occurred during the discovery.
    */
+  @Override
   public Vector findCommunicators() throws CommunicationException {
     return findCommunicators(true, null);
   }
@@ -479,6 +489,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * @return A vector of {@link com.sun.jdmk.discovery.DiscoveryResponse}.
    * @throws CommunicationException An error occurred during the discovery.
    */
+  @Override
   public Vector findCommunicators(String SelectedHost) throws CommunicationException {
     return findCommunicators(true, SelectedHost);
   }
@@ -496,6 +507,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * Returns the multicast group.
    * A multicast group is specified by a class D IP address, those in the range 224.0.0.1 to 239.255.255.255.
    */
+  @Override
   public String getMulticastGroup() {
     return multicastGroup;
   }
@@ -510,6 +522,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * @throws java.lang.IllegalStateException This method has been invoked while
    *                                         the <CODE>DiscoveryClient</CODE> was ONLINE or STARTING.
    */
+  @Override
   public void setMulticastGroup(String multicastGroup) throws java.lang.IllegalStateException {
     if (state == OFFLINE) {
       this.multicastGroup = multicastGroup;
@@ -527,6 +540,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * Returns the multicast port.
    * It can be any standard UDP port number.
    */
+  @Override
   public int getMulticastPort() {
     return multicastPort;
   }
@@ -541,6 +555,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * @throws java.lang.IllegalStateException This method has been invoked while
    *                                         the <CODE>DiscoveryClient</CODE> was ONLINE or STARTING.
    */
+  @Override
   public void setMulticastPort(int multicastPort) throws java.lang.IllegalStateException {
     if (state == OFFLINE) {
       this.multicastPort = multicastPort;
@@ -570,6 +585,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    *                     This exception can be thrown only if the state in ONLINE: the actual <CODE>java.net.MulticastSocket</CODE> setting
    *                     is done when the <CODE>DiscoveryClient</CODE> is <CODE>ONLINE</CODE>.
    */
+  @Override
   public void setTimeOut(int timeOut) throws IOException {
     if (timeOut <= 0) {
       this.timeOut = defaultTimeOut;
@@ -586,6 +602,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    *
    * @return The <CODE>timeOut</CODE> in milliseconds.
    */
+  @Override
   public int getTimeOut() {
     return timeOut;
   }
@@ -606,6 +623,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    *                                            This exception can be thrown only if the state in ONLINE: the actual <CODE>java.net.MulticastSocket</CODE> setting
    *                                            is done when the <CODE>DiscoveryClient</CODE> is <CODE>ONLINE</CODE>.
    */
+  @Override
   public void setTimeToLive(int ttl) throws IOException, java.lang.IllegalArgumentException {
 
     if ((ttl <= 0) || (ttl > 255)) {
@@ -623,6 +641,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * Get the time-to-live. The default value is returned if the <CODE>TimeToLive</CODE> has not
    * been set.
    */
+  @Override
   public int getTimeToLive() {
     return ttl;
   }
@@ -640,6 +659,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    * <code>false</code> indicates that the multicast response mode
    * is being used.
    */
+  @Override
   public boolean getPointToPointResponse() {
     return pointToPointResponse;
   }
@@ -655,6 +675,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    *                             false value unsets the use of unicast socket for the response,
    *                             multicast is used instead.
    */
+  @Override
   public void setPointToPointResponse(boolean pointToPointResponse) {
     this.pointToPointResponse = pointToPointResponse;
     if (state == ONLINE) {
@@ -671,6 +692,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    *
    * @return <CODE>ONLINE</CODE>, <CODE>OFFLINE</CODE>.
    */
+  @Override
   public Integer getState() {
     return new Integer(state);
   }
@@ -680,6 +702,7 @@ public class DiscoveryClient implements java.io.Serializable, DiscoveryClientMBe
    *
    * @return One of the strings "ONLINE", "OFFLINE".
    */
+  @Override
   public String getStateString() {
     String result = "UNKNOWN";
 

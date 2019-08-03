@@ -73,6 +73,7 @@ public final class RmiNotificationReceiverImpl_Stub
   // methods from remote interfaces
 
   // implementation of remoteRequest(int, Object[])
+  @Override
   public java.lang.Object[] remoteRequest(int $param_int_1, java.lang.Object[] $param_arrayOf_Object_2)
     throws java.lang.Exception {
     Object $result = ref.invoke(this, $method_remoteRequest_0, new java.lang.Object[]{new java.lang.Integer($param_int_1), $param_arrayOf_Object_2}, -5203888509662801705L);

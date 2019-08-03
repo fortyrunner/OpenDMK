@@ -132,6 +132,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    *                                some reason.  One common reason is that the object <code>c</code>
    *                                does not implement the <code>Cloneable</code> interface.
    */
+  @Override
   public void setOperationContext(OperationContext c) {
     try {
       // NPCTE fix for bugId 4497571, esc 0, MR 03 September 2001
@@ -153,6 +154,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    *
    * @return the current OperationContext.
    */
+  @Override
   public OperationContext getOperationContext() {
     return operationContext;
   }
@@ -533,6 +535,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    *                                       information sent to the <CODE>ConnectorServer</CODE> was not
    *                                       correct. Login based authentication failed.
    */
+  @Override
   public void connect(ConnectorAddress mbeanServerAddress) {
 
     if (logger.finerOn()) {
@@ -615,6 +618,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
   }
 
   // NPCTE fix for bugId 4783766, esc 542324, MR , Nov 2002
+  @Override
   public void disconnect() {
     disconnect(false);
   }
@@ -647,6 +651,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    *
    * @return True, if the communication is established, otherwise false.
    */
+  @Override
   public boolean isConnected() {
 
     if (logger.finerOn()) {
@@ -663,6 +668,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @return The exact address of the remote MBeanServer, or null if the ConnectorClient is
    * not connected.
    */
+  @Override
   public ConnectorAddress getMBeanServerAddress() {
     if (logger.finerOn()) {
       logger.finer("getMBeanServerAddress", "getMBeanServerAddress");
@@ -683,6 +689,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * disconnected, getMbeanServerId still returns the previous
    * MbeanServer identification.
    */
+  @Override
   public String getMBeanServerId() {
     if (logger.finerOn()) {
       logger.finer("getMBeanServerId", "getMBeanServerId");
@@ -729,6 +736,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException  The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                        not correct. Login based authentication failed.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name)
     throws ReflectionException, InstanceAlreadyExistsException,
     MBeanRegistrationException, MBeanException,
@@ -769,6 +777,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException  The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                        not correct. Login based authentication failed.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     ObjectName loaderName)
     throws ReflectionException, InstanceAlreadyExistsException,
@@ -812,6 +821,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException  The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                        not correct. Login based authentication failed.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     Object params[], String signature[])
     throws ReflectionException, InstanceAlreadyExistsException,
@@ -859,6 +869,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException  The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                        not correct. Login based authentication failed.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     ObjectName loaderName, Object params[],
                                     String signature[])
@@ -941,6 +952,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public void unregisterMBean(ObjectName name) throws InstanceNotFoundException, MBeanRegistrationException {
     if (!connected) {
       throw new CommunicationException("ConnectorClient not connected");
@@ -995,6 +1007,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public Set queryNames(ObjectName name, QueryExp query) {
     if (!connected) {
       throw new CommunicationException("ConnectorClient not connected");
@@ -1029,6 +1042,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public Set queryMBeans(ObjectName name, QueryExp query) {
     if (!connected) {
       throw new CommunicationException("ConnectorClient not connected");
@@ -1062,6 +1076,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public boolean isRegistered(ObjectName name) {
     if (!connected) {
       throw new CommunicationException("ConnectorClient not connected");
@@ -1098,6 +1113,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public Object getAttribute(ObjectName name, String attribute)
     throws MBeanException, AttributeNotFoundException, InstanceNotFoundException, ReflectionException {
 
@@ -1138,6 +1154,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public AttributeList getAttributes(ObjectName name, String[] attributes)
     throws InstanceNotFoundException {
 
@@ -1177,6 +1194,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException  The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                        not correct. Login based authentication failed.
    */
+  @Override
   public void setAttribute(ObjectName name, Attribute attribute)
     throws InstanceNotFoundException, AttributeNotFoundException, InvalidAttributeValueException,
     MBeanException, ReflectionException {
@@ -1220,6 +1238,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public AttributeList setAttributes(ObjectName name, AttributeList attributes)
     throws InstanceNotFoundException {
 
@@ -1258,6 +1277,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public Object invoke(ObjectName name, String methodName, Object arguments[], String signature[])
     throws InstanceNotFoundException, MBeanException, ReflectionException {
 
@@ -1302,6 +1322,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public MBeanInfo getMBeanInfo(ObjectName name)
     throws InstanceNotFoundException, IntrospectionException, ReflectionException {
 
@@ -1338,6 +1359,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public ObjectInstance getObjectInstance(ObjectName name) throws InstanceNotFoundException {
 
     if (!connected) {
@@ -1364,6 +1386,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public Integer getMBeanCount() {
 
     if (!connected) {
@@ -1388,6 +1411,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public String getDefaultDomain() {
     if (!connected) {
       throw new CommunicationException("ConnectorClient not connected");
@@ -1411,6 +1435,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @return true if the MBean specified is an instance of the specified class, false otherwise.
    * @throws InstanceNotFoundException The MBean specified is not registered in the MBean server.
    */
+  @Override
   public boolean isInstanceOf(ObjectName name, String className) throws InstanceNotFoundException {
     if (!connected) {
       throw new CommunicationException("ConnectorClient not connected");
@@ -1468,6 +1493,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    *                 is represented by the ProxyMBean.
    * @return The name of the Java class of the ProxyMBean.
    */
+  @Override
   public String getClassForProxyMBean(ObjectInstance instance) throws ProxyMBeanInstantiationException {
     if (logger.finerOn()) {
       logger.finer("getClassForProxyMBean", "getClassForProxyMBean");
@@ -1497,6 +1523,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public void setMode(int mode) throws IllegalArgumentException {
     if (logger.finerOn()) {
       logger.finer("setMode", "setMode");
@@ -1520,6 +1547,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public int getMode() {
     if (logger.finerOn()) {
       logger.finer("getMode", "getMode");
@@ -1540,6 +1568,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public void getNotifications() {
     if (logger.finerOn()) {
       logger.finer("getNotifications", "getNotifications");
@@ -1567,6 +1596,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public void setPeriod(int period) {
     if (logger.finerOn()) {
       logger.finer("setPeriod", "setPeriod");
@@ -1589,6 +1619,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public int getPeriod() {
     if (logger.finerOn()) {
       logger.finer("getPeriod", "getPeriod");
@@ -1610,6 +1641,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public void clearCache() {
     if (logger.finerOn()) {
       logger.finer("clearCache", "clearCache");
@@ -1638,6 +1670,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public int setCacheSize(int size, boolean discardOverflow) throws JMRuntimeException {
     if (logger.finerOn()) {
       logger.finer("setCacheSize", "setCacheSize");
@@ -1661,6 +1694,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public int getCacheSize() {
     if (logger.finerOn()) {
       logger.finer("getCacheSize", "getCacheSize");
@@ -1686,6 +1720,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public void setOverflowCount(int count) {
     if (logger.finerOn()) {
       logger.finer("setOverflowCount", "setOverflowCount");
@@ -1710,6 +1745,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public int getOverflowCount() {
     if (logger.finerOn()) {
       logger.finer("getOverflowCount", "getOverflowCount");
@@ -1735,6 +1771,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public void setOverflowMode(int of) throws IllegalArgumentException {
     if (logger.finerOn()) {
       logger.finer("setOverflowMode", "setOverflowMode");
@@ -1757,6 +1794,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public int getOverflowMode() {
     if (logger.finerOn()) {
       logger.finer("getOverflowMode", "getOverflowMode");
@@ -1782,6 +1820,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public void addNotificationListener(ObjectName name, NotificationListener listener, NotificationFilter filter, Object handback)
     throws InstanceNotFoundException {
     if (logger.finerOn()) {
@@ -1808,6 +1847,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @throws UnauthorizedSecurityException The authentication information sent to the <CODE>ConnectorServer</CODE> was
    *                                       not correct. Login based authentication failed.
    */
+  @Override
   public void removeNotificationListener(ObjectName name, NotificationListener listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
     if (logger.finerOn()) {
@@ -1932,6 +1972,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * <p>
    * The default value is 10000 milliseconds.
    */
+  @Override
   public int getHeartBeatPeriod() {
     if (logger.finerOn()) {
       logger.finer("getHeartBeatPeriod", "getHeartBeatPeriod");
@@ -1951,6 +1992,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    *
    * @param period The heartbeat period in milliseconds.
    */
+  @Override
   public void setHeartBeatPeriod(int period) {
     if (logger.finerOn()) {
       logger.finer("setHeartBeatPeriod", "setHeartBeatPeriod");
@@ -1966,6 +2008,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * <p>
    * The default value is 6 times.
    */
+  @Override
   public int getHeartBeatRetries() {
     if (logger.finerOn()) {
       logger.finer("getHeartBeatRetries", "getHeartBeatRetries");
@@ -1983,6 +2026,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    *
    * @param nretries The number of retries.
    */
+  @Override
   public void setHeartBeatRetries(int nretries) {
     if (logger.finerOn()) {
       logger.finer("setHeartBeatRetries", "setHeartBeatRetries");
@@ -2000,6 +2044,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    * @param filter   The filter object. If filter is null, no filtering will be performed before handling notifications.
    * @param handback The context to be sent to the listener when a notification is emitted.
    */
+  @Override
   public void addHeartBeatNotificationListener(NotificationListener listener, NotificationFilter filter, Object handback) {
     if (logger.finerOn()) {
       logger.finer("addHeartBeatNotificationListener", "addHeartBeatNotificationListener");
@@ -2016,6 +2061,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
    *
    * @param listener The heartbeat listener which will handle the notifications emitted by the connector client.
    */
+  @Override
   public void removeHeartBeatNotificationListener(NotificationListener listener) {
     if (logger.finerOn()) {
       logger.finer("removeHeartBeatNotificationListener", "removeHeartBeatNotificationListener");
@@ -2073,6 +2119,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
      * @param params a set of objects provided by the ClientNotificationDispatcher.
      * @return a set of Objects.
      */
+    @Override
     public Object[] remoteRequest(int opType, Object[] params) throws Exception {
       return connector.remoteRequest(opType, params);
     }
@@ -2085,6 +2132,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
      *
      * @return the connector address used by a server to connect with this client.
      */
+    @Override
     public ConnectorAddress startPush() {
       return connector.startPush();
     }
@@ -2094,6 +2142,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
      *
      * @param address the connector address used by a server to connect with this client.
      */
+    @Override
     public void stopPush(ConnectorAddress address) {
       connector.stopPush();
     }
@@ -2116,6 +2165,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
     /**
      * Get remote MBean server.
      */
+    @Override
     public RemoteMBeanServer getRemoteMBeanServer() {
       return connector;
     }
@@ -2123,6 +2173,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
     /**
      * Ping heartbeat server.
      */
+    @Override
     public String pingHeartBeatServer(String sessionId, int period, int nretries, Long notifSessionId) {
       return connector.pingHeartBeatServer(sessionId, period, nretries, notifSessionId);
     }

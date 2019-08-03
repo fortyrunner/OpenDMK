@@ -70,6 +70,7 @@ public class SynchroMessageConnectionServerImpl implements SynchroMessageConnect
     this.serverAdmin = DefaultConfig.getServerAdmin(this.env);
   }
 
+  @Override
   public void start(Map env) throws IOException {
     if (logger.traceOn()) {
       logger.trace("start", "Starts a SynchroMessageConnectionServerImpl.");
@@ -78,6 +79,7 @@ public class SynchroMessageConnectionServerImpl implements SynchroMessageConnect
     msServer.start(env);
   }
 
+  @Override
   public ServerSynchroMessageConnection accept() throws IOException {
     if (logger.traceOn()) {
       logger.trace("accept", "Waiting a coming client...");
@@ -86,6 +88,7 @@ public class SynchroMessageConnectionServerImpl implements SynchroMessageConnect
     return new ServerSynchroMessageConnectionImpl(msServer.accept(), env);
   }
 
+  @Override
   public void stop() throws IOException {
     if (logger.traceOn()) {
       logger.trace("stop", "Stops a SynchroMessageConnectionServerImpl object.");
@@ -94,6 +97,7 @@ public class SynchroMessageConnectionServerImpl implements SynchroMessageConnect
     msServer.stop();
   }
 
+  @Override
   public JMXServiceURL getAddress() {
     return msServer.getAddress();
   }

@@ -57,10 +57,12 @@ public final class RmiNotificationReceiverImpl_Skel
 
   private static final long interfaceHash = 8523573353537790858L;
 
+  @Override
   public java.rmi.server.Operation[] getOperations() {
     return operations.clone();
   }
 
+  @Override
   public void dispatch(java.rmi.Remote obj, java.rmi.server.RemoteCall call, int opnum, long hash)
     throws java.lang.Exception {
     if (opnum < 0) {

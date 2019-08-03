@@ -310,6 +310,7 @@ public abstract class ForwardingMBeanServerInterceptor implements MBeanServerInt
     }
   }
 
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     Object params[], String signature[])
     throws ReflectionException, InstanceAlreadyExistsException,
@@ -318,6 +319,7 @@ public abstract class ForwardingMBeanServerInterceptor implements MBeanServerInt
     return next.createMBean(className, name, params, signature);
   }
 
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     ObjectName loaderName, Object params[],
                                     String signature[])
@@ -328,49 +330,59 @@ public abstract class ForwardingMBeanServerInterceptor implements MBeanServerInt
       signature);
   }
 
+  @Override
   public ObjectInstance registerMBean(Object object, ObjectName name)
     throws InstanceAlreadyExistsException, MBeanRegistrationException,
     NotCompliantMBeanException {
     return next.registerMBean(object, name);
   }
 
+  @Override
   public void unregisterMBean(ObjectName name)
     throws InstanceNotFoundException, MBeanRegistrationException {
     next.unregisterMBean(name);
   }
 
+  @Override
   public ObjectInstance getObjectInstance(ObjectName name)
     throws InstanceNotFoundException {
     return next.getObjectInstance(name);
   }
 
+  @Override
   public Set queryMBeans(ObjectName name, QueryExp query) {
     return next.queryMBeans(name, query);
   }
 
+  @Override
   public Set queryNames(ObjectName name, QueryExp query) {
     return next.queryNames(name, query);
   }
 
+  @Override
   public boolean isRegistered(ObjectName name) {
     return next.isRegistered(name);
   }
 
+  @Override
   public Integer getMBeanCount() {
     return next.getMBeanCount();
   }
 
+  @Override
   public Object getAttribute(ObjectName name, String attribute)
     throws MBeanException, AttributeNotFoundException,
     InstanceNotFoundException, ReflectionException {
     return next.getAttribute(name, attribute);
   }
 
+  @Override
   public AttributeList getAttributes(ObjectName name, String[] attributes)
     throws InstanceNotFoundException, ReflectionException {
     return next.getAttributes(name, attributes);
   }
 
+  @Override
   public void setAttribute(ObjectName name, Attribute attribute)
     throws InstanceNotFoundException, AttributeNotFoundException,
     InvalidAttributeValueException, MBeanException,
@@ -378,12 +390,14 @@ public abstract class ForwardingMBeanServerInterceptor implements MBeanServerInt
     next.setAttribute(name, attribute);
   }
 
+  @Override
   public AttributeList setAttributes(ObjectName name,
                                      AttributeList attributes)
     throws InstanceNotFoundException, ReflectionException {
     return next.setAttributes(name, attributes);
   }
 
+  @Override
   public Object invoke(ObjectName name, String operationName,
                        Object params[], String signature[])
     throws InstanceNotFoundException, MBeanException,
@@ -391,14 +405,17 @@ public abstract class ForwardingMBeanServerInterceptor implements MBeanServerInt
     return next.invoke(name, operationName, params, signature);
   }
 
+  @Override
   public String getDefaultDomain() {
     return next.getDefaultDomain();
   }
 
+  @Override
   public String[] getDomains() {
     return next.getDomains();
   }
 
+  @Override
   public void addNotificationListener(ObjectName name,
                                       NotificationListener listener,
                                       NotificationFilter filter,
@@ -407,6 +424,7 @@ public abstract class ForwardingMBeanServerInterceptor implements MBeanServerInt
     next.addNotificationListener(name, listener, filter, handback);
   }
 
+  @Override
   public void addNotificationListener(ObjectName name,
                                       ObjectName listener,
                                       NotificationFilter filter,
@@ -415,12 +433,14 @@ public abstract class ForwardingMBeanServerInterceptor implements MBeanServerInt
     next.addNotificationListener(name, listener, filter, handback);
   }
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
     next.removeNotificationListener(name, listener);
   }
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener,
                                          NotificationFilter filter,
@@ -429,12 +449,14 @@ public abstract class ForwardingMBeanServerInterceptor implements MBeanServerInt
     next.removeNotificationListener(name, listener, filter, handback);
   }
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
     next.removeNotificationListener(name, listener);
   }
 
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener,
                                          NotificationFilter filter,
@@ -443,27 +465,32 @@ public abstract class ForwardingMBeanServerInterceptor implements MBeanServerInt
     next.removeNotificationListener(name, listener, filter, handback);
   }
 
+  @Override
   public MBeanInfo getMBeanInfo(ObjectName name)
     throws InstanceNotFoundException, IntrospectionException,
     ReflectionException {
     return next.getMBeanInfo(name);
   }
 
+  @Override
   public boolean isInstanceOf(ObjectName name, String className)
     throws InstanceNotFoundException {
     return next.isInstanceOf(name, className);
   }
 
+  @Override
   public ClassLoader getClassLoaderFor(ObjectName mbeanName)
     throws InstanceNotFoundException {
     return next.getClassLoaderFor(mbeanName);
   }
 
+  @Override
   public ClassLoader getClassLoader(ObjectName loaderName)
     throws InstanceNotFoundException {
     return next.getClassLoader(loaderName);
   }
 
+  @Override
   public final ClassLoader getMBeanClassLoader(ObjectName name)
     throws InstanceNotFoundException {
     return getClassLoaderFor(name);

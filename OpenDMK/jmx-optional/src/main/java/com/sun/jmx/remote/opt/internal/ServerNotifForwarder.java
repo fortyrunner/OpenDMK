@@ -92,6 +92,7 @@ public class ServerNotifForwarder {
     try {
       Boolean instanceOf = (Boolean)
         AccessController.doPrivileged(new PrivilegedExceptionAction() {
+          @Override
           public Object run() throws InstanceNotFoundException {
             return new Boolean(
               mbeanServer.isInstanceOf(name,
@@ -256,6 +257,7 @@ public class ServerNotifForwarder {
       try {
         oi = (ObjectInstance) AccessController.doPrivileged(
           new PrivilegedExceptionAction() {
+            @Override
             public Object run()
               throws InstanceNotFoundException {
               return mbeanServer.getObjectInstance(name);

@@ -157,6 +157,7 @@ public class HttpConnectorServer extends GenericHttpConnectorServer implements H
    * @throws Exception This exception should be caught by the MBeanServer
    *                   and re-thrown as an MBeanRegistrationException.
    */
+  @Override
   public ObjectName preRegister(MBeanServer server, ObjectName name) throws Exception {
     if (name == null) {
       name = new ObjectName(server.getDefaultDomain() + ":" + com.sun.jdmk.ServiceName.HTTP_CONNECTOR_SERVER);
@@ -167,6 +168,7 @@ public class HttpConnectorServer extends GenericHttpConnectorServer implements H
   /**
    * Gets an instance of the socket factory used by this connector.
    */
+  @Override
   GenericHttpSocket createSocket() {
     HttpSocket http_socket = new HttpSocket();
     http_socket.setTimeout(getTimeout());
@@ -176,6 +178,7 @@ public class HttpConnectorServer extends GenericHttpConnectorServer implements H
   /**
    * Gets the notification forwarder used by this connector.
    */
+  @Override
   GenericHttpNotificationForwarder getNotificationForwarder(GenericHttpConnectorAddress address) {
     return new HttpNotificationForwarder(address);
   }
@@ -185,6 +188,7 @@ public class HttpConnectorServer extends GenericHttpConnectorServer implements H
    *
    * @return The string "http".
    */
+  @Override
   public String getProtocol() {
     return "http";
   }
@@ -199,6 +203,7 @@ public class HttpConnectorServer extends GenericHttpConnectorServer implements H
    *
    * @return The current value of the "Timeout" property.
    */
+  @Override
   public int getTimeout() {
     if (sockListen != null) {
       return sockListen.getTimeout();
@@ -224,6 +229,7 @@ public class HttpConnectorServer extends GenericHttpConnectorServer implements H
    * @throws java.lang.IllegalStateException This method has been invoked
    *                                         while the connector was ONLINE or STARTING.
    */
+  @Override
   public void setTimeout(int value) throws java.lang.IllegalStateException {
     if ((state == ONLINE) || (state == STARTING)) {
       throw new IllegalStateException("Stop server before carrying out this operation");
@@ -240,6 +246,7 @@ public class HttpConnectorServer extends GenericHttpConnectorServer implements H
   /**
    * Returns the string used in debug traces.
    */
+  @Override
   String makeDebugTag() {
     return "HttpConnectorServer[" + getProtocol() + ":" + getPort() + "]";
   }

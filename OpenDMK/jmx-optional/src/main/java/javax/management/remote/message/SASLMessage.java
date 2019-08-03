@@ -182,6 +182,7 @@ public class SASLMessage implements ProfileMessage {
   /**
    * The profile name.
    */
+  @Override
   public String getProfileName() {
     return "SASL/" + mechanism;
   }

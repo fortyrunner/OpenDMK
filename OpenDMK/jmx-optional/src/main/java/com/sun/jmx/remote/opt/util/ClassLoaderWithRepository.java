@@ -61,6 +61,7 @@ public class ClassLoaderWithRepository extends ClassLoader {
     this.cl2 = cl2;
   }
 
+  @Override
   protected Class findClass(String name) throws ClassNotFoundException {
     try {
       return repository.loadClass(name);

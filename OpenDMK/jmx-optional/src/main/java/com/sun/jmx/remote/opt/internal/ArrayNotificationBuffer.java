@@ -139,6 +139,7 @@ public class ArrayNotificationBuffer implements NotificationBuffer {
       addSharer(this);
     }
 
+    @Override
     public NotificationResult
     fetchNotifications(Set/*<ListenerInfo>*/ listeners,
                        long startSequenceNumber,
@@ -150,6 +151,7 @@ public class ArrayNotificationBuffer implements NotificationBuffer {
         timeout, maxNotifications);
     }
 
+    @Override
     public void dispose() {
       ArrayNotificationBuffer.this.removeSharer(this);
     }
@@ -188,6 +190,7 @@ public class ArrayNotificationBuffer implements NotificationBuffer {
     return disposed;
   }
 
+  @Override
   public void dispose() {
     logger.trace("dispose", "starts");
 
@@ -234,6 +237,7 @@ public class ArrayNotificationBuffer implements NotificationBuffer {
    *                            elements but will not contain more than this number of
    *                            different notifications.
    */
+  @Override
   public NotificationResult
   fetchNotifications(Set/*<ListenerInfo>*/ listeners,
                      long startSequenceNumber,
@@ -623,6 +627,7 @@ public class ArrayNotificationBuffer implements NotificationBuffer {
     throws Exception {
     try {
       AccessController.doPrivileged(new PrivilegedExceptionAction() {
+        @Override
         public Object run() throws InstanceNotFoundException {
           mBeanServer.addNotificationListener(name,
             listener,
@@ -641,6 +646,7 @@ public class ArrayNotificationBuffer implements NotificationBuffer {
     throws Exception {
     try {
       AccessController.doPrivileged(new PrivilegedExceptionAction() {
+        @Override
         public Object run() throws Exception {
           mBeanServer.removeNotificationListener(name, listener);
           return null;
@@ -655,6 +661,7 @@ public class ArrayNotificationBuffer implements NotificationBuffer {
                          final QueryExp query) {
     PrivilegedAction act =
       new PrivilegedAction() {
+        @Override
         public Object run() {
           return mBeanServer.queryNames(name, query);
         }
@@ -673,6 +680,7 @@ public class ArrayNotificationBuffer implements NotificationBuffer {
                                       final String className) {
     PrivilegedExceptionAction act =
       new PrivilegedExceptionAction() {
+        @Override
         public Object run() throws InstanceNotFoundException {
           return new Boolean(mbs.isInstanceOf(name, className));
         }
@@ -723,6 +731,7 @@ public class ArrayNotificationBuffer implements NotificationBuffer {
   }
 
   private class BufferListener implements NotificationListener {
+    @Override
     public void handleNotification(Notification notif, Object handback) {
       if (logger.debugOn()) {
         logger.debug("BufferListener.handleNotification",
@@ -737,6 +746,7 @@ public class ArrayNotificationBuffer implements NotificationBuffer {
 
   private static class BroadcasterQuery
     extends QueryEval implements QueryExp {
+    @Override
     public boolean apply(final ObjectName name) {
       final MBeanServer mbs = QueryEval.getMBeanServer();
       return isInstanceOf(mbs, name, broadcasterClass);
@@ -755,6 +765,7 @@ public class ArrayNotificationBuffer implements NotificationBuffer {
 
   private final NotificationListener creationListener =
     new NotificationListener() {
+      @Override
       public void handleNotification(Notification notif,
                                      Object handback) {
         logger.debug("creationListener", "handleNotification called");

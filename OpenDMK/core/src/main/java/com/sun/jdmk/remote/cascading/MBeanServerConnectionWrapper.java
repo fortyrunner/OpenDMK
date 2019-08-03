@@ -143,6 +143,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public void addNotificationListener(ObjectName name,
                                       NotificationListener listener,
                                       NotificationFilter filter,
@@ -160,6 +161,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public void addNotificationListener(ObjectName name,
                                       ObjectName listener,
                                       NotificationFilter filter,
@@ -177,6 +179,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name)
     throws
     ReflectionException,
@@ -194,6 +197,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     Object params[], String signature[])
     throws
@@ -213,6 +217,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInstance createMBean(String className,
                                     ObjectName name,
                                     ObjectName loaderName)
@@ -233,6 +238,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInstance createMBean(String className,
                                     ObjectName name,
                                     ObjectName loaderName,
@@ -256,6 +262,7 @@ public abstract class MBeanServerConnectionWrapper
    * Throws an {@link UnsupportedOperationException}. This behavior can
    * be changed by subclasses.
    */
+  @Override
   public ObjectInputStream deserialize(ObjectName name, byte[] data)
     throws OperationsException {
     throw new UnsupportedOperationException("deserialize");
@@ -265,6 +272,7 @@ public abstract class MBeanServerConnectionWrapper
    * Throws an {@link UnsupportedOperationException}. This behavior can
    * be changed by subclasses.
    */
+  @Override
   public ObjectInputStream deserialize(String className, byte[] data)
     throws OperationsException, ReflectionException {
     throw new UnsupportedOperationException("deserialize");
@@ -274,6 +282,7 @@ public abstract class MBeanServerConnectionWrapper
    * Throws an {@link UnsupportedOperationException}. This behavior can
    * be changed by subclasses.
    */
+  @Override
   public ObjectInputStream deserialize(String className,
                                        ObjectName loaderName,
                                        byte[] data)
@@ -287,6 +296,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public Object getAttribute(ObjectName name, String attribute)
     throws
     MBeanException,
@@ -304,6 +314,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public AttributeList getAttributes(ObjectName name, String[] attributes)
     throws InstanceNotFoundException, ReflectionException {
     try {
@@ -317,6 +328,7 @@ public abstract class MBeanServerConnectionWrapper
    * Throws an {@link UnsupportedOperationException}. This behavior can
    * be changed by subclasses.
    */
+  @Override
   public ClassLoader getClassLoader(ObjectName loaderName)
     throws InstanceNotFoundException {
     throw new UnsupportedOperationException("getClassLoader");
@@ -326,6 +338,7 @@ public abstract class MBeanServerConnectionWrapper
    * Throws an {@link UnsupportedOperationException}. This behavior can
    * be changed by subclasses.
    */
+  @Override
   public ClassLoader getClassLoaderFor(ObjectName mbeanName)
     throws InstanceNotFoundException {
     throw new UnsupportedOperationException("getClassLoaderFor");
@@ -335,6 +348,7 @@ public abstract class MBeanServerConnectionWrapper
    * Throws an {@link UnsupportedOperationException}. This behavior can
    * be changed by subclasses.
    */
+  @Override
   public ClassLoaderRepository getClassLoaderRepository() {
     throw new UnsupportedOperationException("getClassLoaderRepository");
   }
@@ -343,6 +357,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public String getDefaultDomain() {
     try {
       return connection().getDefaultDomain();
@@ -355,6 +370,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public String[] getDomains() {
     try {
       return connection().getDomains();
@@ -367,6 +383,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public Integer getMBeanCount() {
     try {
       return connection().getMBeanCount();
@@ -379,6 +396,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public MBeanInfo getMBeanInfo(ObjectName name)
     throws
     InstanceNotFoundException,
@@ -395,6 +413,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public ObjectInstance getObjectInstance(ObjectName name)
     throws InstanceNotFoundException {
     try {
@@ -408,6 +427,7 @@ public abstract class MBeanServerConnectionWrapper
    * Throws an {@link UnsupportedOperationException}. This behavior can
    * be changed by subclasses.
    */
+  @Override
   public Object instantiate(String className)
     throws ReflectionException, MBeanException {
     throw new UnsupportedOperationException("instantiate");
@@ -417,6 +437,7 @@ public abstract class MBeanServerConnectionWrapper
    * Throws an {@link UnsupportedOperationException}. This behavior can
    * be changed by subclasses.
    */
+  @Override
   public Object instantiate(String className,
                             Object params[],
                             String signature[])
@@ -428,6 +449,7 @@ public abstract class MBeanServerConnectionWrapper
    * Throws an {@link UnsupportedOperationException}. This behavior can
    * be changed by subclasses.
    */
+  @Override
   public Object instantiate(String className, ObjectName loaderName)
     throws ReflectionException, MBeanException,
     InstanceNotFoundException {
@@ -438,6 +460,7 @@ public abstract class MBeanServerConnectionWrapper
    * Throws an {@link UnsupportedOperationException}. This behavior can
    * be changed by subclasses.
    */
+  @Override
   public Object instantiate(String className, ObjectName loaderName,
                             Object params[], String signature[])
     throws ReflectionException, MBeanException,
@@ -449,6 +472,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public Object invoke(ObjectName name, String operationName,
                        Object params[], String signature[])
     throws
@@ -466,6 +490,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public boolean isInstanceOf(ObjectName name, String className)
     throws InstanceNotFoundException {
     try {
@@ -479,6 +504,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public boolean isRegistered(ObjectName name) {
     try {
       return connection().isRegistered(name);
@@ -492,6 +518,7 @@ public abstract class MBeanServerConnectionWrapper
    * wrapped object.
    * If an IOException is raised, returns an empty Set.
    */
+  @Override
   public Set queryMBeans(ObjectName name, QueryExp query) {
     try {
       return connection().queryMBeans(name, query);
@@ -506,6 +533,7 @@ public abstract class MBeanServerConnectionWrapper
    * wrapped object.
    * If an IOException is raised, returns an empty Set.
    */
+  @Override
   public Set queryNames(ObjectName name, QueryExp query) {
     try {
       return connection().queryNames(name, query);
@@ -519,6 +547,7 @@ public abstract class MBeanServerConnectionWrapper
    * Throws an {@link UnsupportedOperationException}. This behavior can
    * be changed by subclasses.
    */
+  @Override
   public ObjectInstance registerMBean(Object object, ObjectName name)
     throws
     InstanceAlreadyExistsException,
@@ -531,6 +560,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
@@ -545,6 +575,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener,
                                          NotificationFilter filter,
@@ -562,6 +593,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
@@ -576,6 +608,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener,
                                          NotificationFilter filter,
@@ -593,6 +626,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public void setAttribute(ObjectName name, Attribute attribute)
     throws
     InstanceNotFoundException,
@@ -611,6 +645,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public AttributeList setAttributes(ObjectName name,
                                      AttributeList attributes)
     throws InstanceNotFoundException, ReflectionException {
@@ -625,6 +660,7 @@ public abstract class MBeanServerConnectionWrapper
    * Forward this method to the
    * wrapped object.
    */
+  @Override
   public void unregisterMBean(ObjectName name)
     throws InstanceNotFoundException, MBeanRegistrationException {
     try {

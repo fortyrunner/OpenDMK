@@ -344,6 +344,7 @@ public abstract class ClientNotifForwarder {
 // -------------------------------------------------
   //
   private class NotifFetcher implements Runnable {
+    @Override
     public void run() {
       synchronized (ClientNotifForwarder.this) {
         currentFetchThread = Thread.currentThread();
@@ -355,6 +356,7 @@ public abstract class ClientNotifForwarder {
 
       if (defaultClassLoader != null) {
         AccessController.doPrivileged(new PrivilegedAction() {
+          @Override
           public Object run() {
             Thread.currentThread().
               setContextClassLoader(defaultClassLoader);

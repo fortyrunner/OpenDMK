@@ -81,6 +81,7 @@ public class ClientSynchroMessageConnectionImpl implements ClientSynchroMessageC
     this.env = env;
   }
 
+  @Override
   public void connect(Map env) throws IOException {
     synchronized (stateLock) {
       if (state == UNCONNECTED) {
@@ -194,6 +195,7 @@ public class ClientSynchroMessageConnectionImpl implements ClientSynchroMessageC
     }
   }
 
+  @Override
   public void sendOneWay(Message msg) throws IOException {
     if (logger.traceOn()) {
       logger.trace("sendOneWay", "Send a message without response.");
@@ -206,6 +208,7 @@ public class ClientSynchroMessageConnectionImpl implements ClientSynchroMessageC
     }
   }
 
+  @Override
   public Message sendWithReturn(Message msg) throws IOException {
     if (logger.traceOn()) {
       logger.trace("sendWithReturn", "Send a message with response.");
@@ -339,6 +342,7 @@ public class ClientSynchroMessageConnectionImpl implements ClientSynchroMessageC
     return ret;
   }
 
+  @Override
   public void close() throws IOException {
     if (logger.traceOn()) {
       logger.trace("close", "Closing this SynchroMessageConnection.");
@@ -406,6 +410,7 @@ public class ClientSynchroMessageConnectionImpl implements ClientSynchroMessageC
     }
   }
 
+  @Override
   public String getConnectionId() {
     // at client side, only clientAdmin can know connectionId
     // when it receives HandshakeEndMessage from its server.
@@ -427,6 +432,7 @@ public class ClientSynchroMessageConnectionImpl implements ClientSynchroMessageC
     public MessageReader() {
     }
 
+    @Override
     public void run() {
       try {
         executingThread = Thread.currentThread();
@@ -568,6 +574,7 @@ public class ClientSynchroMessageConnectionImpl implements ClientSynchroMessageC
       this.msg = msg;
     }
 
+    @Override
     public void run() {
       if (logger.traceOn()) {
         logger.trace("RemoteJob-run", "Receive a new request.");

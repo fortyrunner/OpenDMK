@@ -131,6 +131,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
    * <p>
    * The default value is <CODE>PUSH_MODE</CODE>.
    */
+  @Override
   public int getMode() {
     return forwardMode;
   }
@@ -142,6 +143,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
    *
    * @param mode set to <CODE>PUSH_MODE</CODE> or <CODE>PULL_MODE</CODE>.
    */
+  @Override
   public synchronized void setMode(int mode) throws IllegalArgumentException {
     if (mode != ClientNotificationHandler.PUSH_MODE && mode != ClientNotificationHandler.PULL_MODE) {
       throw new IllegalArgumentException("The mode is illegal.");
@@ -175,6 +177,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
    *                                   match any of the registered MBeans.
    * @throws IllegalArgumentException  Thrown if the listener is null.
    */
+  @Override
   public void addNotificationListener(ObjectName mbean,
                                       NotificationListener listener,
                                       NotificationFilter filter,
@@ -227,6 +230,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
    * @throws ListenerNotFoundException The listener is not registered
    *                                   in the MBean.
    */
+  @Override
   public void removeNotificationListener(ObjectName mbean,
                                          NotificationListener listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
@@ -330,6 +334,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
    *
    * @param period The period in milliseconds.
    */
+  @Override
   public void setPeriod(int period) {
     if (logger.finerOn()) {
       logger.finer("setPullPeriod", "A user asks to set pull period to " + period);
@@ -357,6 +362,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
    * <p>
    * The default value is 1000 milliseconds.
    */
+  @Override
   public int getPeriod() {
     return forwardPeriod;
   }
@@ -364,6 +370,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
   /**
    * Retrieves all notifications in the cache.
    */
+  @Override
   public void getNotifications() {
     if (logger.finerOn()) {
       logger.finer("getNotification", "A user asks to get all notifications.");
@@ -410,6 +417,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
   /**
    * Clear the notification cache. All notifications saved in the cache then will be discarded.
    */
+  @Override
   public void clearCache() {
     if (logger.finerOn()) {
       logger.finer("clearCache", "Ask the server to clear the notification cache.");
@@ -438,6 +446,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
    *
    * @param size the maximum number of notifications in the cache.
    */
+  @Override
   public int setCacheSize(int size, boolean discardOverflow) {
     if (logger.finerOn()) {
       logger.finer("setCacheSize", "Ask the server to set size of the cache.");
@@ -469,6 +478,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
    * but this may lead to OutOfMemory errors under stressed conditions.
    * <P>The default value is <CODE>NO_CACHE_LIMIT</CODE>.
    */
+  @Override
   public int getCacheSize() {
     if (logger.finerOn()) {
       logger.finer("getCacheSize", "Ask the server to return the size of the cache.");
@@ -497,6 +507,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
    *
    * @param count The new value to set to overflow count.
    */
+  @Override
   public void setOverflowCount(int count) {
     if (logger.finerOn()) {
       logger.finer("setOverflowCount", "Set the overflow count.");
@@ -519,6 +530,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
   /**
    * Get the number of notifications discarded since last forwarding because the cache limit has been reached.
    */
+  @Override
   public int getOverflowCount() {
     if (logger.finerOn()) {
       logger.finer("getOverflowCount", "Get the overflow count.");
@@ -554,6 +566,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
    * @throws IllegalArgumentException Thrown if the mode is not <CODE>DISCARD_NEW</CODE>
    *                                  nor <CODE>DISCARD_OLD</CODE>.
    */
+  @Override
   public void setOverflowMode(int of) throws IllegalArgumentException {
     if (logger.finerOn()) {
       logger.finer("setOverflowMode", "Set overflow mode.");
@@ -586,6 +599,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
    * the newest message (<CODE>DISCARD_NEW</CODE>), if the cache size exceeds.
    * <P> The default mode is <CODE>DISCARD_OLD</CODE>.
    */
+  @Override
   public int getOverflowMode() {
     if (logger.finerOn()) {
       logger.finer("getOverflowMode", "Get the overflow mode.");
@@ -635,6 +649,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
   /**
    *
    */
+  @Override
   protected void finalize() throws Throwable {
     listenerList.clear();
     // NPCTE fix for bugId 4783766, esc 542324, MR , Nov 2002
@@ -677,6 +692,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
         setDaemon(true);
       }
 
+      @Override
       public void run() {
         while (!toBeTerminated) {
           RemoteNotification[] notifs = null;
@@ -907,6 +923,7 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
       setDaemon(true);
     }
 
+    @Override
     public void run() {
       if (jobLogger.finerOn()) {
         jobLogger.finer("run", "Start pulling...");

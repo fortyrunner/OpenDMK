@@ -148,10 +148,12 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
   //-------------------------------------
 // implement JMXConnector interface
 //-------------------------------------
+  @Override
   public void connect() throws IOException {
     connect(null);
   }
 
+  @Override
   public void connect(Map env) throws IOException {
     if (logger.fineOn()) {
       logger.fine("connect", "Connecting the client to " + address);
@@ -239,6 +241,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
     }
   }
 
+  @Override
   public void close() throws IOException {
     if (logger.fineOn()) {
       logger.fine("close", "The client " + connectionId + " is asked to be closed.");
@@ -256,10 +259,12 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
     }
   }
 
+  @Override
   public String getConnectionId() throws IOException {
     return connectionId;
   }
 
+  @Override
   public MBeanServerConnection getMBeanServerConnection()
     throws IOException {
 
@@ -275,6 +280,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
   /**
    * Throws UnsupportedOperationException if Subject is not null.
    */
+  @Override
   public MBeanServerConnection getMBeanServerConnection(Subject delegationSubject)
     throws IOException {
 
@@ -285,12 +291,14 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
     throw new UnsupportedOperationException("Sorry.");
   }
 
+  @Override
   public void addConnectionNotificationListener(NotificationListener listener,
                                                 NotificationFilter filter,
                                                 Object handback) {
     connectionBroadcaster.addNotificationListener(listener, filter, handback);
   }
 
+  @Override
   public void removeConnectionNotificationListener(NotificationListener listener)
     throws ListenerNotFoundException {
 
@@ -298,6 +306,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
   }
 
 
+  @Override
   public void removeConnectionNotificationListener(NotificationListener listener,
                                                    NotificationFilter filter,
                                                    Object handback)
@@ -309,6 +318,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
   // --------------------------------------------
 // JDMKConnectorWrapper interface
 // --------------------------------------------
+  @Override
   public Object getWrapped() {
     return mserver;
   }
@@ -318,6 +328,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
 //-------------------------------------
   private class MBeanServerConnectionImpl implements MBeanServerConnection {
 
+    @Override
     public ObjectInstance createMBean(String className, ObjectName name)
       throws ReflectionException,
       InstanceAlreadyExistsException,
@@ -332,6 +343,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public ObjectInstance createMBean(String className,
                                       ObjectName name,
                                       ObjectName loaderName)
@@ -349,6 +361,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public ObjectInstance createMBean(String className,
                                       ObjectName name,
                                       Object[] params,
@@ -366,6 +379,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public ObjectInstance createMBean(String className,
                                       ObjectName name,
                                       ObjectName loaderName,
@@ -385,6 +399,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public void unregisterMBean(ObjectName name)
       throws InstanceNotFoundException,
       MBeanRegistrationException,
@@ -397,6 +412,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public ObjectInstance getObjectInstance(ObjectName name)
       throws InstanceNotFoundException,
       java.io.IOException {
@@ -408,6 +424,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public Set queryMBeans(ObjectName name, QueryExp query)
       throws IOException {
 
@@ -418,6 +435,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public Set queryNames(ObjectName name, QueryExp query)
       throws IOException {
 
@@ -428,6 +446,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public boolean isRegistered(ObjectName name)
       throws IOException {
 
@@ -438,6 +457,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public Integer getMBeanCount()
       throws IOException {
 
@@ -448,6 +468,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public Object getAttribute(ObjectName name, String attribute)
       throws MBeanException,
       AttributeNotFoundException,
@@ -462,6 +483,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public AttributeList getAttributes(ObjectName name, String[] attributes)
       throws InstanceNotFoundException,
       ReflectionException,
@@ -474,6 +496,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public void setAttribute(ObjectName name, Attribute attribute)
       throws InstanceNotFoundException,
       AttributeNotFoundException,
@@ -489,6 +512,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public AttributeList setAttributes(ObjectName name, AttributeList attributes)
       throws InstanceNotFoundException,
       ReflectionException,
@@ -501,6 +525,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public Object invoke(ObjectName name,
                          String operationName,
                          Object[] params,
@@ -517,6 +542,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public String getDefaultDomain() throws IOException {
 
       try {
@@ -526,6 +552,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public String[] getDomains() throws IOException {
       Set ns = mserver.queryNames(null, null);
 
@@ -543,6 +570,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public void addNotificationListener(ObjectName name,
                                         NotificationListener listener,
                                         NotificationFilter filter,
@@ -557,6 +585,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public void addNotificationListener(ObjectName name,
                                         ObjectName listener,
                                         NotificationFilter filter,
@@ -571,6 +600,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public void removeNotificationListener(ObjectName name, ObjectName listener)
       throws InstanceNotFoundException,
       ListenerNotFoundException,
@@ -579,6 +609,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       throw new UnsupportedOperationException("Sorry.");
     }
 
+    @Override
     public void removeNotificationListener(ObjectName name,
                                            ObjectName listener,
                                            NotificationFilter filter,
@@ -590,6 +621,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       throw new UnsupportedOperationException("Sorry.");
     }
 
+    @Override
     public void removeNotificationListener(ObjectName name, NotificationListener listener)
       throws InstanceNotFoundException,
       ListenerNotFoundException,
@@ -602,6 +634,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public void removeNotificationListener(ObjectName name,
                                            NotificationListener listener,
                                            NotificationFilter filter,
@@ -611,6 +644,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       throw new UnsupportedOperationException("Sorry.");
     }
 
+    @Override
     public MBeanInfo getMBeanInfo(ObjectName name)
       throws InstanceNotFoundException,
       IntrospectionException,
@@ -624,6 +658,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
       }
     }
 
+    @Override
     public boolean isInstanceOf(ObjectName name, String className)
       throws InstanceNotFoundException, IOException {
 
@@ -637,6 +672,7 @@ public class JDMKClientConnector implements JMXConnector, JdmkLegacyConnector {
 
   // used to receive HeartBeatNotification
   private class HeartBeatNotifListener implements NotificationListener {
+    @Override
     public void handleNotification(Notification notif, Object hd) {
       HeartBeatNotification hbn = (HeartBeatNotification) notif;
 

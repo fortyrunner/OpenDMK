@@ -59,6 +59,7 @@ import java.util.Map;
 
 public class ClientProvider implements ProfileClientProvider {
 
+  @Override
   public ProfileClient createProfile(String profile, Map environment)
     throws ProfileProviderException {
 

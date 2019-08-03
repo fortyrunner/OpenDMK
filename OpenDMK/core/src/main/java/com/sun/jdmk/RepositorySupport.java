@@ -406,6 +406,7 @@ public class RepositorySupport implements Repository {
    *                         parameters needed by the specific Repository Service
    *                         implementation.
    */
+  @Override
   public void setConfigParameters(ArrayList configParameters) {
   }
 
@@ -416,6 +417,7 @@ public class RepositorySupport implements Repository {
    *
    * @return true if filtering is supported, false otherwise.
    */
+  @Override
   public boolean isFiltering() {
     // Let the MBeanServer perform the filtering !
     return false;
@@ -427,6 +429,7 @@ public class RepositorySupport implements Repository {
    * @param object MBean to be stored in the repository.
    * @param name   MBean object name.
    */
+  @Override
   public void addMBean(final Object object, ObjectName name)
     throws InstanceAlreadyExistsException {
 
@@ -484,6 +487,7 @@ public class RepositorySupport implements Repository {
    * @return true if the MBean is stored in the repository,
    * false otherwise.
    */
+  @Override
   public boolean contains(ObjectName name) {
 
     if (logger.traceOn()) {
@@ -500,6 +504,7 @@ public class RepositorySupport implements Repository {
    * @return The retrieved MBean if it is contained in the repository,
    * null otherwise.
    */
+  @Override
   public Object retrieve(ObjectName name) {
 
     if (logger.traceOn()) {
@@ -530,6 +535,7 @@ public class RepositorySupport implements Repository {
    * @return The list of MBeans selected. There may be zero, one or many
    * MBeans returned in the set.
    */
+  @Override
   public Set query(ObjectName pattern, QueryExp query) {
 
     ObjectNamePattern on_pattern = null; // intermediate Object name pattern for performance
@@ -629,6 +635,7 @@ public class RepositorySupport implements Repository {
    * @throws InstanceNotFoundException The MBean does not exist in
    *                                   the repository.
    */
+  @Override
   public void remove(final ObjectName name)
     throws InstanceNotFoundException {
 
@@ -680,6 +687,7 @@ public class RepositorySupport implements Repository {
    * @return Number of MBeans.
    */
 
+  @Override
   public Integer getCount() {
     return new Integer(nbElements);
   }
@@ -690,6 +698,7 @@ public class RepositorySupport implements Repository {
    *
    * @return A string giving the name of the default domain name.
    */
+  @Override
   public String getDefaultDomain() {
     return domain;
   }
@@ -700,6 +709,7 @@ public class RepositorySupport implements Repository {
    *
    * @param domain the default domain name.
    */
+  @Override
   public void setDefaultDomain(String domain) {
     synchronized (domainTb) {
       if ((domain != null) &&

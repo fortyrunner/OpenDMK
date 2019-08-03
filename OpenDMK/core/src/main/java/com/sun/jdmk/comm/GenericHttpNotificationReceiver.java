@@ -111,6 +111,7 @@ abstract class GenericHttpNotificationReceiver extends CommunicatorServer {
   /**
    *
    */
+  @Override
   protected void doError(Exception e) throws CommunicationException {
     if (e instanceof CommunicationException) {
       throw (CommunicationException) e;
@@ -122,6 +123,7 @@ abstract class GenericHttpNotificationReceiver extends CommunicatorServer {
   /**
    *
    */
+  @Override
   protected void doBind()
     throws InterruptedException, CommunicationException {
     try {
@@ -152,6 +154,7 @@ abstract class GenericHttpNotificationReceiver extends CommunicatorServer {
   /**
    *
    */
+  @Override
   protected void doReceive()
     throws InterruptedException, CommunicationException {
     try {
@@ -178,6 +181,7 @@ abstract class GenericHttpNotificationReceiver extends CommunicatorServer {
   /**
    *
    */
+  @Override
   protected void doProcess()
     throws InterruptedException, CommunicationException {
     if (logger.finerOn()) {
@@ -190,6 +194,7 @@ abstract class GenericHttpNotificationReceiver extends CommunicatorServer {
   /**
    *
    */
+  @Override
   protected void doUnbind()
     throws InterruptedException, CommunicationException {
     try {
@@ -209,6 +214,7 @@ abstract class GenericHttpNotificationReceiver extends CommunicatorServer {
   /**
    * Returns the string used in debug traces.
    */
+  @Override
   protected String makeDebugTag() {
     return "GenericHttpNotificationReceiver[" + getProtocol() + ":" + getPort() + "]";
   }
@@ -216,6 +222,7 @@ abstract class GenericHttpNotificationReceiver extends CommunicatorServer {
   /**
    * Stops this server.
    */
+  @Override
   public void stop() {
     if (isActive()) {
       super.stop();

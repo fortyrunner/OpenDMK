@@ -91,6 +91,7 @@ class HtmlObjectPage extends HtmlPage {
   // PUBLIC METHODS
   // --------------------------------------------------------
 
+  @Override
   public void buildPage(String req) {
     if (logger.finerOn()) {
       logger.finer("buildPage", "Handle request = " + req);
@@ -221,12 +222,12 @@ class HtmlObjectPage extends HtmlPage {
     ArrayList anArray = null;
     AttributeList attlist = new AttributeList();
 
-    String propReqStr = reqStr;
+    String propReqStr;
     boolean done = false;
     String propStr = null;
     String typeStr = null;
     String valueStr;
-    String ind = null;
+    String ind;
 
     try {
       manipulatedObjName = getObjectNameByObjNameStr(objNameStr);
@@ -338,7 +339,7 @@ class HtmlObjectPage extends HtmlPage {
               }
               // Get the class for this attribute
               Class ocl;
-              if (found == true) {
+              if (found) {
                 if (attrInfos[i].isReadable()) {
                   ocl = mbs.getAttribute(manipulatedObjName, propStr).getClass();
                 } else {
@@ -547,7 +548,7 @@ class HtmlObjectPage extends HtmlPage {
       }
       // make sure it is considered not readable
       r = false;
-      if (w == true) {
+      if (w) {
         // try to build an instance of this attribute to display to the user selectable values
         try {
           final Class cl = loadClass(attrType);
@@ -565,17 +566,17 @@ class HtmlObjectPage extends HtmlPage {
     StringBuilder html = new StringBuilder(100);
     String ele = "";
 
-    if (w == true) {
+    if (w) {
       // if writable, we display a select box to allow to change the value
       html.append("<SELECT NAME=\"");
       html.append("(Enumerated)" + attrName + "+" + attrType + "\" >");
-      if (r == false) {
+      if (!r) {
         html.append("<OPTION SELECTED>" + HtmlDef.HTML_WO_DEFAULT);
       }
       for (Enumeration e = o.valueStrings(); e.hasMoreElements(); ) {
         ele = (String) e.nextElement();
         html.append("<OPTION");
-        if ((r == true) && (o.toString() != null) && (o.toString().equals(ele))) {
+        if ((r) && (o.toString() != null) && (o.toString().equals(ele))) {
           // if it is also readable we display the current value as the one initially selected
           html.append(" SELECTED ");
         }
@@ -583,7 +584,7 @@ class HtmlObjectPage extends HtmlPage {
       }
       html.append("</SELECT>");
     } else {
-      if (r == true) {
+      if (r) {
         // read-only case: we display only the current string value
         html.append("Enumerated" + o.toString()); // "Enumerated" tag will be removed by buildAttributes method
       } else {
@@ -600,6 +601,7 @@ class HtmlObjectPage extends HtmlPage {
   /**
    * Replace inverses of HtmlPage.
    */
+  @Override
   protected void inverseS(String[] a, int lo, int hi) {
     MBeanAttributeInfo ti = attinfo[lo];
     attinfo[lo] = attinfo[hi];
@@ -803,7 +805,7 @@ class HtmlObjectPage extends HtmlPage {
     //
     add2Page("<TABLE ALIGN=center BORDER=1 WIDTH=100% CELLPADDING=3>");
     add2Page("<TR>");
-    add2Page("<TH WIDTH=23%> Name </TH><TH WIDTH=35%> Type </TH><TH WIDTH=7%> Access </TH><TH WIDTH=35%> Value </TH>");
+    add2Page("<TH WIDTH=23%> Name </TH><TH WIDTH=15%> Type </TH><TH> Value </TH>");
     add2Page("</TR>");
 
     for (int i = 0; i < propertyName.length; i++) {
@@ -817,132 +819,8 @@ class HtmlObjectPage extends HtmlPage {
       // Start an attribute entry for the table.
       //
       add2Page("<TR>");
+      hasInput = createRows(objNameStr, hasInput, i, attType);
 
-      // Add the property cell to the attribute entry.
-      //
-      String ai = attinfo[i].getDescription();
-      if (ai != null && ai.length() > 0) {
-        add2Page("<TD><A HREF=\"javascript:alert('" + translateNameToHtmlFormat(ai) + "');\"><B>" + propertyName[i] + "</B></A></TD>");
-      } else {
-        add2Page("<TD><B>" + propertyName[i] + "</B></TD>");
-      }
-
-      // Add the property type cell to the attribute entry.
-      //
-      add2Page("<TD ALIGN=RIGHT>" + attType + "</TD>");
-
-      // Add the access cell and value cell to the attribute entry.
-      // NOTE: The choice of representation for the value depends
-      // on the property access.
-      //
-      // READ ONLY
-      if (attinfo[i].isReadable() && !attinfo[i].isWritable()) {
-        add2Page("<TD ALIGN=center> RO </TD>");
-
-        if (propertyView[i].startsWith("Enumerated")) {      // handle Enumerated case first as Enumerated is not
-          add2Page("<TD>" + propertyView[i].substring(10) + "</TD>"); // recognized by the checkType method.
-        } else {
-          if (propertyView[i].startsWith(HtmlDef.HTML_UNAVAILABLE)) {
-            add2Page("<TD>" + propertyView[i] + "</TD>");
-          } else {
-            if (attType != null &&
-              attType.equals("javax.management.ObjectName")) {
-              add2Page("<TD><A HREF=\"" + HtmlDef.VIEWOBJECTRES + toUrlName(propertyView[i]) + "\">" + propertyView[i] + "</A></TD>");
-            } else {
-              if (isArrayType(attType)) {
-                add2Page(buildArrayRef(propertyName[i], objNameStr, "view the values of " + propertyName[i]));
-              } else {
-                if (!checkType(attType)) {
-                  add2Page("<TD><I>Type Not Supported</I>: [" + translateNameToHtmlFormat(propertyView[i]) + "]</TD>"); // toString() output
-                } else {
-                  add2Page("<TD><PRE>" + translateNameToHtmlFormat(propertyView[i]) + "</PRE></TD>");
-                }
-              }
-            }
-          }
-        }
-      }
-      // WRITE ONLY
-      else {
-        if (!attinfo[i].isReadable() && attinfo[i].isWritable()) {
-          hasInput = true; // flag: we will need to add an "Apply" button
-
-          add2Page("<TD ALIGN=center> WO </TD>");
-
-          if (propertyView[i].startsWith("<SELECT NAME=\"(Enumerated)")) {
-            add2Page("<TD>" + propertyView[i] + "</TD>");
-          } else {
-            if (!checkType(attType)) {
-              add2Page("<TD><I>Type Not Supported</I></TD>");
-            } else {
-              if (attType.endsWith("Boolean") || attType.endsWith("boolean")) {
-                add2Page("<TD>" + boolToHtml(propertyName[i], attType, propertyView[i], false) + "</TD>");
-              } else {
-                if (isArrayType(attType)) {
-                  if (!checkType(attType)) {
-                    propertyView[i] = "Write only for " + propertyName[i] + "[] Not supported ";
-                  }
-                  add2Page("<TD>" + propertyView[i] + "</TD>");
-                } else {
-                  add2Page("<TD><INPUT TYPE=\"text\" NAME=\"" + propertyName[i] + "+" + attType + "\" SIZE=34%></TD>");
-                }
-              }
-            }
-          }
-
-        }
-        // READ WRITE
-        else {
-          if (attinfo[i].isReadable() && attinfo[i].isWritable()) {
-            hasInput = true; // flag: we will need to add an "Apply" button
-
-            add2Page("<TD ALIGN=center> RW </TD>");
-
-            if (propertyView[i].startsWith("<SELECT NAME=\"(Enumerated)")) {
-              add2Page("<TD>" + propertyView[i] + "</TD>");
-            } else {
-              if (propertyView[i].startsWith(HtmlDef.HTML_UNAVAILABLE)) {
-                add2Page("<TD>" + propertyView[i] + "</TD>");
-              } else {
-                if (!checkType(attType)) {
-                  add2Page("<TD><I>Type Not Supported</I>: [" + translateNameToHtmlFormat(propertyView[i]) + "]</TD>"); // toString() output
-                } else {
-                  if (propertyView[i].startsWith("<SELECT NAME=\"(Enumerated)")) {
-                    add2Page("<TD>" + propertyView[i] + "</TD>");
-                  } else {
-                    if (attType.endsWith("Boolean") || attType.endsWith("boolean")) {
-                      add2Page("<TD>" + boolToHtml(propertyName[i], attType, propertyView[i], true) + "</TD>");
-                    } else {
-                      if (isArrayType(attType)) {
-                        add2Page(buildArrayRef(propertyName[i], objNameStr, "view the values of " + propertyName[i]));
-                      } else {
-                        htmlPage.append("<TD><INPUT TYPE=\"text\" NAME=\"" +
-                          propertyName[i] + "+" + attType + "\" ");
-                        htmlPage.append("VALUE=\"" + translateNameToHtmlFormat(propertyView[i]) + "\" ");
-                        htmlPage.append("SIZE=34%");
-                        add2Page(">");
-                        if (attType.equals("javax.management.ObjectName")) {
-                          if (propertyView[i].equals(" ") || propertyView[i].equals("")) {
-                            htmlPage.append("<A HREF=\"" + HtmlDef.VIEWOBJECTRES + toUrlName(propertyView[i]) + "\"></A>");
-                          } else {
-                            htmlPage.append("<A HREF=\"" + HtmlDef.VIEWOBJECTRES + toUrlName(propertyView[i]) + "\">view</A>");
-                          }
-                        }
-                        add2Page("</TD>");
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          } else {
-            add2Page("<TD> ?? </TD>");
-            add2Page("<TD>" + propertyView[i] + "</TD>");
-          }
-        }
-      }
-      // End of the attribute entry.
-      //
       add2Page("</TR>");
 
     } // END for LOOP
@@ -962,6 +840,133 @@ class HtmlObjectPage extends HtmlPage {
       add2Page("<TD ALIGN=LEFT></TD>");
     }
     add2Page("</TR></TABLE></FORM>");
+  }
+
+  private boolean createRows(final String objNameStr, boolean hasInput, final int i, final String attType) {
+    // Add the property cell to the attribute entry.
+    //
+    String ai = attinfo[i].getDescription();
+    add2Page("<TD><B>" + propertyName[i] + "</B></TD>");
+
+    // Add the property type cell to the attribute entry.
+    //
+    add2Page("<TD ALIGN=RIGHT>" + attType + "</TD>");
+
+    // Add the access cell and value cell to the attribute entry.
+    // NOTE: The choice of representation for the value depends
+    // on the property access.
+    //
+    // READ ONLY
+    boolean readable = attinfo[i].isReadable();
+    boolean writable = attinfo[i].isWritable();
+    if (readable && !writable) {
+//      add2Page("<TD ALIGN=center> RO </TD>");
+
+      if (propertyView[i].startsWith("Enumerated")) {      // handle Enumerated case first as Enumerated is not
+        add2Page("<TD>" + propertyView[i].substring(10) + "</TD>"); // recognized by the checkType method.
+      } else {
+        if (propertyView[i].startsWith(HtmlDef.HTML_UNAVAILABLE)) {
+          add2Page("<TD>" + propertyView[i] + "</TD>");
+        } else {
+          if (attType != null &&
+            attType.equals("javax.management.ObjectName")) {
+            add2Page("<TD><A HREF=\"" + HtmlDef.VIEWOBJECTRES + toUrlName(propertyView[i]) + "\">" + propertyView[i] + "</A></TD>");
+          } else {
+            if (isArrayType(attType)) {
+              add2Page(buildArrayRef(propertyName[i], objNameStr, "view the values of " + propertyName[i]));
+            } else {
+              if (!checkType(attType)) {
+                add2Page("<TD><I>Type Not Supported</I>: [" + translateNameToHtmlFormat(propertyView[i]) + "]</TD>"); // toString() output
+              } else {
+                add2Page("<TD><PRE>" + translateNameToHtmlFormat(propertyView[i]) + "</PRE></TD>");
+              }
+            }
+          }
+        }
+      }
+    }
+    // WRITE ONLY
+    else {
+      if (!readable && writable) {
+        hasInput = true; // flag: we will need to add an "Apply" button
+
+//        add2Page("<TD ALIGN=center> WO </TD>");
+
+        if (propertyView[i].startsWith("<SELECT NAME=\"(Enumerated)")) {
+          add2Page("<TD>" + propertyView[i] + "</TD>");
+        } else {
+          if (!checkType(attType)) {
+            add2Page("<TD><I>Type Not Supported</I></TD>");
+          } else {
+            if (attType.endsWith("Boolean") || attType.endsWith("boolean")) {
+              add2Page("<TD>" + boolToHtml(propertyName[i], attType, propertyView[i], false) + "</TD>");
+            } else {
+              if (isArrayType(attType)) {
+                if (!checkType(attType)) {
+                  propertyView[i] = "Write only for " + propertyName[i] + "[] Not supported ";
+                }
+                add2Page("<TD>" + propertyView[i] + "</TD>");
+              } else {
+                add2Page("<TD><INPUT TYPE=\"text\" NAME=\"" + propertyName[i] + "+" + attType + "\" SIZE=34%></TD>");
+              }
+            }
+          }
+        }
+
+      }
+      // READ WRITE
+      else {
+        if (readable && writable) {
+          hasInput = true; // flag: we will need to add an "Apply" button
+
+//          add2Page("<TD ALIGN=center> RW </TD>");
+
+          if (propertyView[i].startsWith("<SELECT NAME=\"(Enumerated)")) {
+            add2Page("<TD>" + propertyView[i] + "</TD>");
+          } else {
+            if (propertyView[i].startsWith(HtmlDef.HTML_UNAVAILABLE)) {
+              add2Page("<TD>" + propertyView[i] + "</TD>");
+            } else {
+              if (!checkType(attType)) {
+                add2Page("<TD><I>Type Not Supported</I>: [" + translateNameToHtmlFormat(propertyView[i]) + "]</TD>"); // toString() output
+              } else {
+                if (propertyView[i].startsWith("<SELECT NAME=\"(Enumerated)")) {
+                  add2Page("<TD>" + propertyView[i] + "</TD>");
+                } else {
+                  if (attType.endsWith("Boolean") || attType.endsWith("boolean")) {
+                    add2Page("<TD>" + boolToHtml(propertyName[i], attType, propertyView[i], true) + "</TD>");
+                  } else {
+                    if (isArrayType(attType)) {
+                      add2Page(buildArrayRef(propertyName[i], objNameStr, "view the values of " + propertyName[i]));
+                    } else {
+                      htmlPage.append("<TD><INPUT TYPE=\"text\" NAME=\"" +
+                        propertyName[i] + "+" + attType + "\" ");
+                      htmlPage.append("VALUE=\"" + translateNameToHtmlFormat(propertyView[i]) + "\" ");
+                      htmlPage.append("SIZE=34%");
+                      add2Page(">");
+                      if (attType.equals("javax.management.ObjectName")) {
+                        if (propertyView[i].equals(" ") || propertyView[i].equals("")) {
+                          htmlPage.append("<A HREF=\"" + HtmlDef.VIEWOBJECTRES + toUrlName(propertyView[i]) + "\"></A>");
+                        } else {
+                          htmlPage.append("<A HREF=\"" + HtmlDef.VIEWOBJECTRES + toUrlName(propertyView[i]) + "\">view</A>");
+                        }
+                      }
+                      add2Page("</TD>");
+                    }
+                  }
+                }
+              }
+            }
+          }
+        } else {
+          add2Page("<TD> ?? </TD>");
+          add2Page("<TD>" + propertyView[i] + "</TD>");
+        }
+      }
+    }
+    // End of the attribute entry.
+    //
+    return hasInput;
   }
 
 
@@ -1151,7 +1156,7 @@ class HtmlObjectPage extends HtmlPage {
       if (logger.finerOn()) {
         logger.finer("getStringValue", "Build displayable value for attribute [" + attrInfo.getName() + "] of object [" + o.toString() + "]");
       }
-      if (r == true) {
+      if (r) {
         result = mbs.getAttribute(o, attrInfo.getName());
       }
     } catch (Exception e) {

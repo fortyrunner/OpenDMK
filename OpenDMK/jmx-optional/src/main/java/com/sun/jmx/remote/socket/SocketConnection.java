@@ -105,6 +105,7 @@ public class SocketConnection implements SocketConnectionIf, MessageConnection {
     this.port = port;
   }
 
+  @Override
   public void connect(Map env) throws IOException {
     waitConnectedState = DefaultConfig.getTimeoutForWaitConnectedState(env);
 
@@ -185,6 +186,7 @@ public class SocketConnection implements SocketConnectionIf, MessageConnection {
   /**
    * Returns a reference to the underlying socket.
    */
+  @Override
   public Socket getSocket() {
     return sock;
   }
@@ -192,6 +194,7 @@ public class SocketConnection implements SocketConnectionIf, MessageConnection {
   /**
    * Replaces the underlying socket.
    */
+  @Override
   public void setSocket(Socket s) throws IOException {
     sock = s;
 
@@ -202,6 +205,7 @@ public class SocketConnection implements SocketConnectionIf, MessageConnection {
    * Replaces the current socket's input/output
    * streams by the ones provided.
    */
+  @Override
   public void replaceStreams(InputStream is, OutputStream os)
     throws IOException {
     in = is;
@@ -213,6 +217,7 @@ public class SocketConnection implements SocketConnectionIf, MessageConnection {
   /**
    * Sets the subject authenticated through this socket connection.
    */
+  @Override
   public void setSubject(Subject subject) {
     this.subject = subject;
   }
@@ -221,6 +226,7 @@ public class SocketConnection implements SocketConnectionIf, MessageConnection {
   // Implementation of the MessageConnection interface
   //--------------------------------------------------
 
+  @Override
   public Message readMessage() throws IOException, ClassNotFoundException {
     checkState();
 
@@ -242,6 +248,7 @@ public class SocketConnection implements SocketConnectionIf, MessageConnection {
     return (Message) oin.readObject();
   }
 
+  @Override
   public void writeMessage(Message msg) throws IOException {
     if (logger.debugOn()) {
       logger.debug("writeMessage", "Write a message ...");
@@ -262,6 +269,7 @@ public class SocketConnection implements SocketConnectionIf, MessageConnection {
     oout.reset();
   }
 
+  @Override
   public void close() {
     if (logger.traceOn()) {
       logger.trace("close", "Close the socket connection.");
@@ -314,6 +322,7 @@ public class SocketConnection implements SocketConnectionIf, MessageConnection {
     }
   }
 
+  @Override
   public String getConnectionId() {
     if (sock == null) {
       return defaultConnectionId;
@@ -387,6 +396,7 @@ public class SocketConnection implements SocketConnectionIf, MessageConnection {
       this.cloader = cl;
     }
 
+    @Override
     protected Class resolveClass(ObjectStreamClass aClass)
       throws IOException, ClassNotFoundException {
       return cloader == null ? super.resolveClass(aClass) :

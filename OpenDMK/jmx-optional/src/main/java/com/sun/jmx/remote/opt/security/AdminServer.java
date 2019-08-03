@@ -73,6 +73,7 @@ public class AdminServer implements ServerAdmin {
     this.env = (env != null) ? env : Collections.EMPTY_MAP;
   }
 
+  @Override
   public MessageConnection connectionOpen(MessageConnection mc)
     throws IOException {
 
@@ -246,11 +247,13 @@ public class AdminServer implements ServerAdmin {
     return mc;
   }
 
+  @Override
   public void connectionClosed(MessageConnection mc) {
     removeSubject(mc);
     removeProfiles(mc);
   }
 
+  @Override
   public Subject getSubject(MessageConnection mc) {
     synchronized (subjectsTable) {
       return (Subject) subjectsTable.get(mc);

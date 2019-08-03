@@ -110,6 +110,7 @@ public class SASLInputStream extends InputStream {
     saslBuffer = new byte[recvMaxBufSize];
   }
 
+  @Override
   public int read() throws IOException {
     byte[] inBuf = new byte[1];
     int count = read(inBuf, 0, 1);
@@ -120,6 +121,7 @@ public class SASLInputStream extends InputStream {
     }
   }
 
+  @Override
   public int read(byte[] inBuf, int start, int count) throws IOException {
 
     if (bufPos >= buf.length) {
@@ -220,10 +222,12 @@ public class SASLInputStream extends InputStream {
     return pos;
   }
 
+  @Override
   public int available() throws IOException {
     return buf.length - bufPos;
   }
 
+  @Override
   public void close() throws IOException {
     if (sc != null) {
       sc.dispose();

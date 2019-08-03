@@ -101,6 +101,7 @@ abstract class GenericHttpClientHandler extends ClientHandler {
    * This method ends after the last request is processed or after
    * an interruption.
    */
+  @Override
   public void doRun() {
     try {
       HttpRequest request = new HttpRequest(new HttpBody());
@@ -273,6 +274,7 @@ abstract class GenericHttpClientHandler extends ClientHandler {
   }
 
   private static final AuthInfo nullAuthInfo = new AuthInfo() {
+    @Override
     public void setLogin(String login) {
             /* We would like to use UnsupportedOperationException here,
                but that's not present in JDK 1.1.  When we drop 1.1 support
@@ -283,6 +285,7 @@ abstract class GenericHttpClientHandler extends ClientHandler {
       throw new IllegalArgumentException("unsupported operation");
     }
 
+    @Override
     public void setPassword(String password) {
       /* throw new UnsupportedOperationException(); */
       throw new IllegalArgumentException("unsupported operation");

@@ -217,6 +217,7 @@ public class ProxyCascadingAgent extends CascadingAgent {
     mbsNotifHandler = this::handleMBeanServerNotification;
     mbeanList = new HashMap();
     wrapper = new MBeanServerConnectionWrapper() {
+      @Override
       protected MBeanServerConnection getMBeanServerConnection()
         throws IOException {
         return getConnectionFactory().getMBeanServerConnection();
@@ -302,6 +303,7 @@ public class ProxyCascadingAgent extends CascadingAgent {
 
   // from CascadingAgentMBean
   //
+  @Override
   public synchronized void start()
     throws IOException {
     try {
@@ -394,6 +396,7 @@ public class ProxyCascadingAgent extends CascadingAgent {
    * @see #handleMBeanServerNotification
    * @see #preRegister
    **/
+  @Override
   public synchronized void start(boolean conflictAllowed)
     throws IOException, InstanceAlreadyExistsException {
     if (!state.equals(State.STOPPED)) {
@@ -504,18 +507,21 @@ public class ProxyCascadingAgent extends CascadingAgent {
    * @throws IllegalStateException if the <tt>CascadingAgent</tt> is not
    *                               started.
    **/
+  @Override
   public void stop() throws IOException {
     stop(false);
   }
 
   // from CascadingAgentMBean
   //
+  @Override
   public int getCascadedMBeanCount() {
     return getLinkedCount();
   }
 
   // from CascadingAgentMBean
   //
+  @Override
   public Set getCascadedMBeans() {
     final Set result = new HashSet();
     try {
@@ -536,12 +542,14 @@ public class ProxyCascadingAgent extends CascadingAgent {
 
   // from CascadingAgentMBean
   //
+  @Override
   public String getDescription() {
     return description;
   }
 
   // from CascadingAgentMBean
   //
+  @Override
   public synchronized boolean isActive() {
     return state.equals(State.STARTED);
   }
@@ -605,6 +613,7 @@ public class ProxyCascadingAgent extends CascadingAgent {
    *                               is not stopped.
    * @see CascadingAgent#preDeregister
    */
+  @Override
   public synchronized void preDeregister() throws java.lang.Exception {
     if (!state.equals(State.STOPPED)) {
       throw new IllegalStateException("ProxyCascadingAgent " +
@@ -662,6 +671,7 @@ public class ProxyCascadingAgent extends CascadingAgent {
    *         notification.</li>
    * </ul>
    **/
+  @Override
   protected void handleJMXConnectionNotification(Notification n,
                                                  Object handback) {
     final String nt = n.getType();

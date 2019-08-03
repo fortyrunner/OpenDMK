@@ -248,6 +248,7 @@ public class DefaultPaths {
       try {
         URL thisCodeLocation = (URL)
           AccessController.doPrivileged(new PrivilegedAction() {
+            @Override
             public Object run() {
               return DefaultPaths.class.getProtectionDomain()
                 .getCodeSource().getLocation();
@@ -287,6 +288,7 @@ public class DefaultPaths {
           if (parent != null) {
             boolean parentExists = ((Boolean)
               AccessController.doPrivileged(new PrivilegedAction() {
+                @Override
                 public Object run() {
                   return new Boolean(parent.exists());
                 }

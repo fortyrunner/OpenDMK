@@ -62,6 +62,7 @@ import javax.management.loading.ClassLoaderRepository;
 import java.lang.reflect.Constructor;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -89,6 +90,7 @@ class HtmlAdminPage extends HtmlPage {
 // PUBLIC METHODS
 // --------------------------------------------------------
 
+  @Override
   public void buildPage(String req) {
     if (logger.finerOn()) {
       logger.finer("buildPage", "Handle the request [" + req + "]");
@@ -101,7 +103,7 @@ class HtmlAdminPage extends HtmlPage {
 
         // Parse the req to get the parameters.
         //
-        StringBuffer errBuf = new StringBuffer();
+        StringBuilder errBuf = new StringBuilder();
         StringBuilder htmlBuf = new StringBuilder();
         String domainName = null;
         String className = null;
@@ -242,8 +244,8 @@ class HtmlAdminPage extends HtmlPage {
 
         // Look for constructor paramaters in the request.
         //
-        ArrayList valueList = new ArrayList();
-        ArrayList typeList = new ArrayList();
+        List<String> valueList = new ArrayList();
+        List typeList = new ArrayList();
 
         if (ok && action.equals(HtmlDef.actionAdd) && isreq2 && params.indexOf('?') != -1 && params.indexOf('=', 1) != -1) {
 
@@ -254,7 +256,7 @@ class HtmlAdminPage extends HtmlPage {
 
           int index;
           boolean done = false;
-          String propReqStr = null;
+          String propReqStr;
 
           while (!done) {
             // A property name separator is always "&".
@@ -275,17 +277,15 @@ class HtmlAdminPage extends HtmlPage {
             index = propReqStr.indexOf('=');
 
             if (index < 0) {
-              done = true;
               // We cannot continue.
               //
               ok = false;
-              errBuf.append("Syntax error in request [" + propReqStr + "] " + HtmlDef.HTTP_ERROR_BAD_REQUEST_ID + " " + HtmlDef.HTTP_ERROR_BAD_REQUEST);
+              errBuf.append("Syntax error in request [").append(propReqStr).append("] ").append(HtmlDef.HTTP_ERROR_BAD_REQUEST_ID).append(" ").append(HtmlDef.HTTP_ERROR_BAD_REQUEST);
               break;
             }
 
             propStr = propReqStr.substring(0, index);
             valueStr = propReqStr.substring(index + 1);
-            typeStr = null;
 
             if ((propStr != null) && (propStr.length() != 0)) {
               // Remove %0D in the begining of property name.
@@ -336,7 +336,7 @@ class HtmlAdminPage extends HtmlPage {
                 logger.finer("buildPage", "Got null value or property");
               }
               ok = false;
-              errBuf.append("Syntax error in request [" + propReqStr + "]" + HtmlDef.HTTP_ERROR_BAD_REQUEST_ID + " " + HtmlDef.HTTP_ERROR_BAD_REQUEST);
+              errBuf.append("Syntax error in request [").append(propReqStr).append("]").append(HtmlDef.HTTP_ERROR_BAD_REQUEST_ID).append(" ").append(HtmlDef.HTTP_ERROR_BAD_REQUEST);
               break;
             }
           }
@@ -346,7 +346,6 @@ class HtmlAdminPage extends HtmlPage {
         }
 
         if (ok) {
-          errBuf = null;
           // Execute the request.
           //
           errBuf = cmfHttpAction(action, domainName, className, keysName, cloaderName, typeList, valueList, isreq2);
@@ -378,9 +377,7 @@ class HtmlAdminPage extends HtmlPage {
           // Build the result of the page.
           //
           if (errBuf == null) {
-            htmlPage.append("<HR><P>" + HtmlDef.CRLF +
-              "<FONT SIZE=+3 COLOR=green><B>Unregister Successful" +
-              "</B></FONT><P><HR><P>" + "The MBean [" + safeObjNameStr + "] was successfully unregistered.");
+            htmlPage.append("<HR><P>" + HtmlDef.CRLF + "<FONT SIZE=+3 COLOR=green><B>Unregister Successful" + "</B></FONT><P><HR><P>" + "The MBean [").append(safeObjNameStr).append("] was successfully unregistered.");
           } else {
             add2Page(errBuf.toString());
           }
@@ -405,9 +402,7 @@ class HtmlAdminPage extends HtmlPage {
             add2Page("</TR></TABLE>");
 
             if (errBuf == null) {
-              htmlPage.append("<HR><P>" + HtmlDef.CRLF +
-                "<FONT SIZE=+3 COLOR=green><B>Create Successful" +
-                "</B></FONT><P><HR><P>" + "The MBean [" + safeObjNameStr + "] was successfully instantiated and registered.");
+              htmlPage.append("<HR><P>" + HtmlDef.CRLF + "<FONT SIZE=+3 COLOR=green><B>Create Successful" + "</B></FONT><P><HR><P>" + "The MBean [").append(safeObjNameStr).append("] was successfully instantiated and registered.");
               add2Page("<P><TABLE WIDTH=100%><TR>");
               add2Page("<TD ALIGN=RIGHT><A HREF=\"" + HtmlDef.VIEWOBJECTRES + toUrlName(nm) + "\">Go to " + HtmlDef.objectPageTitle + "</A></TD>");
               add2Page("</TR></TABLE>");
@@ -431,9 +426,7 @@ class HtmlAdminPage extends HtmlPage {
               add2Page("</TR></TABLE>");
 
               if (errBuf == null) {
-                htmlPage.append("<HR><P>" + HtmlDef.CRLF +
-                  "<FONT SIZE=+3 COLOR=green><B>List Constructors Successful" +
-                  "</B></FONT><P><HR><P>" + "The list of public constructors was successfully build for the MBean [" + safeObjNameStr + "].");
+                htmlPage.append("<HR><P>" + HtmlDef.CRLF + "<FONT SIZE=+3 COLOR=green><B>List Constructors Successful" + "</B></FONT><P><HR><P>" + "The list of public constructors was successfully build for the MBean [").append(safeObjNameStr).append("].");
               } else {
                 add2Page(errBuf.toString());
               }
@@ -605,14 +598,14 @@ class HtmlAdminPage extends HtmlPage {
     }
   }
 
-  private StringBuffer cmfHttpAction(String action, String domainName, String className,
-                                     String keysName, String cloaderName, ArrayList typeList, ArrayList valueList, boolean bctor) {
+  private StringBuilder cmfHttpAction(String action, String domainName, String className,
+                                      String keysName, String cloaderName, List typeList, List<String> valueList, boolean bctor) {
 
     // Convert object name string to be HTML safe
     String safeDomainName = translateNameToHtmlFormat(domainName);
     String safeKeysName = translateNameToHtmlFormat(keysName);
 
-    StringBuffer errBuf = new StringBuffer();
+    StringBuilder errBuf = new StringBuilder();
     errBuf.append("<HR><P><FONT SIZE=+3 COLOR=red><B>");
     boolean error = false;
 
@@ -628,7 +621,7 @@ class HtmlAdminPage extends HtmlPage {
       logger.finer("cmfHttpAction", "Perform the operation [" + action + "]");
     }
 
-    ObjectName objName = null;
+    ObjectName objName;
 
     // We have to build the object name.
     //
@@ -638,7 +631,7 @@ class HtmlAdminPage extends HtmlPage {
       if (logger.finestOn()) {
         logger.finest("cmfHttpAction", HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME_ID + " " + HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME + " Cannot create the ObjectName [" + domainName + ":" + keysName + "]");
       }
-      errBuf.append(HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME_ID + " " + HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME + "</B></FONT><P><HR><P>" + "<P>Cannot create the ObjectName [" + safeDomainName + ":" + safeKeysName + "]");
+      errBuf.append(HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME_ID + " " + HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME + "</B></FONT><P><HR><P>" + "<P>Cannot create the ObjectName [").append(safeDomainName).append(":").append(safeKeysName).append("]");
       return errBuf;
     }
 
@@ -652,7 +645,7 @@ class HtmlAdminPage extends HtmlPage {
         if (logger.finestOn()) {
           logger.finest("cmfHttpAction", HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME_ID + " " + HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME + " Cannot create the ObjectName for the classloader specified [" + cloaderName + "]");
         }
-        errBuf.append(HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME_ID + " " + HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME + "</B></FONT><P><HR><P>" + "<P>Cannot create the ObjectName for the classloader specified [" + cloaderName + "]");
+        errBuf.append(HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME_ID + " " + HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME + "</B></FONT><P><HR><P>" + "<P>Cannot create the ObjectName for the classloader specified [").append(cloaderName).append("]");
         return errBuf;
       }
     }
@@ -687,7 +680,7 @@ class HtmlAdminPage extends HtmlPage {
                 argu[i] = val;
               } else {
                 if (type.endsWith("Boolean") || type.endsWith("boolean")) {
-                  argu[i] = new Boolean(val);
+                  argu[i] = Boolean.valueOf(val);
                 } else {
                   if (type.endsWith("Byte") || type.endsWith("byte")) {
                     argu[i] = new Byte(val);
@@ -721,7 +714,7 @@ class HtmlAdminPage extends HtmlPage {
                                       df.setTimeZone(TimeZone.getDefault());
                                       argu[i] = df.parse(val);
                                     } catch (java.text.ParseException e) {
-                                      errBuf.append(HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE_ID + " " + HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE + "</B></FONT><P><HR><P>" + "Cannot convert String to " + type);
+                                      errBuf.append(HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE_ID + " " + HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE + "</B></FONT><P><HR><P>" + "Cannot convert String to ").append(type);
                                       error = true;
                                       break;
                                     }
@@ -739,7 +732,7 @@ class HtmlAdminPage extends HtmlPage {
                                             try {
                                               argu[i] = new Double(val);
                                             } catch (NumberFormatException e4) {
-                                              errBuf.append(HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE_ID + " " + HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE + "</B></FONT><P><HR><P>" + "Cannot convert String to " + type);
+                                              errBuf.append(HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE_ID + " " + HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE + "</B></FONT><P><HR><P>" + "Cannot convert String to ").append(type);
                                               error = true;
                                               break;
                                             }
@@ -747,7 +740,7 @@ class HtmlAdminPage extends HtmlPage {
                                         }
                                       }
                                     } else {
-                                      errBuf.append(HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE_ID + " " + HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE + "</B></FONT><P><HR><P>" + "Cannot convert String to " + type);
+                                      errBuf.append(HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE_ID + " " + HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE + "</B></FONT><P><HR><P>" + "Cannot convert String to ").append(type);
                                       error = true;
                                       break;
                                     }
@@ -803,61 +796,61 @@ class HtmlAdminPage extends HtmlPage {
         logger.finest("cmfHttpAction", "Reflection exceptoin. [Exception=" + e.getTargetException() + "]");
       }
       error = true;
-      errBuf.append(HtmlDef.HTTP_ERROR_REFLECTION_ID + " " + HtmlDef.HTTP_ERROR_REFLECTION + "</B></FONT><P><HR><P>" + e.getTargetException());
+      errBuf.append(HtmlDef.HTTP_ERROR_REFLECTION_ID + " " + HtmlDef.HTTP_ERROR_REFLECTION + "</B></FONT><P><HR><P>").append(e.getTargetException());
     } catch (InstanceAlreadyExistsException e) {
       if (logger.finestOn()) {
         logger.finest("cmfHttpAction", "Instance already exists. [Exception=" + e + "]");
       }
       error = true;
-      errBuf.append(HtmlDef.HTTP_ERROR_INSTANCE_ALREADY_EXISTS_ID + " " + HtmlDef.HTTP_ERROR_INSTANCE_ALREADY_EXISTS + "</B></FONT><P><HR><P>" + e.toString());
+      errBuf.append(HtmlDef.HTTP_ERROR_INSTANCE_ALREADY_EXISTS_ID + " " + HtmlDef.HTTP_ERROR_INSTANCE_ALREADY_EXISTS + "</B></FONT><P><HR><P>").append(e.toString());
     } catch (MBeanRegistrationException e) {
       if (logger.finestOn()) {
         logger.finest("cmfHttpAction", "MBean registration. [Exception=" + e + "]");
       }
       error = true;
-      errBuf.append(HtmlDef.HTTP_ERROR_MBEAN_REGISTRATION_ID + " " + HtmlDef.HTTP_ERROR_MBEAN_REGISTRATION + "</B></FONT><P><HR><P>" + e.toString());
+      errBuf.append(HtmlDef.HTTP_ERROR_MBEAN_REGISTRATION_ID + " " + HtmlDef.HTTP_ERROR_MBEAN_REGISTRATION + "</B></FONT><P><HR><P>").append(e.toString());
     } catch (MBeanException e) {
       if (logger.finestOn()) {
         logger.finest("cmfHttpAction", "MBean exception. [Exception=" + e.getTargetException() + "]");
       }
       error = true;
-      errBuf.append(HtmlDef.HTTP_ERROR_MBEAN_ID + " " + HtmlDef.HTTP_ERROR_MBEAN + "</B></FONT><P><HR><P>" + e.getTargetException());
+      errBuf.append(HtmlDef.HTTP_ERROR_MBEAN_ID + " " + HtmlDef.HTTP_ERROR_MBEAN + "</B></FONT><P><HR><P>").append(e.getTargetException());
     } catch (NotCompliantMBeanException e) {
       if (logger.finestOn()) {
         logger.finest("cmfHttpAction", "Not Compliant MBean. [Exception=" + e + "]");
       }
       error = true;
-      errBuf.append(HtmlDef.HTTP_ERROR_NOT_COMPLIANT_MBEAN_ID + " " + HtmlDef.HTTP_ERROR_NOT_COMPLIANT_MBEAN + "</B></FONT><P><HR><P>" + e);
+      errBuf.append(HtmlDef.HTTP_ERROR_NOT_COMPLIANT_MBEAN_ID + " " + HtmlDef.HTTP_ERROR_NOT_COMPLIANT_MBEAN + "</B></FONT><P><HR><P>").append(e);
     } catch (InstanceNotFoundException e) {
       if (logger.finestOn()) {
         logger.finest("cmfHttpAction", "Instance not found. [Exception=" + e + "]");
       }
       error = true;
-      errBuf.append(HtmlDef.HTTP_ERROR_INSTANCE_NOT_FOUND_ID + " " + HtmlDef.HTTP_ERROR_INSTANCE_NOT_FOUND + "</B></FONT><P><HR><P>" + e);
+      errBuf.append(HtmlDef.HTTP_ERROR_INSTANCE_NOT_FOUND_ID + " " + HtmlDef.HTTP_ERROR_INSTANCE_NOT_FOUND + "</B></FONT><P><HR><P>").append(e);
     } catch (ClassNotFoundException e) {
       if (logger.finestOn()) {
         logger.finest("cmfHttpAction", "The MBean class could not be loaded. [Exception=" + e + "]");
       }
       error = true;
-      errBuf.append(HtmlDef.HTTP_ERROR_CLASS_NOT_FOUND_ID + " " + HtmlDef.HTTP_ERROR_CLASS_NOT_FOUND + "</B></FONT><P><HR><P>" + e);
+      errBuf.append(HtmlDef.HTTP_ERROR_CLASS_NOT_FOUND_ID + " " + HtmlDef.HTTP_ERROR_CLASS_NOT_FOUND + "</B></FONT><P><HR><P>").append(e);
     } catch (NumberFormatException e) {
       if (logger.finestOn()) {
         logger.finest("buildPage", "Cannot convert String to type. [Exception=" + e + "]");
       }
       error = true;
-      errBuf.append(HtmlDef.HTTP_ERROR_BAD_REQUEST_ID + " " + HtmlDef.HTTP_ERROR_BAD_REQUEST + "</B></FONT><P><HR><P>" + e);
+      errBuf.append(HtmlDef.HTTP_ERROR_BAD_REQUEST_ID + " " + HtmlDef.HTTP_ERROR_BAD_REQUEST + "</B></FONT><P><HR><P>").append(e);
     } catch (MalformedObjectNameException e) {
       if (logger.finestOn()) {
         logger.finest("buildPage", "Malformed object name. [Exception=" + e + "]");
       }
       error = true;
-      errBuf.append(HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME_ID + " " + HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME + "</B></FONT><P><HR><P>" + e);
+      errBuf.append(HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME_ID + " " + HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME + "</B></FONT><P><HR><P>").append(e);
     } catch (JMRuntimeException e) {
       if (logger.finestOn()) {
         logger.finest("cmfHttpAction", "Instance not found. [Exception=" + e + "]");
       }
       error = true;
-      errBuf.append(HtmlDef.HTTP_ERROR_MBEAN_ID + " " + HtmlDef.HTTP_ERROR_MBEAN + "</B></FONT><P><HR><P>" + e);
+      errBuf.append(HtmlDef.HTTP_ERROR_MBEAN_ID + " " + HtmlDef.HTTP_ERROR_MBEAN + "</B></FONT><P><HR><P>").append(e);
     }
 
 
@@ -869,7 +862,7 @@ class HtmlAdminPage extends HtmlPage {
   }
 
   private void addRow(String fieldName, String fieldarg, String name) {
-    String actualName = null;
+    String actualName;
 
     if (name == null) {
       actualName = "";
@@ -913,7 +906,7 @@ class HtmlAdminPage extends HtmlPage {
       if (logger.finerOn()) {
         logger.finer("buildCtorsList", "Found " + ctors.length + " constructors(s)");
       }
-      String ctorStr = null;
+      String ctorStr;
 
       add2Page("<P><H3>List of MBean constructors for:</H3>" + HtmlDef.PF);
       add2Page("<UL type=disc><LI><B>MBean Name:</B> " + safeDomainName + ":" + safeKeysName);
@@ -948,8 +941,8 @@ class HtmlAdminPage extends HtmlPage {
     String encKeysName = encodeUrl(keysName);
 
     StringBuilder str = new StringBuilder(50);
-    String propType = null;
-    String param = null;
+    String propType;
+    String param;
     int max = paramList.length;
     boolean support = true;
 
@@ -968,25 +961,16 @@ class HtmlAdminPage extends HtmlPage {
 
     add2Page("<TD>");
     if (support) {
-      str.append("<FORM ACTION=\"" +
-        HtmlDef.ADMIN +
-        HtmlDef.ADMIN_OBJECT +
-        HtmlDef.ADMIN_QUEST2 +
-        "&domainName=" + encDomainName +
-        "&keysName=" + encKeysName +
-        "&className=" + className +
-        "&cloaderName=" + ((cloaderName != null) ? cloaderName : "") +
-        "&action=" + HtmlDef.actionAdd +
-        "&\" METHOD=GET>" + HtmlDef.PF);
+      str.append("<FORM ACTION=\"" + HtmlDef.ADMIN + HtmlDef.ADMIN_OBJECT + HtmlDef.ADMIN_QUEST2 + "&domainName=").append(encDomainName).append("&keysName=").append(encKeysName).append("&className=").append(className).append("&cloaderName=").append((cloaderName != null) ? cloaderName : "").append("&action=").append(HtmlDef.actionAdd).append("&\" METHOD=GET>").append(HtmlDef.PF);
     }
 
     str.append("<TABLE>" + HtmlDef.PF);
 
     if (!support) {
-      str.append("<P><TD><B>" + className + "<B></TD>" + HtmlDef.PF);
+      str.append("<P><TD><B>").append(className).append("<B></TD>").append(HtmlDef.PF);
     } else {
       str.append("<TD><INPUT TYPE=SUBMIT VALUE=\"" + HtmlDef.actionAdd + "\"></TD>" + HtmlDef.PF);
-      str.append("<TD><B>" + className + "</B> </TD>");
+      str.append("<TD><B>").append(className).append("</B> </TD>");
     }
 
     // Default constructor.
@@ -1013,18 +997,18 @@ class HtmlAdminPage extends HtmlPage {
       }
       String ai = paramList[i].getDescription();
       if (ai != null && ai.length() > 0) {
-        str.append("<TD>(" + propType + ")<A HREF=\"javascript:alert('" + ai + "');\">" + param + "</A></TD>" + HtmlDef.PF);
+        str.append("<TD>(").append(propType).append(")<A HREF=\"javascript:alert('").append(ai).append("');\">").append(param).append("</A></TD>").append(HtmlDef.PF);
       } else {
-        str.append("<TD>(" + propType + ")" + param + "</TD>" + HtmlDef.PF);
+        str.append("<TD>(").append(propType).append(")").append(param).append("</TD>").append(HtmlDef.PF);
       }
 
       if (!support) {
         str.append("<TD></TD>" + HtmlDef.PF);
       } else {
         if (propType.endsWith("Boolean") || propType.endsWith("boolean")) {
-          str.append("<TD>" + boolToHtml(param, propType, "true", true) + "</TD>" + HtmlDef.PF);
+          str.append("<TD>").append(boolToHtml(param, propType, "true", true)).append("</TD>").append(HtmlDef.PF);
         } else {
-          str.append("<TD><INPUT TYPE=\"text\" NAME=\"" + param + "+" + propType + "\" ");
+          str.append("<TD><INPUT TYPE=\"text\" NAME=\"").append(param).append("+").append(propType).append("\" ");
           str.append("SIZE=50%");
           str.append("></TD>" + HtmlDef.PF);
         }
@@ -1069,7 +1053,7 @@ class HtmlAdminPage extends HtmlPage {
     // Now analyze each Constructor.
     //
     for (Constructor constructor : consList) {
-      MBeanConstructorInfo mc = null;
+      MBeanConstructorInfo mc;
       try {
         mc = new MBeanConstructorInfo("Public constructor of the MBean", constructor);
       } catch (Exception ex) {
@@ -1108,8 +1092,8 @@ class HtmlAdminPage extends HtmlPage {
       return findClass(className);
     }
 
-    Set qresult = null;
-    Object[] qmbeans = null;
+    Set qresult;
+    Object[] qmbeans;
     synchronized (this) {
       qresult = mbs.queryMBeans(aLoader, null);
     }
@@ -1125,8 +1109,7 @@ class HtmlAdminPage extends HtmlPage {
     }
     Object[] params = new Object[]{className};
     String[] signature = new String[]{"java.lang.String"};
-    Class theClass = (Class) mbs.invoke(((ObjectInstance) qmbeans[0]).getObjectName(), "loadClass", params, signature);
-    return theClass;
+    return (Class) mbs.invoke(((ObjectInstance) qmbeans[0]).getObjectName(), "loadClass", params, signature);
   }
 
   private Class loadClass(String className)

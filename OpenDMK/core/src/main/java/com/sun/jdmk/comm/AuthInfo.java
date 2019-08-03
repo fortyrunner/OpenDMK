@@ -133,6 +133,7 @@ public class AuthInfo implements Cloneable {
    *
    * @see java.lang.Object#clone
    */
+  @Override
   public Object clone() {
     Object newAuthInfo = null;
     try {

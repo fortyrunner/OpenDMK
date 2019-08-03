@@ -141,6 +141,7 @@ public class UnsignedLong extends Number implements Comparable {
    * Return an <code>int</code> that is equal mod 2<sup>32</sup> to
    * this unsigned number.
    */
+  @Override
   public int intValue() {
     return (int) value;
   }
@@ -149,6 +150,7 @@ public class UnsignedLong extends Number implements Comparable {
    * Return a <code>long</code> that is equal mod 2<sup>64</sup> to
    * this unsigned number.
    */
+  @Override
   public long longValue() {
     return value;
   }
@@ -157,6 +159,7 @@ public class UnsignedLong extends Number implements Comparable {
    * Return the representable <code>double</code> that is nearest
    * to this unsigned number.
    */
+  @Override
   public double doubleValue() {
     if (value >= 0) {
       return (double) value;
@@ -169,6 +172,7 @@ public class UnsignedLong extends Number implements Comparable {
    * Return the representable <code>float</code> that is nearest
    * to this unsigned number.
    */
+  @Override
   public float floatValue() {
     if (value >= 0) {
       return (float) value;
@@ -177,6 +181,7 @@ public class UnsignedLong extends Number implements Comparable {
     }
   }
 
+  @Override
   public int compareTo(Object o) {
     UnsignedLong u = (UnsignedLong) o;
     return unsignedCompare(this.value, u.value);

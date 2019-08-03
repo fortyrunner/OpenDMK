@@ -59,6 +59,7 @@ public class GetPropertyAction implements PrivilegedAction {
     this.key = key;
   }
 
+  @Override
   public Object run() {
     return System.getProperty(key);
   }

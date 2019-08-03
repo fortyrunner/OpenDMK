@@ -68,6 +68,7 @@ class BASE64Encoder extends CharacterEncoder {
   /**
    * This class encodes three bytes per atom.
    */
+  @Override
   protected int bytesPerAtom() {
     return (3);
   }
@@ -77,6 +78,7 @@ class BASE64Encoder extends CharacterEncoder {
    * of 57/3 * 4 or 76 characters per output line, not counting the
    * line termination.
    */
+  @Override
   protected int bytesPerLine() {
     return (57);
   }
@@ -102,6 +104,7 @@ class BASE64Encoder extends CharacterEncoder {
    * than three is encodes either one or two '=' signs to indicate
    * padding characters.
    */
+  @Override
   protected void encodeAtom(OutputStream outStream, byte data[], int offset, int len)
     throws IOException {
     byte a, b, c;

@@ -124,6 +124,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public Object instantiate(String className)
     throws ReflectionException, MBeanException {
     return instantiate(className, null, null);
@@ -131,6 +132,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public Object instantiate(String className, ObjectName loaderName)
     throws ReflectionException, MBeanException,
     InstanceNotFoundException {
@@ -140,6 +142,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public Object instantiate(String className, Object params[],
                             String signature[])
     throws ReflectionException, MBeanException {
@@ -148,6 +151,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public Object instantiate(String className, ObjectName loaderName,
                             Object params[], String signature[])
     throws ReflectionException, MBeanException,
@@ -157,6 +161,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name)
     throws ReflectionException, InstanceAlreadyExistsException,
     MBeanException,
@@ -166,6 +171,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     ObjectName loaderName)
     throws ReflectionException, InstanceAlreadyExistsException,
@@ -177,6 +183,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     Object params[], String signature[])
     throws ReflectionException, InstanceAlreadyExistsException,
@@ -187,6 +194,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public ObjectInstance createMBean(String className, ObjectName name,
                                     ObjectName loaderName, Object params[],
                                     String signature[])
@@ -198,6 +206,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public ObjectInstance registerMBean(Object object, ObjectName name)
     throws InstanceAlreadyExistsException, MBeanRegistrationException,
     NotCompliantMBeanException {
@@ -206,6 +215,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public void unregisterMBean(ObjectName name)
     throws InstanceNotFoundException, MBeanRegistrationException {
     mbs.unregisterMBean(name);
@@ -213,6 +223,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public ObjectInstance getObjectInstance(ObjectName name)
     throws InstanceNotFoundException {
     return mbs.getObjectInstance(name);
@@ -220,30 +231,35 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public Set queryMBeans(ObjectName name, QueryExp query) {
     return mbs.queryMBeans(name, query);
   }
 
   // See javax.management.MBeanServer
   //
+  @Override
   public Set queryNames(ObjectName name, QueryExp query) {
     return mbs.queryNames(name, query);
   }
 
   // See javax.management.MBeanServer
   //
+  @Override
   public boolean isRegistered(ObjectName name) {
     return mbs.isRegistered(name);
   }
 
   // See javax.management.MBeanServer
   //
+  @Override
   public Integer getMBeanCount() {
     return mbs.getMBeanCount();
   }
 
   // See javax.management.MBeanServer
   //
+  @Override
   public Object getAttribute(ObjectName name, String attribute)
     throws MBeanException, AttributeNotFoundException,
     InstanceNotFoundException, ReflectionException {
@@ -252,6 +268,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public AttributeList getAttributes(ObjectName name, String[] attributes)
     throws InstanceNotFoundException, ReflectionException {
     return mbs.getAttributes(name, attributes);
@@ -259,6 +276,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public void setAttribute(ObjectName name, Attribute attribute)
     throws InstanceNotFoundException, AttributeNotFoundException,
     InvalidAttributeValueException, MBeanException,
@@ -268,6 +286,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public AttributeList setAttributes(ObjectName name,
                                      AttributeList attributes)
     throws InstanceNotFoundException, ReflectionException {
@@ -276,6 +295,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public Object invoke(ObjectName name, String operationName,
                        Object params[], String signature[])
     throws InstanceNotFoundException, MBeanException,
@@ -285,6 +305,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public String getDefaultDomain() {
     return mbs.getDefaultDomain();
   }
@@ -292,12 +313,14 @@ public class MBeanServerForwarder implements MBeanServer {
   // See javax.management.MBeanServer
   //
   //
+  @Override
   public String[] getDomains() {
     return mbs.getDomains();
   }
 
   // See javax.management.MBeanServer
   //
+  @Override
   public void addNotificationListener(ObjectName name,
                                       NotificationListener listener,
                                       NotificationFilter filter,
@@ -308,6 +331,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public void addNotificationListener(ObjectName name, ObjectName listener,
                                       NotificationFilter filter,
                                       Object handback)
@@ -317,6 +341,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
@@ -326,6 +351,7 @@ public class MBeanServerForwarder implements MBeanServer {
   // See javax.management.MBeanServer
   //
   //
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          NotificationListener listener,
                                          NotificationFilter filter,
@@ -336,6 +362,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener)
     throws InstanceNotFoundException, ListenerNotFoundException {
@@ -345,6 +372,7 @@ public class MBeanServerForwarder implements MBeanServer {
   // See javax.management.MBeanServer
   //
   //
+  @Override
   public void removeNotificationListener(ObjectName name,
                                          ObjectName listener,
                                          NotificationFilter filter,
@@ -355,6 +383,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public MBeanInfo getMBeanInfo(ObjectName name)
     throws InstanceNotFoundException, IntrospectionException,
     ReflectionException {
@@ -363,6 +392,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public boolean isInstanceOf(ObjectName name, String className)
     throws InstanceNotFoundException {
     return mbs.isInstanceOf(name, className);
@@ -370,6 +400,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public ObjectInputStream deserialize(ObjectName name, byte[] data)
     throws OperationsException {
     return mbs.deserialize(name, data);
@@ -377,6 +408,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public ObjectInputStream deserialize(String className, byte[] data)
     throws OperationsException, ReflectionException {
     return mbs.deserialize(className, data);
@@ -384,6 +416,7 @@ public class MBeanServerForwarder implements MBeanServer {
 
   // See javax.management.MBeanServer
   //
+  @Override
   public ObjectInputStream deserialize(String className,
                                        ObjectName loaderName, byte[] data)
     throws OperationsException,
@@ -394,6 +427,7 @@ public class MBeanServerForwarder implements MBeanServer {
   // See javax.management.MBeanServer
   //
   //
+  @Override
   public ClassLoader getClassLoaderFor(ObjectName mbeanName)
     throws InstanceNotFoundException {
     return mbs.getClassLoaderFor(mbeanName);
@@ -402,6 +436,7 @@ public class MBeanServerForwarder implements MBeanServer {
   // See javax.management.MBeanServer
   //
   //
+  @Override
   public ClassLoader getClassLoader(ObjectName loaderName)
     throws InstanceNotFoundException {
     return mbs.getClassLoader(loaderName);
@@ -410,6 +445,7 @@ public class MBeanServerForwarder implements MBeanServer {
   // See javax.management.MBeanServer
   //
   //
+  @Override
   public ClassLoaderRepository getClassLoaderRepository() {
     return mbs.getClassLoaderRepository();
   }

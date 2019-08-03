@@ -102,6 +102,7 @@ public class DynamicMetaDataImpl implements MetaData {
   /**
    * This methods tests if the MBean is JMX compliant
    */
+  @Override
   public void testCompliance(Class c)
     throws NotCompliantMBeanException {
     if (DynamicMBean.class.isAssignableFrom(c)) {
@@ -118,6 +119,7 @@ public class DynamicMetaDataImpl implements MetaData {
   //
   //---------------------------------------------------------------------
 
+  @Override
   public ObjectName preRegisterInvoker(Object moi, ObjectName name,
                                        MBeanServer mbs)
     throws InstanceAlreadyExistsException, MBeanRegistrationException {
@@ -154,6 +156,7 @@ public class DynamicMetaDataImpl implements MetaData {
   }
 
 
+  @Override
   public void postRegisterInvoker(Object moi, boolean registrationDone) {
     if (!(moi instanceof MBeanRegistration)) {
       return;
@@ -172,6 +175,7 @@ public class DynamicMetaDataImpl implements MetaData {
   }
 
 
+  @Override
   public void preDeregisterInvoker(Object moi)
     throws MBeanRegistrationException {
     if (!(moi instanceof MBeanRegistration)) {
@@ -195,6 +199,7 @@ public class DynamicMetaDataImpl implements MetaData {
   }
 
 
+  @Override
   public void postDeregisterInvoker(Object moi) {
     if (!(moi instanceof MBeanRegistration)) {
       return;
@@ -211,6 +216,7 @@ public class DynamicMetaDataImpl implements MetaData {
     }
   }
 
+  @Override
   public String getMBeanClassName(Object moi)
     throws IntrospectionException, NotCompliantMBeanException {
 
@@ -232,6 +238,7 @@ public class DynamicMetaDataImpl implements MetaData {
     return className;
   }
 
+  @Override
   public MBeanInfo getMBeanInfo(Object moi)
     throws IntrospectionException {
 
@@ -249,6 +256,7 @@ public class DynamicMetaDataImpl implements MetaData {
 
   }
 
+  @Override
   public Object getAttribute(Object instance, String attribute)
     throws MBeanException, AttributeNotFoundException,
     ReflectionException {
@@ -275,6 +283,7 @@ public class DynamicMetaDataImpl implements MetaData {
     }
   }
 
+  @Override
   public AttributeList getAttributes(Object instance, String[] attributes)
     throws ReflectionException {
 
@@ -299,6 +308,7 @@ public class DynamicMetaDataImpl implements MetaData {
   }
 
 
+  @Override
   public AttributeList setAttributes(Object instance,
                                      AttributeList attributes)
     throws ReflectionException {
@@ -325,6 +335,7 @@ public class DynamicMetaDataImpl implements MetaData {
   }
 
 
+  @Override
   public Object setAttribute(Object instance, Attribute attribute)
     throws AttributeNotFoundException, InvalidAttributeValueException,
     MBeanException, ReflectionException {
@@ -359,6 +370,7 @@ public class DynamicMetaDataImpl implements MetaData {
   }
 
 
+  @Override
   public Object invoke(Object instance, String operationName,
                        Object params[], String signature[])
     throws MBeanException, ReflectionException {
@@ -392,6 +404,7 @@ public class DynamicMetaDataImpl implements MetaData {
     }
   }
 
+  @Override
   public boolean isInstanceOf(Object instance, String className)
     throws ReflectionException {
 

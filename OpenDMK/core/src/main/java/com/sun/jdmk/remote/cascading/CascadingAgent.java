@@ -221,6 +221,7 @@ public abstract class CascadingAgent
 
     connectionFactory = sourceConnection;
     emitter = new NotificationBroadcasterSupport() {
+      @Override
       protected void handleNotification(
         NotificationListener listener,
         Notification notif, Object handback) {
@@ -236,6 +237,7 @@ public abstract class CascadingAgent
 
   private class ConnectionListener
     implements NotificationListener {
+    @Override
     public void handleNotification(Notification notification,
                                    Object handback) {
       if (enabled()) {
@@ -305,41 +307,49 @@ public abstract class CascadingAgent
 
   // from CascadingAgentMBean
   //
+  @Override
   public final String getTargetPath() {
     return targetPath;
   }
 
   // from CascadingAgentMBean
   //
+  @Override
   public int getCascadedMBeanCount() {
     return getCascadedMBeans().size();
   }
 
   // from CascadingAgentMBean
   //
+  @Override
   public abstract Set getCascadedMBeans();
 
 
   // from CascadingAgentMBean
   //
+  @Override
   public abstract void start()
     throws IOException;
 
   // from CascadingAgentMBean
   //
+  @Override
   public abstract void start(boolean conflictAllowed)
     throws IOException, InstanceAlreadyExistsException;
 
   // from CascadingAgentMBean
   //
+  @Override
   public abstract void stop() throws IOException;
 
   // from CascadingAgentMBean
   //
+  @Override
   public abstract boolean isActive();
 
   // from CascadingAgentMBean
   //
+  @Override
   public abstract String getDescription();
 
   /**
@@ -357,12 +367,14 @@ public abstract class CascadingAgent
 
   // from CascadingAgentMBean
   //
+  @Override
   public final ObjectName getPattern() {
     return sourcePattern;
   }
 
   // from CascadingAgentMBean
   //
+  @Override
   public final QueryExp getQuery() {
     return sourceQuery;
   }
@@ -370,6 +382,7 @@ public abstract class CascadingAgent
 
   // from NotificationEmitter
   //
+  @Override
   public void addNotificationListener(NotificationListener listener,
                                       NotificationFilter filter,
                                       Object handback)
@@ -379,6 +392,7 @@ public abstract class CascadingAgent
 
   // from NotificationEmitter
   //
+  @Override
   public void removeNotificationListener(NotificationListener listener)
     throws ListenerNotFoundException {
     emitter.removeNotificationListener(listener);
@@ -386,6 +400,7 @@ public abstract class CascadingAgent
 
   // from NotificationEmitter
   //
+  @Override
   public void removeNotificationListener(NotificationListener listener,
                                          NotificationFilter filter,
                                          Object handback)
@@ -396,6 +411,7 @@ public abstract class CascadingAgent
 
   // from NotificationEmitter
   //
+  @Override
   public MBeanNotificationInfo[] getNotificationInfo() {
     final MBeanNotificationInfo[] info = {
       jmxConnectionNotificationInfo
@@ -467,6 +483,7 @@ public abstract class CascadingAgent
    *                                  registered in an <tt>MBeanServer</tt>.
    * @see MBeanRegistration#preRegister
    */
+  @Override
   public ObjectName preRegister(MBeanServer server,
                                 ObjectName name)
     throws java.lang.Exception {
@@ -484,18 +501,21 @@ public abstract class CascadingAgent
 
   // from MBeanRegistration
   //
+  @Override
   public void postRegister(Boolean registrationDone) {
   }
 
 
   // from MBeanRegistration
   //
+  @Override
   public void preDeregister() throws java.lang.Exception {
   }
 
 
   // from MBeanRegistration
   //
+  @Override
   public void postDeregister() {
     myMBS = null;
   }

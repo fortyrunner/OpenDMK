@@ -77,10 +77,12 @@ final class PlainServer implements SaslServer {
     this.cbh = cbh;
   }
 
+  @Override
   public String getMechanismName() {
     return "PLAIN";
   }
 
+  @Override
   public byte[] evaluateResponse(byte[] response) throws SaslException {
     if (completed) {
       throw new IllegalStateException(
@@ -153,14 +155,17 @@ final class PlainServer implements SaslServer {
     return null;
   }
 
+  @Override
   public String getAuthorizationID() {
     return authorizationID;
   }
 
+  @Override
   public boolean isComplete() {
     return completed;
   }
 
+  @Override
   public byte[] unwrap(byte[] incoming, int offset, int len)
     throws SaslException {
     if (completed) {
@@ -172,6 +177,7 @@ final class PlainServer implements SaslServer {
     }
   }
 
+  @Override
   public byte[] wrap(byte[] outgoing, int offset, int len)
     throws SaslException {
     if (completed) {
@@ -183,6 +189,7 @@ final class PlainServer implements SaslServer {
     }
   }
 
+  @Override
   public Object getNegotiatedProperty(String propName) {
     if (completed) {
       if (propName.equals(Sasl.QOP)) {
@@ -196,6 +203,7 @@ final class PlainServer implements SaslServer {
     }
   }
 
+  @Override
   public void dispose() throws SaslException {
   }
 

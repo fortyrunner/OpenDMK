@@ -81,11 +81,13 @@ public class CacheMap extends WeakHashMap {
     this.nSoftReferences = nSoftReferences;
   }
 
+  @Override
   public Object put(Object key, Object value) {
     cache(key);
     return super.put(key, value);
   }
 
+  @Override
   public Object get(Object key) {
     cache(key);
     return super.get(key);

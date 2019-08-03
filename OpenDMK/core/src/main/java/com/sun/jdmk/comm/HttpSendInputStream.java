@@ -94,6 +94,7 @@ class HttpSendInputStream extends FilterInputStream {
   /**
    * Read a byte of data from the stream.
    */
+  @Override
   public int read() throws IOException {
     if (in == null) {
       in = owner.readNotify();
@@ -108,6 +109,7 @@ class HttpSendInputStream extends FilterInputStream {
    * @param off the start offset of the data
    * @param len the maximum number of bytes to read
    */
+  @Override
   public int read(byte b[], int off, int len) throws IOException {
     if (len == 0) {
       return 0;
@@ -123,6 +125,7 @@ class HttpSendInputStream extends FilterInputStream {
    *
    * @param n the number of bytes to be skipped
    */
+  @Override
   public long skip(long n) throws IOException {
     if (n == 0) {
       return 0;
@@ -136,6 +139,7 @@ class HttpSendInputStream extends FilterInputStream {
   /**
    * Return the number of bytes that can be read without blocking.
    */
+  @Override
   public int available() throws IOException {
     if (in == null) {
       in = owner.readNotify();
@@ -146,6 +150,7 @@ class HttpSendInputStream extends FilterInputStream {
   /**
    * Close the stream.
    */
+  @Override
   public void close() throws IOException {
     owner.close();
   }
@@ -155,6 +160,7 @@ class HttpSendInputStream extends FilterInputStream {
    *
    * @param readlimit how many bytes can be read before mark becomes invalid
    */
+  @Override
   public synchronized void mark(int readlimit) {
     if (in == null) {
       try {
@@ -169,6 +175,7 @@ class HttpSendInputStream extends FilterInputStream {
   /**
    * Reposition the stream to the last marked position.
    */
+  @Override
   public synchronized void reset() throws IOException {
     if (in == null) {
       in = owner.readNotify();
@@ -179,6 +186,7 @@ class HttpSendInputStream extends FilterInputStream {
   /**
    * Return true if this stream type supports mark/reset.
    */
+  @Override
   public boolean markSupported() {
     if (in == null) {
       try {

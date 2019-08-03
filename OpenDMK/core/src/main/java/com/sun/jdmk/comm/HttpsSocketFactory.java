@@ -73,6 +73,7 @@ class HttpsSocketFactory extends GenericHttpSocketFactory {
    * @return a socket connected to the specified host and port.
    * @throws IOException if an I/O error occurs during socket creation
    */
+  @Override
   public Socket createSocket(String host, int port, GenericHttpConnectorClient connector) throws IOException {
     return factory.createSocket(host, port, connector);
   }
@@ -85,6 +86,7 @@ class HttpsSocketFactory extends GenericHttpSocketFactory {
    * @return the server socket on the specified port
    * @throws IOException if an I/O error occurs during server socket creation
    */
+  @Override
   public ServerSocket createServerSocket(int port) throws IOException {
     throw new IOException("Not Implemented Yet");
   }

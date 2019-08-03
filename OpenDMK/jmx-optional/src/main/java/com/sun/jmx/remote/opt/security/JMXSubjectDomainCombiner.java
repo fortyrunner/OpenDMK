@@ -68,6 +68,7 @@ public class JMXSubjectDomainCombiner extends SubjectDomainCombiner {
     super(s);
   }
 
+  @Override
   public ProtectionDomain[] combine(ProtectionDomain[] current,
                                     ProtectionDomain[] assigned) {
     // Add a new ProtectionDomain with the null codesource/signers, and

@@ -310,6 +310,7 @@ public abstract class CommunicatorServer
    * Has no effect if this <CODE>CommunicatorServer</CODE> is
    * <CODE>ONLINE</CODE> or <CODE>STOPPING</CODE>.
    */
+  @Override
   public void start() {
     boolean start;
 
@@ -355,6 +356,7 @@ public abstract class CommunicatorServer
    * Has no effect if this <CODE>CommunicatorServer</CODE> is
    * <CODE>OFFLINE</CODE> or <CODE>STOPPING</CODE>.
    */
+  @Override
   public void stop() {
     synchronized (stateLock) {
       if (state == OFFLINE || state == STOPPING) {
@@ -398,6 +400,7 @@ public abstract class CommunicatorServer
    *
    * @return True if connector is <CODE>ONLINE</CODE>; false otherwise.
    */
+  @Override
   public boolean isActive() {
     return (state == ONLINE);
   }
@@ -431,6 +434,7 @@ public abstract class CommunicatorServer
    * is the same as the <VAR>wantedState</VAR> parameter;
    * <code>false</code> otherwise.
    */
+  @Override
   public boolean waitState(int wantedState, long timeout) {
     if (logger.finerOn()) {
       logger.finer("waitState", wantedState + "(0on,1off,2st) TO=" +
@@ -485,6 +489,7 @@ public abstract class CommunicatorServer
    * @return <CODE>ONLINE</CODE>, <CODE>OFFLINE</CODE>,
    * <CODE>STARTING</CODE> or <CODE>STOPPING</CODE>.
    */
+  @Override
   public int getState() {
     return state;
   }
@@ -495,6 +500,7 @@ public abstract class CommunicatorServer
    * @return One of the strings "ONLINE", "OFFLINE", "STARTING" or
    * "STOPPING".
    */
+  @Override
   public String getStateString() {
     return getStringForState(state);
   }
@@ -504,6 +510,7 @@ public abstract class CommunicatorServer
    *
    * @return The host name used by this <CODE>CommunicatorServer</CODE>.
    */
+  @Override
   public String getHost() {
     try {
       host = System.getProperty("jdmk.hostname");
@@ -521,6 +528,7 @@ public abstract class CommunicatorServer
    *
    * @return The port number used by this <CODE>CommunicatorServer</CODE>.
    */
+  @Override
   public int getPort() {
     return port;
   }
@@ -532,6 +540,7 @@ public abstract class CommunicatorServer
    * @throws java.lang.IllegalStateException This method has been invoked
    *                                         while the communicator was ONLINE or STARTING.
    */
+  @Override
   public void setPort(int port) throws java.lang.IllegalStateException {
     synchronized (stateLock) {
       if ((state == ONLINE) || (state == STARTING)) {
@@ -548,6 +557,7 @@ public abstract class CommunicatorServer
    *
    * @return The protocol as a string.
    */
+  @Override
   public abstract String getProtocol();
 
   /**
@@ -622,6 +632,7 @@ public abstract class CommunicatorServer
    * <p>
    * The <CODE>run</CODE> method executed by this connector's main thread.
    */
+  @Override
   public void run() {
 
     // Fix jaw.00667.B
@@ -1022,6 +1033,7 @@ public abstract class CommunicatorServer
    *                 listener when a notification is emitted.
    * @throws IllegalArgumentException Listener parameter is null.
    */
+  @Override
   public void addNotificationListener(NotificationListener listener,
                                       NotificationFilter filter,
                                       Object handback)
@@ -1044,6 +1056,7 @@ public abstract class CommunicatorServer
    * @param listener The listener object to be removed.
    * @throws ListenerNotFoundException The listener is not registered.
    */
+  @Override
   public void removeNotificationListener(NotificationListener listener)
     throws ListenerNotFoundException {
 
@@ -1063,6 +1076,7 @@ public abstract class CommunicatorServer
    * sent when the <tt>State</tt> attribute of this CommunicatorServer
    * changes.
    */
+  @Override
   public MBeanNotificationInfo[] getNotificationInfo() {
 
     // Initialize notifInfos on first call to getNotificationInfo()
@@ -1149,6 +1163,7 @@ public abstract class CommunicatorServer
    *                   the <CODE>MBeanServer</CODE> and re-thrown
    *                   as an <CODE>MBeanRegistrationException</CODE>.
    */
+  @Override
   public ObjectName preRegister(MBeanServer server, ObjectName name)
     throws java.lang.Exception {
     objectName = name;
@@ -1169,6 +1184,7 @@ public abstract class CommunicatorServer
    *                         successfully registered in the <CODE>MBeanServer</CODE>.
    *                         The value false means that the registration phase has failed.
    */
+  @Override
   public void postRegister(Boolean registrationDone) {
     if (!registrationDone.booleanValue()) {
       synchronized (this) {
@@ -1184,6 +1200,7 @@ public abstract class CommunicatorServer
    *                   the <CODE>MBeanServer</CODE> and re-thrown
    *                   as an <CODE>MBeanRegistrationException</CODE>.
    */
+  @Override
   public void preDeregister() throws java.lang.Exception {
     synchronized (this) {
       topMBS = bottomMBS = null;
@@ -1197,6 +1214,7 @@ public abstract class CommunicatorServer
   /**
    * Do nothing.
    */
+  @Override
   public void postDeregister() {
   }
 

@@ -64,6 +64,7 @@ import java.util.Map;
  */
 public class ClientProvider implements JMXConnectorProvider {
 
+  @Override
   public JMXConnector newJMXConnector(JMXServiceURL serviceURL, Map environment)
     throws IOException {
 

@@ -87,6 +87,7 @@ public class SASLServerHandler implements ProfileServer {
   // ProfileServer interface implementation
   //---------------------------------------
 
+  @Override
   public void initialize(MessageConnection mc, Subject s) throws IOException {
 
     this.mc = mc;
@@ -123,6 +124,7 @@ public class SASLServerHandler implements ProfileServer {
     }
   }
 
+  @Override
   public ProfileMessage produceMessage() throws IOException {
     int status;
     if (saslServer.isComplete()) {
@@ -142,6 +144,7 @@ public class SASLServerHandler implements ProfileServer {
     return challenge;
   }
 
+  @Override
   public void consumeMessage(ProfileMessage pm) throws IOException {
     if (!(pm instanceof SASLMessage)) {
       throw new IOException("Unexpected profile message type: " +
@@ -168,10 +171,12 @@ public class SASLServerHandler implements ProfileServer {
     }
   }
 
+  @Override
   public boolean isComplete() {
     return saslServer.isComplete();
   }
 
+  @Override
   public Subject activate() throws IOException {
     // If negotiated integrity or privacy
     //
@@ -196,6 +201,7 @@ public class SASLServerHandler implements ProfileServer {
       subject = new Subject();
     }
     AccessController.doPrivileged(new PrivilegedAction() {
+      @Override
       public Object run() {
         subject.getPrincipals().add(principal);
         return null;
@@ -204,10 +210,12 @@ public class SASLServerHandler implements ProfileServer {
     return subject;
   }
 
+  @Override
   public void terminate() throws IOException {
     saslServer.dispose();
   }
 
+  @Override
   public String getName() {
     return profile;
   }

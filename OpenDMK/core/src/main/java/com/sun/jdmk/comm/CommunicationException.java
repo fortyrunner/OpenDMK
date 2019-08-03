@@ -100,6 +100,7 @@ public class CommunicationException extends javax.management.JMRuntimeException 
   /**
    * Prints the stack trace of the thrown target exception.
    */
+  @Override
   public void printStackTrace() {
     printStackTrace(System.err);
   }
@@ -108,6 +109,7 @@ public class CommunicationException extends javax.management.JMRuntimeException 
    * Prints the stack trace of the thrown target exception to the specified
    * print stream.
    */
+  @Override
   public void printStackTrace(PrintStream ps) {
     synchronized (ps) {
       if (target != null) {
@@ -123,6 +125,7 @@ public class CommunicationException extends javax.management.JMRuntimeException 
    * Prints the stack trace of the thrown target exception to the
    * specified print writer.
    */
+  @Override
   public void printStackTrace(PrintWriter pw) {
     synchronized (pw) {
       if (target != null) {

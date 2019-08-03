@@ -103,14 +103,17 @@ public class GenericProxy implements Proxy {
    * ------------------------------------------
    */
 
+  @Override
   public ObjectInstance getMBeanObjectInstance() {
     return objectInstance;
   }
 
+  @Override
   public ProxyHandler getServer() {
     return server;
   }
 
+  @Override
   public void setServer(ProxyHandler server) {
     this.server = server;
   }

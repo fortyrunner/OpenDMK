@@ -122,6 +122,7 @@ final class MBeanServerDelegateImpl
         null, delegateImpl.getNotificationInfo());
   }
 
+  @Override
   final public ObjectName preRegister(MBeanServer server, ObjectName name)
     throws java.lang.Exception {
     if (name == null) {
@@ -131,15 +132,18 @@ final class MBeanServerDelegateImpl
     }
   }
 
+  @Override
   final public void postRegister(Boolean registrationDone) {
   }
 
+  @Override
   final public void preDeregister()
     throws java.lang.Exception {
     throw new IllegalArgumentException(
       "The MBeanServerDelegate MBean cannot be unregistered");
   }
 
+  @Override
   final public void postDeregister() {
   }
 
@@ -152,6 +156,7 @@ final class MBeanServerDelegateImpl
    * @throws MBeanException             Wraps a <CODE>java.lang.Exception</CODE> thrown by the
    *                                    MBean's getter.
    */
+  @Override
   public Object getAttribute(String attribute)
     throws AttributeNotFoundException,
     MBeanException, ReflectionException {
@@ -213,6 +218,7 @@ final class MBeanServerDelegateImpl
    *                  be set and  the value it is to be set to.
    * @throws AttributeNotFoundException
    */
+  @Override
   public void setAttribute(Attribute attribute)
     throws AttributeNotFoundException, InvalidAttributeValueException,
     MBeanException, ReflectionException {
@@ -248,6 +254,7 @@ final class MBeanServerDelegateImpl
    * @param attributes A list of the attributes to be retrieved.
    * @return The list of attributes retrieved.
    */
+  @Override
   public AttributeList getAttributes(String[] attributes) {
     // If attributes is null, the get all attributes.
     //
@@ -292,6 +299,7 @@ final class MBeanServerDelegateImpl
    * In fact, this method always return an empty list since all
    * MBeanServerDelegateMBean attributes are read-only.
    */
+  @Override
   public AttributeList setAttributes(AttributeList attributes) {
     return new AttributeList(0);
   }
@@ -311,6 +319,7 @@ final class MBeanServerDelegateImpl
    *                             <CODE>java.lang.Exception</CODE> thrown while trying to invoke
    *                             the method.
    */
+  @Override
   public Object invoke(String actionName, Object params[],
                        String signature[])
     throws MBeanException, ReflectionException {
@@ -329,14 +338,17 @@ final class MBeanServerDelegateImpl
         " could not be found");
   }
 
+  @Override
   public final String getImplementationName() {
     return ServiceName.JMX_IMPL_NAME;
   }
 
+  @Override
   public final String getImplementationVersion() {
     return ServiceName.JMX_IMPL_VERSION;
   }
 
+  @Override
   public final String getImplementationVendor() {
     return ServiceName.JMX_IMPL_VENDOR;
   }
@@ -344,6 +356,7 @@ final class MBeanServerDelegateImpl
 
   // From NotificationEmitter extends NotificationBroacaster
   //
+  @Override
   public final void addNotificationListener(NotificationListener listener,
                                             NotificationFilter filter,
                                             Object handback)
@@ -353,6 +366,7 @@ final class MBeanServerDelegateImpl
 
   // From NotificationEmitter extends NotificationBroacaster
   //
+  @Override
   public final void removeNotificationListener(NotificationListener listener)
     throws ListenerNotFoundException {
     delegateImpl.removeNotificationListener(listener);
@@ -360,6 +374,7 @@ final class MBeanServerDelegateImpl
 
   // From NotificationEmitter extends NotificationBroacaster
   //
+  @Override
   public final void removeNotificationListener(NotificationListener listener,
                                                NotificationFilter filter,
                                                Object handback)
@@ -367,6 +382,7 @@ final class MBeanServerDelegateImpl
     delegateImpl.removeNotificationListener(listener, filter, handback);
   }
 
+  @Override
   public final void sendNotification(Notification notification) {
     delegateImpl.sendNotification(notification);
   }
@@ -376,6 +392,7 @@ final class MBeanServerDelegateImpl
    *
    * @return The MBeanInfo describing the MBeanServerDelegate.
    */
+  @Override
   public MBeanInfo getMBeanInfo() {
     return delegateInfo;
   }

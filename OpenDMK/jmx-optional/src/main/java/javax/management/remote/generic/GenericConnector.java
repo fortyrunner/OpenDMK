@@ -139,10 +139,12 @@ public class GenericConnector implements JMXConnector {
     connectionBroadcaster = new NotificationBroadcasterSupport();
   }
 
+  @Override
   public void connect() throws IOException {
     connect(null);
   }
 
+  @Override
   public void connect(Map env) throws IOException {
     final boolean tracing = logger.traceOn();
     final String idstr = (tracing ? "[" + this.toString() + "]" : null);
@@ -231,17 +233,20 @@ public class GenericConnector implements JMXConnector {
       null));
   }
 
+  @Override
   public String getConnectionId() throws IOException {
     checkState();
     return connection.getConnectionId();
   }
 
   // implements client interface here
+  @Override
   public MBeanServerConnection getMBeanServerConnection()
     throws IOException {
     return getMBeanServerConnection(null);
   }
 
+  @Override
   public MBeanServerConnection getMBeanServerConnection(
     Subject delegationSubject)
     throws IOException {
@@ -257,6 +262,7 @@ public class GenericConnector implements JMXConnector {
     }
   }
 
+  @Override
   public void close() throws IOException {
     close(false, "The connection is closed by a user.");
   }
@@ -360,6 +366,7 @@ public class GenericConnector implements JMXConnector {
     }
   }
 
+  @Override
   public void
   addConnectionNotificationListener(NotificationListener listener,
                                     NotificationFilter filter,
@@ -371,6 +378,7 @@ public class GenericConnector implements JMXConnector {
       handback);
   }
 
+  @Override
   public void
   removeConnectionNotificationListener(NotificationListener listener)
     throws ListenerNotFoundException {
@@ -380,6 +388,7 @@ public class GenericConnector implements JMXConnector {
     connectionBroadcaster.removeNotificationListener(listener);
   }
 
+  @Override
   public void
   removeConnectionNotificationListener(NotificationListener listener,
                                        NotificationFilter filter,
@@ -407,6 +416,7 @@ public class GenericConnector implements JMXConnector {
    */
   protected void sendNotification(final Notification n) {
     Runnable job = new Runnable() {
+      @Override
       public void run() {
         try {
           connectionBroadcaster.sendNotification(n);
@@ -440,6 +450,7 @@ public class GenericConnector implements JMXConnector {
     // Implementation of MBeanServerConnection
     //----------------------------------------------
 
+    @Override
     public ObjectInstance createMBean(String className, ObjectName name)
       throws
       ReflectionException,
@@ -450,6 +461,7 @@ public class GenericConnector implements JMXConnector {
       return ci.createMBean(className, name, ds);
     }
 
+    @Override
     public ObjectInstance createMBean(String className,
                                       ObjectName name,
                                       ObjectName loaderName)
@@ -463,6 +475,7 @@ public class GenericConnector implements JMXConnector {
       return ci.createMBean(className, name, loaderName, ds);
     }
 
+    @Override
     public ObjectInstance createMBean(String className,
                                       ObjectName name,
                                       Object params[],
@@ -476,6 +489,7 @@ public class GenericConnector implements JMXConnector {
       return ci.createMBean(className, name, params, signature, ds);
     }
 
+    @Override
     public ObjectInstance createMBean(String className,
                                       ObjectName name,
                                       ObjectName loaderName,
@@ -492,6 +506,7 @@ public class GenericConnector implements JMXConnector {
         params, signature, ds);
     }
 
+    @Override
     public void unregisterMBean(ObjectName name)
       throws
       InstanceNotFoundException,
@@ -500,31 +515,37 @@ public class GenericConnector implements JMXConnector {
       ci.unregisterMBean(name, ds);
     }
 
+    @Override
     public ObjectInstance getObjectInstance(ObjectName name)
       throws InstanceNotFoundException, IOException {
       return ci.getObjectInstance(name, ds);
     }
 
+    @Override
     public Set queryMBeans(ObjectName name, QueryExp query)
       throws IOException {
       return ci.queryMBeans(name, query, ds);
     }
 
+    @Override
     public Set queryNames(ObjectName name, QueryExp query)
       throws IOException {
       return ci.queryNames(name, query, ds);
     }
 
+    @Override
     public boolean isRegistered(ObjectName name)
       throws IOException {
       return ci.isRegistered(name, ds);
     }
 
+    @Override
     public Integer getMBeanCount()
       throws IOException {
       return ci.getMBeanCount(ds);
     }
 
+    @Override
     public Object getAttribute(ObjectName name, String attribute)
       throws
       MBeanException,
@@ -535,11 +556,13 @@ public class GenericConnector implements JMXConnector {
       return ci.getAttribute(name, attribute, ds);
     }
 
+    @Override
     public AttributeList getAttributes(ObjectName name, String[] attributes)
       throws InstanceNotFoundException, ReflectionException, IOException {
       return ci.getAttributes(name, attributes, ds);
     }
 
+    @Override
     public void setAttribute(ObjectName name, Attribute attribute)
       throws
       InstanceNotFoundException,
@@ -551,12 +574,14 @@ public class GenericConnector implements JMXConnector {
       ci.setAttribute(name, attribute, ds);
     }
 
+    @Override
     public AttributeList setAttributes(ObjectName name,
                                        AttributeList attributes)
       throws InstanceNotFoundException, ReflectionException, IOException {
       return ci.setAttributes(name, attributes, ds);
     }
 
+    @Override
     public Object invoke(ObjectName name, String operationName,
                          Object params[], String signature[])
       throws
@@ -567,16 +592,19 @@ public class GenericConnector implements JMXConnector {
       return ci.invoke(name, operationName, params, signature, ds);
     }
 
+    @Override
     public String getDefaultDomain()
       throws IOException {
       return ci.getDefaultDomain(ds);
     }
 
+    @Override
     public String[] getDomains()
       throws IOException {
       return ci.getDomains(ds);
     }
 
+    @Override
     public void addNotificationListener(ObjectName name,
                                         NotificationListener listener,
                                         NotificationFilter filter,
@@ -585,6 +613,7 @@ public class GenericConnector implements JMXConnector {
       ci.addNotificationListener(name, listener, filter, handback, ds);
     }
 
+    @Override
     public void addNotificationListener(ObjectName name,
                                         ObjectName listener,
                                         NotificationFilter filter,
@@ -593,6 +622,7 @@ public class GenericConnector implements JMXConnector {
       ci.addNotificationListener(name, listener, filter, handback, ds);
     }
 
+    @Override
     public void removeNotificationListener(ObjectName name,
                                            ObjectName listener)
       throws
@@ -602,6 +632,7 @@ public class GenericConnector implements JMXConnector {
       ci.removeNotificationListener(name, listener, ds);
     }
 
+    @Override
     public void removeNotificationListener(ObjectName name,
                                            ObjectName listener,
                                            NotificationFilter filter,
@@ -613,6 +644,7 @@ public class GenericConnector implements JMXConnector {
       ci.removeNotificationListener(name, listener, filter, handback, ds);
     }
 
+    @Override
     public void removeNotificationListener(ObjectName name,
                                            NotificationListener listener)
       throws
@@ -622,6 +654,7 @@ public class GenericConnector implements JMXConnector {
       ci.removeNotificationListener(name, listener, ds);
     }
 
+    @Override
     public void removeNotificationListener(ObjectName name,
                                            NotificationListener listener,
                                            NotificationFilter filter,
@@ -633,6 +666,7 @@ public class GenericConnector implements JMXConnector {
       ci.removeNotificationListener(name, listener, filter, handback, ds);
     }
 
+    @Override
     public MBeanInfo getMBeanInfo(ObjectName name)
       throws
       InstanceNotFoundException,
@@ -642,6 +676,7 @@ public class GenericConnector implements JMXConnector {
       return ci.getMBeanInfo(name, ds);
     }
 
+    @Override
     public boolean isInstanceOf(ObjectName name, String className)
       throws InstanceNotFoundException, IOException {
       return ci.isInstanceOf(name, className, ds);
@@ -653,6 +688,7 @@ public class GenericConnector implements JMXConnector {
 
   private class RequestHandler implements SynchroCallback {
 
+    @Override
     public Message execute(Message msg) {
       if (msg instanceof CloseMessage) {
         if (logger.traceOn()) {
@@ -697,6 +733,7 @@ public class GenericConnector implements JMXConnector {
       return null;
     }
 
+    @Override
     public void connectionException(Exception e) {
       synchronized (lock) {
         if (state != CONNECTED) {

@@ -201,6 +201,7 @@ public class HttpsConnectorServer
    * @throws Exception This exception should be caught by the MBeanServer
    *                   and re-thrown as an MBeanRegistrationException.
    */
+  @Override
   public ObjectName preRegister(MBeanServer server, ObjectName name)
     throws Exception {
     if (name == null) {
@@ -213,6 +214,7 @@ public class HttpsConnectorServer
   /**
    * Gets an instance of the socket factory used by this connector.
    */
+  @Override
   GenericHttpSocket createSocket() {
     HttpsSocket https_socket =
       new HttpsSocket(0, null, getNeedClientAuth());
@@ -223,6 +225,7 @@ public class HttpsConnectorServer
   /**
    * Gets the notification forwarder used by this connector.
    */
+  @Override
   GenericHttpNotificationForwarder
   getNotificationForwarder(GenericHttpConnectorAddress address) {
     return new HttpsNotificationForwarder(address);
@@ -233,6 +236,7 @@ public class HttpsConnectorServer
    *
    * @return The string "https".
    */
+  @Override
   public String getProtocol() {
     return "https";
   }
@@ -247,6 +251,7 @@ public class HttpsConnectorServer
    *
    * @return The current value of the "Timeout" property.
    */
+  @Override
   public int getTimeout() {
     if (sockListen != null) {
       return sockListen.getTimeout();
@@ -272,6 +277,7 @@ public class HttpsConnectorServer
    * @throws java.lang.IllegalStateException This method has been invoked
    *                                         while the connector was ONLINE or STARTING.
    */
+  @Override
   public void setTimeout(int value) throws java.lang.IllegalStateException {
     if ((state == ONLINE) || (state == STARTING)) {
       throw new IllegalStateException(
@@ -301,6 +307,7 @@ public class HttpsConnectorServer
   /**
    * Returns the string used in debug traces.
    */
+  @Override
   String makeDebugTag() {
     return "HttpsConnectorServer[" + getProtocol() + ":" + getPort() + "]";
   }

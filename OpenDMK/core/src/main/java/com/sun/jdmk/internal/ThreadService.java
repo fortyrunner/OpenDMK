@@ -92,6 +92,7 @@ public class ThreadService implements TaskServer {
    * @param task The task to be executed.
    * @throws IllegalArgumentException if the submitted task is null.
    **/
+  @Override
   public void submitTask(Task task) throws IllegalArgumentException {
     submitTask((Runnable) task);
   }
@@ -194,6 +195,7 @@ public class ThreadService implements TaskServer {
       idle++;
     }
 
+    @Override
     public void run() {
 
       while (!terminated) {

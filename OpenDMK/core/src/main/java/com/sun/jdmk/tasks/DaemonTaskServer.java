@@ -92,6 +92,7 @@ public class DaemonTaskServer implements TaskServer {
     new ClassLogger(ClassLogger.LOGGER_MISC, DaemonTaskServer.class);
 
   private final class Daemon implements Runnable {
+    @Override
     public void run() {
       DaemonTaskServer.this.run();
     }
@@ -273,6 +274,7 @@ public class DaemonTaskServer implements TaskServer {
    *
    * @param task The Task to execute.
    **/
+  @Override
   public synchronized void submitTask(Task task) {
     // If we are terminating then we don't accept new tasks...
     if (terminating) {

@@ -75,6 +75,7 @@ public final class ServerFactoryImpl implements SaslServerFactory {
   public ServerFactoryImpl() {
   }
 
+  @Override
   public SaslServer createSaslServer(String mech,
                                      String protocol,
                                      String serverName,
@@ -94,6 +95,7 @@ public final class ServerFactoryImpl implements SaslServerFactory {
     return null;
   }
 
+  @Override
   public String[] getMechanismNames(Map props) {
     return PolicyUtils.filterMechs(myMechs, mechPolicies, props);
   }

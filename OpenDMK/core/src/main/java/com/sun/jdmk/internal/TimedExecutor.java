@@ -86,6 +86,7 @@ public class TimedExecutor implements TaskServer {
    * @param task The task to be executed.
    * @throws IllegalArgumentException if the submitted task is null.
    **/
+  @Override
   public void submitTask(Task task) throws IllegalArgumentException {
     submitTask((Runnable) task, 0);
   }
@@ -225,6 +226,7 @@ public class TimedExecutor implements TaskServer {
       setDaemon(true);
     }
 
+    @Override
     public void run() {
       while (!terminated) {
         JobInfo ji = getJobInfo();

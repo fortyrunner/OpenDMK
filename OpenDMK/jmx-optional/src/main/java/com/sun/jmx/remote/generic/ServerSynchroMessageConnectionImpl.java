@@ -77,6 +77,7 @@ public class ServerSynchroMessageConnectionImpl implements ServerSynchroMessageC
     connection = mc;
   }
 
+  @Override
   public void connect(Map env) throws IOException {
     synchronized (stateLock) {
       if (state != UNCONNECTED) {
@@ -107,6 +108,7 @@ public class ServerSynchroMessageConnectionImpl implements ServerSynchroMessageC
     }
   }
 
+  @Override
   public void sendOneWay(Message msg) throws IOException {
     if (logger.traceOn()) {
       logger.trace("sendOneWay", "Send a message without response.");
@@ -119,6 +121,7 @@ public class ServerSynchroMessageConnectionImpl implements ServerSynchroMessageC
     }
   }
 
+  @Override
   public void setCallback(SynchroCallback cb) {
     if (logger.traceOn()) {
       logger.trace("setCallback", "be called.");
@@ -140,10 +143,12 @@ public class ServerSynchroMessageConnectionImpl implements ServerSynchroMessageC
     threads.handoff(reader);
   }
 
+  @Override
   public String getConnectionId() {
     return connection.getConnectionId();
   }
 
+  @Override
   public void close() throws IOException {
     if (logger.traceOn()) {
       logger.trace("close", "Closing this SynchroMessageConnection.");
@@ -202,6 +207,7 @@ public class ServerSynchroMessageConnectionImpl implements ServerSynchroMessageC
     public MessageReader() {
     }
 
+    @Override
     public void run() {
       try {
         executingThread = Thread.currentThread();
@@ -293,6 +299,7 @@ public class ServerSynchroMessageConnectionImpl implements ServerSynchroMessageC
       this.msg = msg;
     }
 
+    @Override
     public void run() {
       if (logger.traceOn()) {
         logger.trace("RemoteJob-run", "Receive a new request.");
@@ -319,6 +326,7 @@ public class ServerSynchroMessageConnectionImpl implements ServerSynchroMessageC
     private Message msg;
   }
 
+  @Override
   public Subject getSubject() {
     return serverAdmin.getSubject(connection);
   }

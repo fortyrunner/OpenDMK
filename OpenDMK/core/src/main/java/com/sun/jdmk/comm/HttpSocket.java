@@ -106,6 +106,7 @@ class HttpSocket extends GenericHttpSocket {
    * @param port The port number.
    * @return The adaptor socket.
    */
+  @Override
   public GenericHttpSocket createServerSocket(int port) {
     HttpSocket newSocket = new HttpSocket(port);
     newSocket.setTimeout(getTimeout());
@@ -120,6 +121,7 @@ class HttpSocket extends GenericHttpSocket {
    * @return The adaptor socket.
    */
   // NPCTE fix for bug 4873785
+  @Override
   public GenericHttpSocket createServerSocket(int port, InetAddress bindAddr) {
     HttpSocket newSocket = new HttpSocket(port, bindAddr);
     newSocket.setTimeout(getTimeout());
@@ -134,6 +136,7 @@ class HttpSocket extends GenericHttpSocket {
    *
    * @return The adaptor socket.
    */
+  @Override
   public GenericHttpSocket createClientSocket() {
     HttpSocket newSocket = new HttpSocket(0);
     newSocket.setTimeout(getTimeout());
@@ -145,6 +148,7 @@ class HttpSocket extends GenericHttpSocket {
    *
    * @return The string "http".
    */
+  @Override
   public String getProtocol() {
     return "http";
   }
@@ -154,6 +158,7 @@ class HttpSocket extends GenericHttpSocket {
    *
    * @throws IOException Signals that an I/O exception of some sort has occurred.
    */
+  @Override
   public void doBind()
     throws IOException {
 
@@ -171,6 +176,7 @@ class HttpSocket extends GenericHttpSocket {
    *
    * @throws IOException Signals that an I/O exception of some sort has occurred.
    */
+  @Override
   public void doUnbind()
     throws IOException {
 
@@ -188,6 +194,7 @@ class HttpSocket extends GenericHttpSocket {
    *                                has occurred.
    * @throws CommunicationException A communications problem occurred.
    */
+  @Override
   public void doConnect(String serverName, int serverPort)
     throws UnknownHostException, IOException, CommunicationException {
 
@@ -207,6 +214,7 @@ class HttpSocket extends GenericHttpSocket {
    * @throws IOException            Signals that an I/O exception of some sort has occurred.
    * @throws CommunicationException A communications problem occurred.
    */
+  @Override
   public void doDisconnect()
     throws IOException, CommunicationException {
 
@@ -238,6 +246,7 @@ class HttpSocket extends GenericHttpSocket {
    * @throws IOException Signals that an I/O exception of some sort
    *                     has occurred.
    */
+  @Override
   public void doSend(String header, byte[] content)
     throws IOException {
 
@@ -261,6 +270,7 @@ class HttpSocket extends GenericHttpSocket {
    *
    * @throws IOException Signals that an I/O exception of some sort has occurred.
    */
+  @Override
   public void doReceive()
     throws IOException {
 
@@ -279,6 +289,7 @@ class HttpSocket extends GenericHttpSocket {
    * @return The input stream from this adaptor socket.
    * @throws IOException An I/O error occurred.
    */
+  @Override
   public InputStream doGetInputStream()
     throws IOException {
 
@@ -296,6 +307,7 @@ class HttpSocket extends GenericHttpSocket {
    * @return The output stream from this adaptor socket.
    * @throws IOException An I/O error occurred.
    */
+  @Override
   public OutputStream doGetOutputStream()
     throws IOException {
 
@@ -312,6 +324,7 @@ class HttpSocket extends GenericHttpSocket {
    *
    * @return The local IP address.
    */
+  @Override
   public InetAddress getLocalAddress() {
     if (serverSocket != null) {
       return serverSocket.getInetAddress();
@@ -325,6 +338,7 @@ class HttpSocket extends GenericHttpSocket {
    *
    * @return The local port number.
    */
+  @Override
   public int getLocalPort() {
     if (serverSocket != null) {
       return serverSocket.getLocalPort();
@@ -338,6 +352,7 @@ class HttpSocket extends GenericHttpSocket {
    *
    * @return The remote IP address.
    */
+  @Override
   public InetAddress getRemoteAddress() {
     if (serverSocket != null) {
       return sckAccept.getInetAddress();
@@ -351,6 +366,7 @@ class HttpSocket extends GenericHttpSocket {
    *
    * @return The remote port number.
    */
+  @Override
   public int getRemotePort() {
     if (serverSocket != null) {
       return sckAccept.getPort();
