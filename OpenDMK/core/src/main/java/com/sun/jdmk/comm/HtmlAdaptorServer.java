@@ -578,7 +578,7 @@ public class HtmlAdaptorServer
 
     // Validate the attribute.
     //
-    if (attribute == null || attribute.trim().equals("")) {
+    if (attribute == null || attribute.trim().isEmpty()) {
       throw new RuntimeOperationsException
         (new IllegalArgumentException("Attribute name cannot be null or empty"),
           "The getAttribute method of HtmlAdaptorServer was called with a null or empty attribute name string.");
@@ -698,7 +698,7 @@ public class HtmlAdaptorServer
   public Object invoke(String actionName, Object[] params, String[] signature)
     throws MBeanException, ReflectionException {
 
-    if (actionName == null || actionName.trim().equals("")) {
+    if (actionName == null || actionName.trim().isEmpty()) {
       throw new RuntimeOperationsException
         (new IllegalArgumentException("String parameter 'actionName' of invoke method of HtmlAdaptorServer" +
           " cannot be null or empty"),
@@ -883,7 +883,7 @@ public class HtmlAdaptorServer
     }
     String name = attribute.getName();
     Object value = attribute.getValue();
-    if (name == null || name.trim().equals("")) {
+    if (name == null || name.trim().isEmpty()) {
       throw new RuntimeOperationsException(new IllegalArgumentException("setAttribute: name field of attribute parameter " +
         "cannot be null or empty"),
         "Cannot invoke setAttribute method of " + dclassName +

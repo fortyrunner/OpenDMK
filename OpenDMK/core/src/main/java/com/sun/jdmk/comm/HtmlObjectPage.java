@@ -51,10 +51,6 @@
 
 package com.sun.jdmk.comm;
 
-
-// java import
-//
-
 import com.sun.jdmk.Enumerated;
 
 import javax.management.*;
@@ -62,17 +58,19 @@ import javax.management.loading.ClassLoaderRepository;
 import java.lang.reflect.Constructor;
 import java.net.URLEncoder;
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.TimeZone;
-
-// jmx import
-//
-// jmx RI import
-//
+import java.util.*;
 
 class HtmlObjectPage extends HtmlPage {
+
+  private MBeanAttributeInfo[] attinfo = null;
+  private String[] propertyName = null;
+  private String[] propertyView = null;
+  private ObjectName manipulatedObjName = null;
+  private MBeanInfo manipulatedObj = null;
+  private String meta = null;
+  private int autoRefresh = 0;
+  private final int minAutoRefresh = 5;
+  private HtmlAdaptorServer server;
 
   // --------------------------------------------------------
   // CONSTRUCTORS
@@ -81,7 +79,7 @@ class HtmlObjectPage extends HtmlPage {
   /**
    * Constructs a new HtmlObjectPage.
    */
-  public HtmlObjectPage(MBeanServer f, boolean r, boolean w, HtmlAdaptorServer server) {
+  public HtmlObjectPage(final MBeanServer f, final boolean r, final boolean w, final HtmlAdaptorServer server) {
     super(f, r, w);
     this.server = server;
   }
@@ -92,13 +90,13 @@ class HtmlObjectPage extends HtmlPage {
   // --------------------------------------------------------
 
   @Override
-  public void buildPage(String req) {
+  public void buildPage(final String req) {
     if (logger.finerOn()) {
       logger.finer("buildPage", "Handle request = " + req);
     }
 
     String objNameStr = req;
-    int disp = req.indexOf("?");
+    int disp = req.indexOf('?');
 
     if (disp >= 0) {
       objNameStr = req.substring(0, disp);
@@ -198,9 +196,6 @@ class HtmlObjectPage extends HtmlPage {
     }
 
 
-    StringBuilder errBuf = new StringBuilder();
-    boolean error = false;
-
     objNameStr = fromUrlName(objNameStr);
     String safeObjNameStr = translateNameToHtmlFormat(objNameStr);
 
@@ -223,7 +218,7 @@ class HtmlObjectPage extends HtmlPage {
     AttributeList attlist = new AttributeList();
 
     String propReqStr;
-    boolean done = false;
+
     String propStr = null;
     String typeStr = null;
     String valueStr;
@@ -240,6 +235,7 @@ class HtmlObjectPage extends HtmlPage {
       return false;
     }
 
+    boolean done = false;
     while (!done) {
       // A property name separator is always "&".
       //
@@ -271,7 +267,7 @@ class HtmlObjectPage extends HtmlPage {
       valueStr = propReqStr.substring(index + 1);
 
       if ((valueStr != null) && (propStr != null) &&
-        (valueStr.length() != 0) && (propStr.length() != 0)) {
+        (!valueStr.isEmpty()) && (!propStr.isEmpty())) {
         // Remove %0D in the begining of property name.
         //
         //if (propStr.startsWith("%0D") || propStr.startsWith("%0d")) {
@@ -315,7 +311,7 @@ class HtmlObjectPage extends HtmlPage {
 
         if (logger.finerOn()) {
           logger.finer("setObjectValue",
-            "Get Name = [" + propStr + "] " + (ind.length() > 0 ? "[" + ind + "] " : " ") + "Type = [" + typeStr + "]" + " Value = [" + valueStr + "]");
+            "Get Name = [" + propStr + "] " + (!ind.isEmpty() ? "[" + ind + "] " : " ") + "Type = [" + typeStr + "]" + " Value = [" + valueStr + "]");
         }
 
 
@@ -391,7 +387,7 @@ class HtmlObjectPage extends HtmlPage {
 
         // Value will be added to list to be set only if not null
         if (attvalue != null) {
-          if (ind.length() > 0) {
+          if (!ind.isEmpty()) {
             // This is an array,
             // treat each element as value of an array.
             //
@@ -440,7 +436,7 @@ class HtmlObjectPage extends HtmlPage {
 
     // Call MBeanServer to set the values.
     //
-    AttributeList resAttList = null;
+    AttributeList resAttList;
     try {
       resAttList = mbs.setAttributes(manipulatedObjName, attlist);
       if (logger.finerOn()) {
@@ -498,7 +494,7 @@ class HtmlObjectPage extends HtmlPage {
   }
 
   public void buildMeta(String objName) {
-    String objNameStr = objName.substring(0, objName.indexOf("?"));
+    String objNameStr = objName.substring(0, objName.indexOf('?'));
 
     try {
       autoRefresh = Integer.parseInt(objName.substring(objName.indexOf("period=") + 7));
@@ -564,7 +560,7 @@ class HtmlObjectPage extends HtmlPage {
     }
 
     StringBuilder html = new StringBuilder(100);
-    String ele = "";
+    String ele;
 
     if (w) {
       // if writable, we display a select box to allow to change the value
@@ -758,7 +754,7 @@ class HtmlObjectPage extends HtmlPage {
     // if one is provided.
     //
     String desc = manipulatedObj.getDescription();
-    if (desc != null && desc.length() > 0) {
+    if (desc != null && !desc.isEmpty()) {
       add2Page("<HR><H3>MBean description:</H3><P>" + desc + "<P>");
     }
 
@@ -945,7 +941,7 @@ class HtmlObjectPage extends HtmlPage {
                       htmlPage.append("SIZE=34%");
                       add2Page(">");
                       if (attType.equals("javax.management.ObjectName")) {
-                        if (propertyView[i].equals(" ") || propertyView[i].equals("")) {
+                        if (propertyView[i].equals(" ") || propertyView[i].isEmpty()) {
                           htmlPage.append("<A HREF=\"" + HtmlDef.VIEWOBJECTRES + toUrlName(propertyView[i]) + "\"></A>");
                         } else {
                           htmlPage.append("<A HREF=\"" + HtmlDef.VIEWOBJECTRES + toUrlName(propertyView[i]) + "\">view</A>");
@@ -978,8 +974,7 @@ class HtmlObjectPage extends HtmlPage {
       logger.finer("buildOperations", "Build operations part");
     }
 
-    String actionStr = null;
-    String ai = null;
+
     MBeanOperationInfo[] op =
       checkedOperationInfo(manipulatedObj.getOperations());
 
@@ -1010,25 +1005,28 @@ class HtmlObjectPage extends HtmlPage {
       return;
     }
 
+
+
     /*
      * Found operations to process.
      * Return with the list of operations in the html page.
      */
     for (int i = op.length - 1; i >= 0; i--) {
-      ai = op[i].getDescription();
 
       // Build the operation button and input fields form.
       //
-      actionStr = buildOperationWithParam(op[i].getReturnType(), op[i].getName(), op[i].getSignature());
+      String name = op[i].getName();
+      String actionStr = buildOperationWithParam(op[i].getReturnType(), name, op[i].getSignature());
 
       // Add the operation description and
       // the operation button and input fields form.
       //
       if (actionStr != null) {
-        if (ai != null && ai.length() > 0) {
-          add2Page("<HR><A HREF=\"javascript:alert('" + translateNameToHtmlFormat(ai) + "');\"><B>Description of " + op[i].getName() + "</B></A>");
+        String description = op[i].getDescription();
+        if (description == null || description.isEmpty()) {
+          add2Page("<HR><B>" + name + "</B>");
         } else {
-          add2Page("<HR><B>" + op[i].getName() + "</B>");
+          add2Page("<HR><B>" + name + "</B> - " + description);
         }
         add2Page(actionStr);
       }
@@ -1045,12 +1043,12 @@ class HtmlObjectPage extends HtmlPage {
     }
 
     boolean support = true;
-    String propType = null;
-    String param = null;
+    String propType;
+
     StringBuilder str = new StringBuilder(50);
 
     // Do we support the operation ?
-    //
+
     int max = paramList.length;
     for (MBeanParameterInfo mBeanParameterInfo : paramList) {
       propType = mBeanParameterInfo.getType();
@@ -1066,7 +1064,7 @@ class HtmlObjectPage extends HtmlPage {
     }
 
     // Start a form, containing the operation table.
-    //
+
     if (support) {
       str.append("<FORM ACTION=" + HtmlDef.INVOKEACTION + toUrlName(manipulatedObjName.toString()) + "/action=" + action);
       str.append(" METHOD=GET>" + HtmlDef.PF);
@@ -1078,22 +1076,37 @@ class HtmlObjectPage extends HtmlPage {
     str.append("<TR><TD>" + returnType + "</TD>" + HtmlDef.PF);
 
     // Add the operation name to the operation table.
-    //
+
     if (!support) {
       str.append("<TD>" + action + "</TD>" + HtmlDef.PF);
     } else {
       str.append("<TD><INPUT TYPE=SUBMIT NAME=\"action\" VALUE=\"" + action + "\"></TD>" + HtmlDef.PF);
     }
 
+    addParamsToOperations(paramList, support, str, max);
+
+    // End the form and operation table.
+
+    str.append("</TR></TABLE>" + HtmlDef.PF);
+    if (support) {
+      str.append("</FORM>" + HtmlDef.PF);
+    }
+
+    return str.toString();
+  }
+
+  private void addParamsToOperations(final MBeanParameterInfo[] paramList, final boolean support, final StringBuilder str, final int max) {
+
     // Analyse the parameters and add them to operation table.
-    //
+
     for (int i = 0; i < max; i++) {
-      propType = paramList[i].getType();
+      String propType = paramList[i].getType();
 
       // Build the paramaters.
-      //
+
+      String param;
       if (paramList[i].getName() != null &&
-        paramList[i].getName().length() > 0) {
+        !paramList[i].getName().isEmpty()) {
         param = paramList[i].getName();
       } else {
         param = "param" + i;
@@ -1102,7 +1115,7 @@ class HtmlObjectPage extends HtmlPage {
         str.append("<TD></TD>");
       }
       String ai = paramList[i].getDescription();
-      if (ai != null && ai.length() > 0) {
+      if (ai != null && !ai.isEmpty()) {
         str.append("<TD>(" + propType + ")<A HREF=\"javascript:alert('" + translateNameToHtmlFormat(ai) + "');\">" + param + "</A></TD>" + HtmlDef.PF);
       } else {
         str.append("<TD>(" + propType + ")" + param + "</TD>" + HtmlDef.PF);
@@ -1123,15 +1136,6 @@ class HtmlObjectPage extends HtmlPage {
       }
       str.append("</TR><TR><TD></TD>" + HtmlDef.PF);
     }
-
-    // End the form and operation table.
-    //
-    str.append("</TR></TABLE>" + HtmlDef.PF);
-    if (support) {
-      str.append("</FORM>" + HtmlDef.PF);
-    }
-
-    return str.toString();
   }
 
 
@@ -1148,7 +1152,6 @@ class HtmlObjectPage extends HtmlPage {
 
     Object result = null;
     boolean r = attrInfo.isReadable();
-    boolean w = attrInfo.isWritable();
 
     // Get the attribute value.
     //
@@ -1225,109 +1228,125 @@ class HtmlObjectPage extends HtmlPage {
     return result.toString(); // so, even for unsupported types we return the output of toString()
   }
 
-  private Object stringToObject(String typeStr, String valueStr) {
-    Object value = null;
+  private Object stringToObject(final String typeStr, final String valueStr) {
     try {
       if (typeStr.endsWith("String")) {
-        value = valueStr;
-      } else {
-        if (typeStr.endsWith("Byte") || typeStr.endsWith("byte")) {
-          value = new Byte(valueStr);
-        } else {
-          if (typeStr.endsWith("Long") || typeStr.endsWith("long")) {
-            value = new Long(valueStr);
-          } else {
-            if (typeStr.endsWith("Integer") || typeStr.endsWith("int")) {
-              value = new Integer(valueStr);
-            } else {
-              if (typeStr.endsWith("Date")) {
-                try {
-                  DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
-                  // BUG : the TZ of the DateFormat is not set correctly with the method getDateTimeInstance.
-                  // By default, the DateFormat use the TZ of the system.
-                  df.setTimeZone(TimeZone.getDefault());
-                  value = df.parse(valueStr);
-                } catch (java.text.ParseException e) {
-                  buildError("Cannot convert String \"" + valueStr + "\" to " +
-                    typeStr +
-                    ".<P>", HtmlDef.HTTP_ERROR_BAD_REQUEST_ID + " " + HtmlDef.HTTP_ERROR_BAD_REQUEST);
-                  return null;
-                }
-              } else {
-                if (typeStr.endsWith("Boolean") || typeStr.endsWith("boolean")) {
-                  value = new Boolean(valueStr);
-                } else {
-                  if (typeStr.endsWith("Number")) {
-                    try {
-                      value = new Integer(valueStr);
-                    } catch (NumberFormatException e1) {
-                      try {
-                        value = new Long(valueStr);
-                      } catch (NumberFormatException e2) {
-                        try {
-                          value = new Float(valueStr);
-                        } catch (NumberFormatException e3) {
-                          try {
-                            value = new Double(valueStr);
-                          } catch (NumberFormatException e4) {
-                            buildError("Cannot convert String \"" + valueStr + "\" to " + typeStr + ".<P>",
-                              HtmlDef.HTTP_ERROR_BAD_REQUEST_ID + " " + HtmlDef.HTTP_ERROR_BAD_REQUEST);
-                            return null;
-                          }
-                        }
-                      }
-                    }
-                  } else {
-                    if (typeStr.equals("javax.management.ObjectName")) {
-                      try {
-                        value = new ObjectName(valueStr);
-                      } catch (MalformedObjectNameException e) {
-                        buildError("Cannot convert String \"" + valueStr + "\" to " + typeStr + ".<P>",
-                          HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME_ID + " " + HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME);
-                        return null;
-                      }
-                    } else {
-                      if (typeStr.endsWith("Character") || typeStr.endsWith("char")) {
-                        value = new Character(valueStr.charAt(0));
-                      } else {
-                        if (typeStr.endsWith("Double") || typeStr.endsWith("double")) {
-                          value = new Double(valueStr);
-                        } else {
-                          if (typeStr.endsWith("Float") || typeStr.endsWith("float")) {
-                            value = new Float(valueStr);
-                          } else {
-                            if (typeStr.endsWith("Short") || typeStr.endsWith("short")) {
-                              value = new Short(valueStr);
-                            } else {
-                              // Unknown conversion mechanism for this.
-                              //
-                              buildError("Cannot convert the String \"" + valueStr + "\" to " + typeStr,
-                                HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE_ID + " " + HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE);
-                              return null;
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+        return valueStr;
       }
+
+      if (typeStr.endsWith("Byte") || typeStr.endsWith("byte")) {
+        return Byte.parseByte(valueStr);
+      }
+
+      if (typeStr.endsWith("Long") || typeStr.endsWith("long")) {
+        return Long.parseLong(valueStr);
+      }
+
+      if (typeStr.endsWith("Integer") || typeStr.endsWith("int")) {
+        return Integer.valueOf(valueStr);
+      }
+
+      if (typeStr.endsWith("Date")) {
+        return parseDate(typeStr, valueStr);
+      }
+
+      if (typeStr.endsWith("Boolean") || typeStr.endsWith("boolean")) {
+        return Boolean.parseBoolean(valueStr);
+      }
+
+      if (typeStr.endsWith("Number")) {
+        return parseNumber(typeStr, valueStr);
+      }
+
+      if (typeStr.equals("javax.management.ObjectName")) {
+        return parseObjectName(typeStr, valueStr);
+      }
+
+      if (typeStr.endsWith("Character") || typeStr.endsWith("char")) {
+        return valueStr.charAt(0);
+      }
+
+      if (typeStr.endsWith("Double") || typeStr.endsWith("double")) {
+        return Double.parseDouble(valueStr);
+      }
+
+      if (typeStr.endsWith("Float") || typeStr.endsWith("float")) {
+        return Float.parseFloat(valueStr);
+      }
+
+      if (typeStr.endsWith("Short") || typeStr.endsWith("short")) {
+        return Short.parseShort(valueStr);
+      }
+
+      // Unknown conversion mechanism for this.
+
+      buildError("Cannot convert the String \"" + valueStr + "\" to " + typeStr,
+        HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE_ID + " " + HtmlDef.HTTP_ERROR_INVALID_PROP_VALUE);
+      return null;
+
+
     } catch (NumberFormatException e) {
       buildError("Cannot convert the String \"" + valueStr + "\" to " + typeStr + ".<P>",
         HtmlDef.HTTP_ERROR_BAD_REQUEST_ID + " " + HtmlDef.HTTP_ERROR_BAD_REQUEST);
       return null;
     }
+
+  }
+
+  private Object parseDate(final String typeStr, final String valueStr) {
+    Object value = null;
+    try {
+      DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
+      // BUG : the TZ of the DateFormat is not set correctly with the method getDateTimeInstance.
+      // By default, the DateFormat use the TZ of the system.
+      df.setTimeZone(TimeZone.getDefault());
+      value = df.parse(valueStr);
+    } catch (java.text.ParseException e) {
+      buildError("Cannot convert String \"" + valueStr + "\" to " +
+        typeStr +
+        ".<P>", HtmlDef.HTTP_ERROR_BAD_REQUEST_ID + " " + HtmlDef.HTTP_ERROR_BAD_REQUEST);
+    }
     return value;
   }
 
-  private Object getArray(String typeStr, ArrayList a) {
+  private Object parseNumber(final String typeStr, final String valueStr) {
+    Object value;
+    try {
+      value = Integer.parseInt(valueStr);
+    } catch (NumberFormatException e1) {
+      try {
+        value = Long.parseLong(valueStr);
+      } catch (NumberFormatException e2) {
+        try {
+          value = Float.parseFloat(valueStr);
+        } catch (NumberFormatException e3) {
+          try {
+            value = Double.parseDouble(valueStr);
+          } catch (NumberFormatException e4) {
+            buildError("Cannot convert String \"" + valueStr + "\" to " + typeStr + ".<P>",
+              HtmlDef.HTTP_ERROR_BAD_REQUEST_ID + " " + HtmlDef.HTTP_ERROR_BAD_REQUEST);
+            value = null;
+          }
+        }
+      }
+    }
+    return value;
+  }
+
+  private Object parseObjectName(final String typeStr, final String valueStr) {
     Object value = null;
+    try {
+      value = new ObjectName(valueStr);
+    } catch (MalformedObjectNameException e) {
+      buildError("Cannot convert String \"" + valueStr + "\" to " + typeStr + ".<P>",
+        HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME_ID + " " + HtmlDef.HTTP_ERROR_MALFORMED_OBJECTNAME);
+    }
+    return value;
+  }
+
+  private Object getArray(final String typeStr, final List a) {
+    Object value;
     int l = a.size();
-    int i;
     if (typeStr.endsWith("String")) {
       value = a.toArray(new String[l]);
     } else {
@@ -1336,7 +1355,7 @@ class HtmlObjectPage extends HtmlPage {
       } else {
         if (typeStr.endsWith("byte")) {
           value = new byte[l];
-          for (i = l - 1; i >= 0; i--) {
+          for (int i = l - 1; i >= 0; i--) {
             ((byte[]) value)[i] = ((Byte) a.get(i)).byteValue();
           }
         } else {
@@ -1345,7 +1364,7 @@ class HtmlObjectPage extends HtmlPage {
           } else {
             if (typeStr.endsWith("long")) {
               value = new long[l];
-              for (i = l - 1; i >= 0; i--) {
+              for (int i = l - 1; i >= 0; i--) {
                 ((long[]) value)[i] = ((Long) a.get(i)).longValue();
               }
             } else {
@@ -1354,7 +1373,7 @@ class HtmlObjectPage extends HtmlPage {
               } else {
                 if (typeStr.endsWith("int")) {
                   value = new int[l];
-                  for (i = l - 1; i >= 0; i--) {
+                  for (int i = l - 1; i >= 0; i--) {
                     ((int[]) value)[i] = ((Integer) a.get(i)).intValue();
                   }
                 } else {
@@ -1366,7 +1385,7 @@ class HtmlObjectPage extends HtmlPage {
                     } else {
                       if (typeStr.endsWith("boolean")) {
                         value = new boolean[l];
-                        for (i = l - 1; i >= 0; i--) {
+                        for (int i = l - 1; i >= 0; i--) {
                           ((boolean[]) value)[i] = ((Boolean) a.get(i)).booleanValue();
                         }
                       } else {
@@ -1378,7 +1397,7 @@ class HtmlObjectPage extends HtmlPage {
                           } else {
                             if (typeStr.equals("char")) {
                               value = new char[l];
-                              for (i = l - 1; i >= 0; i--) {
+                              for (int i = l - 1; i >= 0; i--) {
                                 ((char[]) value)[i] = ((Character) a.get(i)).charValue();
                               }
                             } else {
@@ -1387,7 +1406,7 @@ class HtmlObjectPage extends HtmlPage {
                               } else {
                                 if (typeStr.equals("double")) {
                                   value = new double[l];
-                                  for (i = l - 1; i >= 0; i--) {
+                                  for (int i = l - 1; i >= 0; i--) {
                                     ((double[]) value)[i] = ((Double) a.get(i)).doubleValue();
                                   }
                                 } else {
@@ -1396,7 +1415,7 @@ class HtmlObjectPage extends HtmlPage {
                                   } else {
                                     if (typeStr.equals("float")) {
                                       value = new float[l];
-                                      for (i = l - 1; i >= 0; i--) {
+                                      for (int i = l - 1; i >= 0; i--) {
                                         ((float[]) value)[i] = ((Float) a.get(i)).floatValue();
                                       }
                                     } else {
@@ -1423,7 +1442,7 @@ class HtmlObjectPage extends HtmlPage {
     return value;
   }
 
-  private Class loadClass(String className)
+  private Class loadClass(final String className)
     throws ClassNotFoundException {
     try {
       return Class.forName(className);
@@ -1438,17 +1457,5 @@ class HtmlObjectPage extends HtmlPage {
   }
 
 
-  // --------------------------------------------------------
-  // PRIVATE VARIABLES
-  // --------------------------------------------------------
 
-  private MBeanAttributeInfo[] attinfo = null;
-  private String[] propertyName = null;
-  private String[] propertyView = null;
-  private ObjectName manipulatedObjName = null;
-  private MBeanInfo manipulatedObj = null;
-  private String meta = null;
-  private int autoRefresh = 0;
-  private final int minAutoRefresh = 5;
-  private HtmlAdaptorServer server = null;
 }

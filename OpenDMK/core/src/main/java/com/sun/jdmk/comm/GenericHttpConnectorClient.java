@@ -904,9 +904,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
     //
     try {
       return (ObjectInstance) invokeRemoteOperation(opList);
-    } catch (InstanceAlreadyExistsException | MBeanRegistrationException e) {
-      throw e;
-    } catch (ReflectionException | RuntimeException | NotCompliantMBeanException | MBeanException e) {
+    } catch (InstanceAlreadyExistsException | ReflectionException | RuntimeException | NotCompliantMBeanException | MBeanException e) {
       throw e;
     } catch (Exception e) {
       throw new CommunicationException(e);
@@ -926,9 +924,7 @@ public abstract class GenericHttpConnectorClient implements RemoteMBeanServer, H
     //
     try {
       return (ObjectInstance) invokeRemoteOperation(opList);
-    } catch (InstanceAlreadyExistsException | MBeanRegistrationException e) {
-      throw e;
-    } catch (ReflectionException | RuntimeException | InstanceNotFoundException | NotCompliantMBeanException | MBeanException e) {
+    } catch (InstanceAlreadyExistsException | ReflectionException | RuntimeException | InstanceNotFoundException | NotCompliantMBeanException | MBeanException e) {
       throw e;
     } catch (Exception e) {
       throw new CommunicationException(e);

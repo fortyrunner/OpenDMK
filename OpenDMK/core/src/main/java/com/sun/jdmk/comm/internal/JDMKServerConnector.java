@@ -125,7 +125,7 @@ public class JDMKServerConnector
         } else {
           sn = sn.substring(i + 1);
 
-          if (sn.trim().equals("")) {
+          if (sn.trim().isEmpty()) {
             sn = ServiceName.RMI_CONNECTOR_SERVER;
           }
         }

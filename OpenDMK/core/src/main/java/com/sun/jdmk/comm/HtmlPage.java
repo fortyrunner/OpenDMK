@@ -81,7 +81,6 @@ abstract class HtmlPage {
   public HtmlPage(MBeanServer f, boolean r, boolean w) {
     htmlPage = new StringBuffer();
     mbs = f;
-    readPerm = r;
     writePerm = w;
     logger = new ClassLogger(ClassLogger.LOGGER_ADAPTOR_HTML,
       this.getClass());
@@ -97,7 +96,7 @@ abstract class HtmlPage {
   }
 
   public void setBgColor(String value) {
-    if (value != null && !value.equals("")) {
+    if (value != null && !value.isEmpty()) {
       if (value.startsWith("#")) {
         bgColor = "BGCOLOR=\"" + value + "\"";
       } else {
@@ -123,16 +122,14 @@ abstract class HtmlPage {
   // --------------------------------------------------------
 
   protected void add2Page(String s) {
-    htmlPage.append(s + HtmlDef.PF);
+    htmlPage.append(s).append(HtmlDef.PF);
   }
 
   protected void buildError(String errorStr, String errorDef) {
     htmlPage = new StringBuffer();
     htmlPage.append(buildHead(errorDef));
     htmlPage.append(startBody(null));
-    htmlPage.append("<HR><P>" + HtmlDef.CRLF +
-      "<FONT SIZE=+3 COLOR=red><B>" + errorDef +
-      "</B></FONT><P><HR><P>" + errorStr + HtmlDef.CRLF);
+    htmlPage.append("<HR><P>" + HtmlDef.CRLF + "<FONT SIZE=+3 COLOR=red><B>").append(errorDef).append("</B></FONT><P><HR><P>").append(errorStr).append(HtmlDef.CRLF);
     htmlPage.append("<P><TABLE WIDTH=100%><TR>");
     htmlPage.append("<TD ALIGN=RIGHT>" + HtmlDef.LISTOFMBEAN + "</TD>");
     htmlPage.append("</TR></TABLE>");
@@ -140,33 +137,29 @@ abstract class HtmlPage {
   }
 
   protected String buildHead(String title) {
-    StringBuilder header = new StringBuilder(80);
-    header.append(HtmlDef.docType + HtmlDef.PF);
-    header.append("<HTML>" + HtmlDef.PF);
-    header.append("<HEAD>" + HtmlDef.PF);
-    header.append("<TITLE>" + title + "</TITLE>" + HtmlDef.PF);
-    header.append("</HEAD>" + HtmlDef.PF);
-    return header.toString();
+    return HtmlDef.docType + HtmlDef.PF +
+      "<HTML>" + HtmlDef.PF +
+      "<HEAD>" + HtmlDef.PF +
+      "<TITLE>" + title + "</TITLE>" + HtmlDef.PF +
+      "</HEAD>" + HtmlDef.PF;
   }
 
   protected String buildHeadMeta(String title, String meta) {
-    StringBuilder header = new StringBuilder(80);
-    header.append("<HTML>" + HtmlDef.PF);
-    header.append("<HEAD>" + HtmlDef.PF);
-    header.append("<TITLE>" + title + "</TITLE>" + HtmlDef.PF);
-    header.append(meta);
-    header.append("</HEAD>" + HtmlDef.PF);
-    return header.toString();
+    return "<HTML>" + HtmlDef.PF +
+      "<HEAD>" + HtmlDef.PF +
+      "<TITLE>" + title + "</TITLE>" + HtmlDef.PF +
+      meta +
+      "</HEAD>" + HtmlDef.PF;
   }
 
   protected String startBody(String otherOption) {
     StringBuilder body = new StringBuilder();
     body.append("<BODY");
     if (bgColor != null) {
-      body.append(" " + bgColor + " ");
+      body.append(" ").append(bgColor).append(" ");
     }
     if (otherOption != null) {
-      body.append(" " + otherOption + " ");
+      body.append(" ").append(otherOption).append(" ");
     }
     body.append(">" + HtmlDef.PF);
     return body.toString();
@@ -200,10 +193,8 @@ abstract class HtmlPage {
    * @return encoded string.
    */
   protected String encodeUrl(String string) {
-    byte[] bytes = null;
-    bytes = string.getBytes(StandardCharsets.ISO_8859_1);
+    byte[] bytes = string.getBytes(StandardCharsets.ISO_8859_1);
 
-    int len = bytes.length;
     byte[] encoded = new byte[bytes.length * 3];
     int n = 0;
     boolean noEncode = true;
@@ -286,11 +277,11 @@ abstract class HtmlPage {
 
   protected String fromUrlName(String name) {
     int pos;
-    if ((pos = name.indexOf("/")) < 0) {
+    if ((pos = name.indexOf('/')) < 0) {
       return name;
     }
     int next;
-    if ((next = name.indexOf("/", pos + 1)) < 0) {
+    if ((next = name.indexOf('/', pos + 1)) < 0) {
       return name;
     }
 
@@ -318,9 +309,7 @@ abstract class HtmlPage {
   }
 
   protected String usualType(String str) {
-    int lastStep;
-    String pathName;
-    String objName;
+
     String postFix = "";
 
     if (str == null) {
@@ -356,8 +345,7 @@ abstract class HtmlPage {
       postFix = "[]";
       str = str.substring(2, str.length() - 1);
     }
-
-    lastStep = str.lastIndexOf('.');
+    int lastStep = str.lastIndexOf('.');
 
     if (lastStep == -1) {
       return (str + postFix);
@@ -373,7 +361,7 @@ abstract class HtmlPage {
    */
   protected String translateNameToHtmlFormat(String name) {
 
-    if ((name == null) || (name.length() == 0)) {
+    if ((name == null) || (name.isEmpty())) {
       return name;
     }
 
@@ -415,7 +403,7 @@ abstract class HtmlPage {
     //
     // We can CHECKED one
     //
-    html.append(propertyName + "+" + propertyType + "\" ");
+    html.append(propertyName).append("+").append(propertyType).append("\" ");
 
     if (propertyView != null && propertyView.equals("true") && rw) {
       html.append("CHECKED ");
@@ -423,7 +411,7 @@ abstract class HtmlPage {
 
     html.append("VALUE=\"true\">True ");
     html.append("<INPUT TYPE=RADIO NAME=\"");
-    html.append(propertyName + "+" + propertyType + "\" ");
+    html.append(propertyName).append("+").append(propertyType).append("\" ");
 
     if (propertyView != null && propertyView.equals("false") && rw) {
       html.append("CHECKED ");
@@ -439,7 +427,7 @@ abstract class HtmlPage {
 
     ObjectName manipulatedObjName = new ObjectName(objNameStr);
     Set list = mbs.queryNames(manipulatedObjName, null);
-    if (list.size() <= 0) {
+    if (list.isEmpty()) {
       buildError("Unable to get MBean [" + objNameStr + "]",
         HtmlDef.HTTP_ERROR_INSTANCE_NOT_FOUND_ID + " " + HtmlDef.HTTP_ERROR_INSTANCE_NOT_FOUND);
       return null;
@@ -458,7 +446,7 @@ abstract class HtmlPage {
 
     String eltStr;
     String listStr = HtmlDef.goodType;
-    int index = 0;
+    int index;
     boolean done = false;
 
     while (!done) {
@@ -530,7 +518,7 @@ abstract class HtmlPage {
     }
   }
 
-  protected boolean lt(String a, String b) {
+  private boolean lt(String a, String b) {
     if (a == null) {
       return false;
     }
@@ -541,9 +529,9 @@ abstract class HtmlPage {
   }
 
   protected void inverseS(String[] a, int lo, int hi) {
-    String T = a[lo];
+    String t = a[lo];
     a[lo] = a[hi];
-    a[hi] = T;
+    a[hi] = t;
   }
 
 
@@ -551,10 +539,9 @@ abstract class HtmlPage {
   // PROTECTED VARIABLES
   // --------------------------------------------------------
 
-  protected StringBuffer htmlPage = null;
-  protected MBeanServer mbs = null;
-  protected boolean readPerm = false;
-  protected boolean writePerm = false;
+  protected StringBuffer htmlPage;
+  protected final MBeanServer mbs;
+  protected final boolean writePerm;
 
   // --------------------------------------------------------
   // PRIVATE VARIABLES

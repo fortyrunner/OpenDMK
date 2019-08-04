@@ -638,7 +638,7 @@ class HtmlAdminPage extends HtmlPage {
     // Build the classloader object name.
     //
     ObjectName ocloaderName = null;
-    if (cloaderName != null && !cloaderName.equals("")) {
+    if (cloaderName != null && !cloaderName.isEmpty()) {
       try {
         ocloaderName = new ObjectName(cloaderName);
       } catch (MalformedObjectNameException e) {
@@ -663,7 +663,7 @@ class HtmlAdminPage extends HtmlPage {
             Object[] argu = new Object[nbElements];
             String[] sign = new String[nbElements];
             for (int i = 0; i < nbElements; i++) {
-              String val = (String) valueList.get(i);
+              String val = valueList.get(i);
               String type = (String) typeList.get(i);
               sign[i] = type;
 

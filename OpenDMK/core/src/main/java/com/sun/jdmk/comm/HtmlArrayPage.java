@@ -415,7 +415,7 @@ class HtmlArrayPage
               add2Page("</TR>");
             }
             add2Page("</TABLE>");
-            if (Extra.equals("")) {
+            if (Extra.isEmpty()) {
               add2Page("<INPUT TYPE=submit VALUE=\"" + HtmlDef.setChangesBut + "\"> ");
             } else {
               add2Page(Extra);

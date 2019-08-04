@@ -203,10 +203,8 @@ class ClientNotificationDispatcher implements ClientNotificationHandler {
     Object[] params = {remoteID, mbean, filter};
     try {
       ret = connector.remoteRequest(ServerNotificationDispatcher.REGISTER_TO_MBEAN, params);
-    } catch (InstanceNotFoundException | CommunicationException infe) {
+    } catch (InstanceNotFoundException | IllegalArgumentException | JMRuntimeException infe) {
       throw infe;
-    } catch (IllegalArgumentException | JMRuntimeException roe) {
-      throw roe;
     } catch (Exception e) {
       // TODO
       e.printStackTrace();
